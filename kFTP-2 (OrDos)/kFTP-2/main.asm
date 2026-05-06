@@ -8614,954 +8614,954 @@ ftpviewshowtitle:
 ; 46 
 ; 47 void FtpViewShowFileList() {
 ftpviewshowfilelist:
-; 48     push_pop(bc, de, hl) {
+; 48     //-- нельзя обновлять, если есть хоть какое то открытое окно
+; 49     CurrentViewDiskOrFtpViewByIdA(a = CurrentViewId);
+	ld a, (currentviewid)
+	call currentviewdiskorftpviewbyida
+; 50     if (a == 0) {
+	or a
+	jp nz, l_589
+; 51         return;
+	ret
+l_589:
+; 52     }
+; 53     //--
+; 54     push_pop(bc, de, hl) {
 	push bc
 	push de
 	push hl
-; 49         b = 0;
+; 55         b = 0;
 	ld b, 0
-; 50         a = FtpViewFilesListCount;
+; 56         a = FtpViewFilesListCount;
 	ld a, (ftpviewfileslistcount)
-; 51         hl = FtpViewFilesList;
+; 57         hl = FtpViewFilesList;
 	ld hl, ftpviewfileslist
-; 52         c = a;
+; 58         c = a;
 	ld c, a
-; 53         do {
-l_589:
-; 54             a = FtpViewY;
+; 59         do {
+l_591:
+; 60             a = FtpViewY;
 	ld a, (ftpviewy)
-; 55             a += 2;
+; 61             a += 2;
 	add 2
-; 56             a += b;
+; 62             a += b;
 	add b
-; 57             myCharPosY = a;
+; 63             myCharPosY = a;
 	ld (mycharposy), a
-; 58             FtpViewShowFileHL();
+; 64             FtpViewShowFileHL();
 	call ftpviewshowfilehl
-; 59             // HL + 16 next file
-; 60             a = 16;
+; 65             // HL + 16 next file
+; 66             a = 16;
 	ld a, 16
-; 61             a += l;
+; 67             a += l;
 	add l
-; 62             l = a;
+; 68             l = a;
 	ld l, a
-; 63             if (flag_c) {
-	jp nc, l_592
-; 64                 h++;
+; 69             if (flag_c) {
+	jp nc, l_594
+; 70                 h++;
 	inc h
-l_592:
-; 65             }
-; 66             b++;
+l_594:
+; 71             }
+; 72             b++;
 	inc b
-l_590:
-; 67         } while ((a = b) < c);
+l_592:
+; 73         } while ((a = b) < c);
 	ld a, b
 	cp c
-	jp c, l_589
-; 68         // Заполнить пустыми строками
-; 69         a = FtpViewX;
+	jp c, l_591
+; 74         // Заполнить пустыми строками
+; 75         a = FtpViewX;
 	ld a, (ftpviewx)
-; 70         a += 1;
+; 76         a += 1;
 	add 1
-; 71         d = a; // X
+; 77         d = a; // X
 	ld d, a
-; 72         a = FtpViewY;
+; 78         a = FtpViewY;
 	ld a, (ftpviewy)
-; 73         a += 2;
+; 79         a += 2;
 	add 2
-; 74         e = a; // Y
+; 80         e = a; // Y
 	ld e, a
-; 75         //--
-; 76         a = FtpViewFilesListCount;
+; 81         //--
+; 82         a = FtpViewFilesListCount;
 	ld a, (ftpviewfileslistcount)
-; 77         b = a;
+; 83         b = a;
 	ld b, a
-; 78         // PosY
-; 79         a = e;
+; 84         // PosY
+; 85         a = e;
 	ld a, e
-; 80         a += b;
+; 86         a += b;
 	add b
-; 81         e = a;
+; 87         e = a;
 	ld e, a
-; 82         //
-; 83         a = FtpViewDY;
+; 88         //
+; 89         a = FtpViewDY;
 	ld a, (ftpviewdy)
-; 84         a -= 4;
+; 90         a -= 4;
 	sub 4
-; 85         a -= b;
+; 91         a -= b;
 	sub b
-; 86         b = a;
+; 92         b = a;
 	ld b, a
-; 87         c = 0;
+; 93         c = 0;
 	ld c, 0
-; 88         do {
-l_594:
-; 89             a = d;
+; 94         do {
+l_596:
+; 95             a = d;
 	ld a, d
-; 90             myCharPosX = a;
+; 96             myCharPosX = a;
 	ld (mycharposx), a
-; 91             a = e;
+; 97             a = e;
 	ld a, e
-; 92             a += c;
+; 98             a += c;
 	add c
-; 93             myCharPosY = a;
+; 99             myCharPosY = a;
 	ld (mycharposy), a
-; 94             //
-; 95             a = FtpViewDX;
+; 100             //
+; 101             a = FtpViewDX;
 	ld a, (ftpviewdx)
-; 96             a -= 3;
+; 102             a -= 3;
 	sub 3
-; 97             h = a;
+; 103             h = a;
 	ld h, a
-; 98             do {
-l_597:
-; 99                 printMyCharA(a = ' ');
+; 104             do {
+l_599:
+; 105                 printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
-; 100                 h--;
+; 106                 h--;
 	dec h
-l_598:
-; 101             } while ((a = h) > 0);
+l_600:
+; 107             } while ((a = h) > 0);
 	ld a, h
 	or a
-	jp nz, l_597
-; 102             b--;
+	jp nz, l_599
+; 108             b--;
 	dec b
-; 103             c++;
+; 109             c++;
 	inc c
-l_595:
-; 104         } while ((a = b) > 0);
+l_597:
+; 110         } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_594
+	jp nz, l_596
 	pop hl
 	pop de
 	pop bc
 	ret
-; 105     }
-; 106 }
-; 107 
-; 108 void FtpViewShowFileHL() {
+; 111     }
+; 112 }
+; 113 
+; 114 void FtpViewShowFileHL() {
 ftpviewshowfilehl:
-; 109     push_pop(bc, hl) {
+; 115     push_pop(bc, hl) {
 	push bc
 	push hl
-; 110         if ((a = b) == 0) {
+; 116         if ((a = b) == 0) {
 	ld a, b
 	or a
-	jp nz, l_600
-; 111             FtpViewShowFileName();
-	call ftpviewshowfilename
-	jp l_601
-l_600:
-; 112         } else {
-; 113             FtpViewShowFileName();
-	call ftpviewshowfilename
-; 114             FtpViewShowFileSize();
-	call ftpviewshowfilesize
-; 115             FtpViewShowFileDate();
-	call ftpviewshowfiledate
-l_601:
-	pop hl
-	pop bc
-	ret
-; 116         }
-; 117     }
-; 118 }
-; 119 
-; 120 // A = 1 - Dir
-; 121 void FtpViewShowIsDirA() {
-ftpviewshowisdira:
-; 122     push_pop(bc) {
-	push bc
-; 123         a &= 0x01;
-	and 1
-; 124         b = a;
-	ld b, a
-; 125         a = FtpViewX;
-	ld a, (ftpviewx)
-; 126         a += 1;
-	add 1
-; 127         myCharPosX = a;
-	ld (mycharposx), a
-; 128         if ((a = b) == 1) {
-	ld a, b
-	cp 1
 	jp nz, l_602
-; 129             printMyCharA(a = 0x1F); //0x10
-	ld a, 31
-	call printmychara
+; 117             FtpViewShowFileName();
+	call ftpviewshowfilename
 	jp l_603
 l_602:
-; 130         } else {
-; 131             printMyCharA(a = ' ');
-	ld a, 32
-	call printmychara
+; 118         } else {
+; 119             FtpViewShowFileName();
+	call ftpviewshowfilename
+; 120             FtpViewShowFileSize();
+	call ftpviewshowfilesize
+; 121             FtpViewShowFileDate();
+	call ftpviewshowfiledate
 l_603:
+	pop hl
 	pop bc
 	ret
-; 132         }
-; 133     }
-; 134 }
-; 135 
-; 136 void FtpViewShowFileName() {
-ftpviewshowfilename:
-; 137     // X pos
-; 138     a = FtpViewX;
+; 122         }
+; 123     }
+; 124 }
+; 125 
+; 126 // A = 1 - Dir
+; 127 void FtpViewShowIsDirA() {
+ftpviewshowisdira:
+; 128     push_pop(bc) {
+	push bc
+; 129         a &= 0x01;
+	and 1
+; 130         b = a;
+	ld b, a
+; 131         a = FtpViewX;
 	ld a, (ftpviewx)
-; 139     a += 2;
-	add 2
-; 140     myCharPosX = a;
+; 132         a += 1;
+	add 1
+; 133         myCharPosX = a;
 	ld (mycharposx), a
-; 141     //
-; 142     b = 8;
-	ld b, 8
-; 143     do {
+; 134         if ((a = b) == 1) {
+	ld a, b
+	cp 1
+	jp nz, l_604
+; 135             printMyCharA(a = 0x1F); //0x10
+	ld a, 31
+	call printmychara
+	jp l_605
 l_604:
-; 144         printMyCharA(a = *hl);
+; 136         } else {
+; 137             printMyCharA(a = ' ');
+	ld a, 32
+	call printmychara
+l_605:
+	pop bc
+	ret
+; 138         }
+; 139     }
+; 140 }
+; 141 
+; 142 void FtpViewShowFileName() {
+ftpviewshowfilename:
+; 143     // X pos
+; 144     a = FtpViewX;
+	ld a, (ftpviewx)
+; 145     a += 2;
+	add 2
+; 146     myCharPosX = a;
+	ld (mycharposx), a
+; 147     //
+; 148     b = 8;
+	ld b, 8
+; 149     do {
+l_606:
+; 150         printMyCharA(a = *hl);
 	ld a, (hl)
 	call printmychara
-; 145         hl++;
+; 151         hl++;
 	inc hl
-; 146         b--;
+; 152         b--;
 	dec b
-l_605:
-; 147     } while ((a = b) > 0);
+l_607:
+; 153     } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_604
+	jp nz, l_606
 	ret
-; 148 }
-; 149 
-; 150 void FtpViewShowFileSize() {
+; 154 }
+; 155 
+; 156 void FtpViewShowFileSize() {
 ftpviewshowfilesize:
-; 151     push_pop(bc, de) {
+; 157     push_pop(bc, de) {
 	push bc
 	push de
-; 152         // X pos
-; 153         a = FtpViewX;
+; 158         // X pos
+; 159         a = FtpViewX;
 	ld a, (ftpviewx)
-; 154         a += 11;
+; 160         a += 11;
 	add 11
-; 155         myCharPosX = a;
+; 161         myCharPosX = a;
 	ld (mycharposx), a
-; 156         //
-; 157         a = *hl;
-	ld a, (hl)
-; 158         d = a;
-	ld d, a
-; 159         hl++;
-	inc hl
-; 160         a = *hl;
-	ld a, (hl)
-; 161         e = a;
-	ld e, a
-; 162         hl++;
-	inc hl
+; 162         //
 ; 163         a = *hl;
 	ld a, (hl)
-; 164         hl++;
+; 164         d = a;
+	ld d, a
+; 165         hl++;
 	inc hl
-; 165         a &= 0x01;
+; 166         a = *hl;
+	ld a, (hl)
+; 167         e = a;
+	ld e, a
+; 168         hl++;
+	inc hl
+; 169         a = *hl;
+	ld a, (hl)
+; 170         hl++;
+	inc hl
+; 171         a &= 0x01;
 	and 1
-; 166         if (a == 0x00) {
+; 172         if (a == 0x00) {
 	or a
-	jp nz, l_607
-; 167             push_pop(hl) {
-	push hl
-; 168                 h = 0; // файл для Орион
-	ld h, 0
-; 169                 if ((a = d) == 0xFF) {
-	ld a, d
-	cp 255
 	jp nz, l_609
-; 170                     if ((a = e) == 0xFF) {
-	ld a, e
+; 173             push_pop(hl) {
+	push hl
+; 174                 h = 0; // файл для Орион
+	ld h, 0
+; 175                 if ((a = d) == 0xFF) {
+	ld a, d
 	cp 255
 	jp nz, l_611
-; 171                         h = 1; // Файл слишком большой для Орион
+; 176                     if ((a = e) == 0xFF) {
+	ld a, e
+	cp 255
+	jp nz, l_613
+; 177                         h = 1; // Файл слишком большой для Орион
 	ld h, 1
+l_613:
 l_611:
-l_609:
-; 172                     }
-; 173                 }
-; 174                 if ((a = h) == 0) { // Показываем размер
+; 178                     }
+; 179                 }
+; 180                 if ((a = h) == 0) { // Показываем размер
 	ld a, h
 	or a
-	jp nz, l_613
-; 175                     //hl = 0x0400;
-; 176                     //compareHlDe();
-; 177                     if ((a = d) < 4) { // < 1024 в байтах //flag_c
+	jp nz, l_615
+; 181                     //hl = 0x0400;
+; 182                     //compareHlDe();
+; 183                     if ((a = d) < 4) { // < 1024 в байтах //flag_c
 	ld a, d
 	cp 4
-	jp nc, l_615
-; 178                         push_pop(hl) {
+	jp nc, l_617
+; 184                         push_pop(hl) {
 	push hl
-; 179                             h = d;
+; 185                             h = d;
 	ld h, d
-; 180                             l = e;
+; 186                             l = e;
 	ld l, e
-; 181                             printMyAsDec4095HL();
+; 187                             printMyAsDec4095HL();
 	call printmyasdec4095hl
 	pop hl
-	jp l_616
-l_615:
-; 182                         }
-; 183                     } else { // В Кб
-; 184                         a = d;
+	jp l_618
+l_617:
+; 188                         }
+; 189                     } else { // В Кб
+; 190                         a = d;
 	ld a, d
-; 185                         a &= 0xFC;
+; 191                         a &= 0xFC;
 	and 252
-; 186                         cyclic_rotate_right(a, 2);
+; 192                         cyclic_rotate_right(a, 2);
 	rrca
 	rrca
-; 187                         printMyAsDec99A();
+; 193                         printMyAsDec99A();
 	call printmyasdec99a
-; 188                         printMyCharA(a = 'K');
+; 194                         printMyCharA(a = 'K');
 	ld a, 75
 	call printmychara
-; 189                         printMyCharA(a = 'b');
+; 195                         printMyCharA(a = 'b');
 	ld a, 98
 	call printmychara
-l_616:
-	jp l_614
-l_613:
-; 190                     }
-; 191                 } else { // Файл слишком большой
-; 192                     printMyCharA(a = ' ');
+l_618:
+	jp l_616
+l_615:
+; 196                     }
+; 197                 } else { // Файл слишком большой
+; 198                     printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
-; 193                     printMyCharA(a = 'B');
+; 199                     printMyCharA(a = 'B');
 	ld a, 66
 	call printmychara
-; 194                     printMyCharA(a = 'I');
+; 200                     printMyCharA(a = 'I');
 	ld a, 73
 	call printmychara
-; 195                     printMyCharA(a = 'G');
+; 201                     printMyCharA(a = 'G');
 	ld a, 71
 	call printmychara
-l_614:
+l_616:
 	pop hl
-; 196                 }
-; 197             }
-; 198             FtpViewShowIsDirA(a = 0);
+; 202                 }
+; 203             }
+; 204             FtpViewShowIsDirA(a = 0);
 	ld a, 0
 	call ftpviewshowisdira
-	jp l_608
-l_607:
-; 199         } else {
-; 200             printMyCharA(a = ' ');
+	jp l_610
+l_609:
+; 205         } else {
+; 206             printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
-; 201             printMyCharA(a = ' ');
+; 207             printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
-; 202             printMyCharA(a = ' ');
+; 208             printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
-; 203             printMyCharA(a = ' ');
+; 209             printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
-; 204             FtpViewShowIsDirA(a = 1);
+; 210             FtpViewShowIsDirA(a = 1);
 	ld a, 1
 	call ftpviewshowisdira
-l_608:
+l_610:
 	pop de
 	pop bc
 	ret
-; 205         }
-; 206     }
-; 207 }
-; 208 
-; 209 void FtpViewShowFileDate() {
+; 211         }
+; 212     }
+; 213 }
+; 214 
+; 215 void FtpViewShowFileDate() {
 ftpviewshowfiledate:
-; 210     push_pop(bc, de) {
+; 216     push_pop(bc, de) {
 	push bc
 	push de
-; 211         // X pos
-; 212         a = FtpViewX;
+; 217         // X pos
+; 218         a = FtpViewX;
 	ld a, (ftpviewx)
-; 213         a += 16;
+; 219         a += 16;
 	add 16
-; 214         myCharPosX = a;
+; 220         myCharPosX = a;
 	ld (mycharposx), a
-; 215         //-- GGGG
-; 216         d = *hl;
+; 221         //-- GGGG
+; 222         d = *hl;
 	ld d, (hl)
-; 217         hl++;
+; 223         hl++;
 	inc hl
-; 218         e = *hl;
+; 224         e = *hl;
 	ld e, (hl)
-; 219         hl++;
+; 225         hl++;
 	inc hl
-; 220         push_pop(hl) {
+; 226         push_pop(hl) {
 	push hl
-; 221             h = d;
+; 227             h = d;
 	ld h, d
-; 222             l = e;
+; 228             l = e;
 	ld l, e
-; 223             printMyAsDec4095HL();
+; 229             printMyAsDec4095HL();
 	call printmyasdec4095hl
 	pop hl
-; 224         }
-; 225         //--
-; 226         printMyCharA(a = '-');
+; 230         }
+; 231         //--
+; 232         printMyCharA(a = '-');
 	ld a, 45
 	call printmychara
-; 227         //--
-; 228         printMyAs00Dec99A(a = *hl);
+; 233         //--
+; 234         printMyAs00Dec99A(a = *hl);
 	ld a, (hl)
 	call printmyas00dec99a
-; 229         hl++;
+; 235         hl++;
 	inc hl
-; 230         //--
-; 231         printMyCharA(a = '-');
+; 236         //--
+; 237         printMyCharA(a = '-');
 	ld a, 45
 	call printmychara
-; 232         //--
-; 233         printMyAs00Dec99A(a = *hl);
+; 238         //--
+; 239         printMyAs00Dec99A(a = *hl);
 	ld a, (hl)
 	call printmyas00dec99a
-; 234         hl++;
+; 240         hl++;
 	inc hl
 	pop de
 	pop bc
 	ret
-; 235     }
-; 236 }
-; 237 
-; 238 void FtpViewShowPath() {
+; 241     }
+; 242 }
+; 243 
+; 244 void FtpViewShowPath() {
 ftpviewshowpath:
-; 239     push_pop(bc, de, hl) {
+; 245     push_pop(bc, de, hl) {
 	push bc
 	push de
 	push hl
-; 240         a = FtpViewX;
+; 246         a = FtpViewX;
 	ld a, (ftpviewx)
-; 241         b = a;
+; 247         b = a;
 	ld b, a
-; 242         a = FtpViewDX;
+; 248         a = FtpViewDX;
 	ld a, (ftpviewdx)
-; 243         a += b;
+; 249         a += b;
 	add b
-; 244         a -= 19;
+; 250         a -= 19;
 	sub 19
-; 245         myCharPosX = a;
+; 251         myCharPosX = a;
 	ld (mycharposx), a
-; 246         a = FtpViewY;
+; 252         a = FtpViewY;
 	ld a, (ftpviewy)
-; 247         myCharPosY = a;
+; 253         myCharPosY = a;
 	ld (mycharposy), a
-; 248         de = FtpViewPath;
+; 254         de = FtpViewPath;
 	ld de, ftpviewpath
-; 249         printMyCharA(a = 0xB5);
+; 255         printMyCharA(a = 0xB5);
 	ld a, 181
 	call printmychara
-; 250         b = 16;
+; 256         b = 16;
 	ld b, 16
-; 251         c = 0;
+; 257         c = 0;
 	ld c, 0
-; 252         do {
-l_617:
-; 253             a = *de;
+; 258         do {
+l_619:
+; 259             a = *de;
 	ld a, (de)
-; 254             de++;
+; 260             de++;
 	inc de
-; 255             if (a == 0) {
-	or a
-	jp nz, l_620
-; 256                 c = 1;
-	ld c, 1
-l_620:
-; 257             }
-; 258             h = a;
-	ld h, a
-; 259             if ((a = c) == 0) {
-	ld a, c
+; 261             if (a == 0) {
 	or a
 	jp nz, l_622
-; 260                 printMyCharA(a = h);
+; 262                 c = 1;
+	ld c, 1
+l_622:
+; 263             }
+; 264             h = a;
+	ld h, a
+; 265             if ((a = c) == 0) {
+	ld a, c
+	or a
+	jp nz, l_624
+; 266                 printMyCharA(a = h);
 	ld a, h
 	call printmychara
-	jp l_623
-l_622:
-; 261             } else {
-; 262                 printMyCharA(a = ' ');
+	jp l_625
+l_624:
+; 267             } else {
+; 268                 printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
-l_623:
-; 263             }
-; 264             b--;
+l_625:
+; 269             }
+; 270             b--;
 	dec b
-l_618:
-; 265         } while ((a = b) > 0);
+l_620:
+; 271         } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_617
-; 266         printMyCharA(a = 0xC6);
+	jp nz, l_619
+; 272         printMyCharA(a = 0xC6);
 	ld a, 198
 	call printmychara
 	pop hl
 	pop de
 	pop bc
 	ret
-; 267     }
-; 268 }
-; 269 
-; 270 /// Обновление позиции
-; 271 /// вх[A]
-; 272 /// 0 - без изменений
-; 273 /// 1 - вверх
-; 274 /// 0xFF - вниз
-; 275 void FtpViewFileCurrentPosUpdateA() {
+; 273     }
+; 274 }
+; 275 
+; 276 /// Обновление позиции
+; 277 /// вх[A]
+; 278 /// 0 - без изменений
+; 279 /// 1 - вверх
+; 280 /// 0xFF - вниз
+; 281 void FtpViewFileCurrentPosUpdateA() {
 ftpviewfilecurrentposupdatea:
-; 276     push_pop(bc) {
+; 282     push_pop(bc) {
 	push bc
-; 277         b = a;
+; 283         b = a;
 	ld b, a
-; 278         if (a == 0) {
+; 284         if (a == 0) {
 	or a
-	jp nz, l_624
-; 279             FtpViewShowSelectLineA(a = 1);
+	jp nz, l_626
+; 285             FtpViewShowSelectLineA(a = 1);
 	ld a, 1
 	call ftpviewshowselectlinea
-	jp l_625
-l_624:
-; 280         } else {
-; 281             a = FtpViewFilesListCount;
-	ld a, (ftpviewfileslistcount)
-; 282             c = a;
-	ld c, a
-; 283             FtpViewShowSelectLineA(a = 0);
-	ld a, 0
-	call ftpviewshowselectlinea
-; 284             a = FtpViewFileCurrentPos;
-	ld a, (ftpviewfilecurrentpos)
-; 285             a += b;
-	add b
-; 286             //
-; 287             if (a == 0xFF) {
-	cp 255
-	jp nz, l_626
-; 288                 a = c;
-	ld a, c
-; 289                 a--;
-	dec a
 	jp l_627
 l_626:
-; 290             } else if (a == c) {
-	cp c
-	jp nz, l_628
-; 291                 a = 0;
+; 286         } else {
+; 287             a = FtpViewFilesListCount;
+	ld a, (ftpviewfileslistcount)
+; 288             c = a;
+	ld c, a
+; 289             FtpViewShowSelectLineA(a = 0);
 	ld a, 0
+	call ftpviewshowselectlinea
+; 290             a = FtpViewFileCurrentPos;
+	ld a, (ftpviewfilecurrentpos)
+; 291             a += b;
+	add b
+; 292             //
+; 293             if (a == 0xFF) {
+	cp 255
+	jp nz, l_628
+; 294                 a = c;
+	ld a, c
+; 295                 a--;
+	dec a
+	jp l_629
 l_628:
-l_627:
-; 292             }
-; 293             FtpViewFileCurrentPos = a;
+; 296             } else if (a == c) {
+	cp c
+	jp nz, l_630
+; 297                 a = 0;
+	ld a, 0
+l_630:
+l_629:
+; 298             }
+; 299             FtpViewFileCurrentPos = a;
 	ld (ftpviewfilecurrentpos), a
-; 294             FtpViewShowSelectLineA(a = 1);
+; 300             FtpViewShowSelectLineA(a = 1);
 	ld a, 1
 	call ftpviewshowselectlinea
-l_625:
+l_627:
 	pop bc
 	ret
-; 295         }
-; 296     }
-; 297 }
-; 298 
-; 299 /// Рисование линии прямым или инверсным цветом
-; 300 /// 0 - прямой
-; 301 /// 1 - инверсный
-; 302 void FtpViewShowSelectLineA() {
+; 301         }
+; 302     }
+; 303 }
+; 304 
+; 305 /// Рисование линии прямым или инверсным цветом
+; 306 /// 0 - прямой
+; 307 /// 1 - инверсный
+; 308 void FtpViewShowSelectLineA() {
 ftpviewshowselectlinea:
-; 303     push_pop(bc) {
+; 309     push_pop(bc) {
 	push bc
-; 304         c = a;
+; 310         c = a;
 	ld c, a
-; 305         // HL
-; 306         a = FtpViewFileCurrentPos;
+; 311         // HL
+; 312         a = FtpViewFileCurrentPos;
 	ld a, (ftpviewfilecurrentpos)
-; 307         b = a;
+; 313         b = a;
 	ld b, a
-; 308         a = FtpViewY;
+; 314         a = FtpViewY;
 	ld a, (ftpviewy)
-; 309         a += 2;
+; 315         a += 2;
 	add 2
-; 310         a += b;
+; 316         a += b;
 	add b
-; 311         l = a;
+; 317         l = a;
 	ld l, a
-; 312         a = FtpViewX;
+; 318         a = FtpViewX;
 	ld a, (ftpviewx)
-; 313         a += 1;
+; 319         a += 1;
 	add 1
-; 314         h = a;
+; 320         h = a;
 	ld h, a
-; 315         // DE
-; 316         a = FtpViewDX;
+; 321         // DE
+; 322         a = FtpViewDX;
 	ld a, (ftpviewdx)
-; 317         a -= 2;
+; 323         a -= 2;
 	sub 2
-; 318         d = a;
+; 324         d = a;
 	ld d, a
-; 319         a = 1;
+; 325         a = 1;
 	ld a, 1
-; 320         e = a;
+; 326         e = a;
 	ld e, a
-; 321         // C
-; 322         if ((a = c) == 0) {
+; 327         // C
+; 328         if ((a = c) == 0) {
 	ld a, c
 	or a
-	jp nz, l_630
-; 323             a = FtpViewColor;
+	jp nz, l_632
+; 329             a = FtpViewColor;
 	ld a, (ftpviewcolor)
-	jp l_631
-l_630:
-; 324         } else {
-; 325             a = FtpViewInvColor;
+	jp l_633
+l_632:
+; 330         } else {
+; 331             a = FtpViewInvColor;
 	ld a, (ftpviewinvcolor)
-l_631:
-; 326         }
-; 327         c = a;
+l_633:
+; 332         }
+; 333         c = a;
 	ld c, a
-; 328         // A
-; 329         a = vboxUMP;
+; 334         // A
+; 335         a = vboxUMP;
 	ld a, 4
-; 330         vboxOpenHLDECA();
+; 336         vboxOpenHLDECA();
 	call vboxopenhldeca
 	pop bc
 	ret
-; 331     }
-; 332 }
-; 333 
-; 334 void FtpViewKeyA() {
+; 337     }
+; 338 }
+; 339 
+; 340 void FtpViewKeyA() {
 ftpviewkeya:
-; 335     push_pop(hl) {
+; 341     push_pop(hl) {
 	push hl
-; 336         l = a;
+; 342         l = a;
 	ld l, a
-; 337         if ((a = CurrentViewId) == FtpViewId) {
+; 343         if ((a = CurrentViewId) == FtpViewId) {
 	ld a, (currentviewid)
 	cp 2
-	jp nz, l_632
-; 338             if ((a = l) == 0x09) { //0x09 TAB
+	jp nz, l_634
+; 344             if ((a = l) == 0x09) { //0x09 TAB
 	ld a, l
 	cp 9
-	jp nz, l_634
-; 339                 CurrentViewChangeIdA(a = DiskViewId);
+	jp nz, l_636
+; 345                 CurrentViewChangeIdA(a = DiskViewId);
 	ld a, 1
 	call currentviewchangeida
-	jp l_635
-l_634:
-; 340             } else {
-; 341                 if ((a = l) == 0x1A) { //down
-	ld a, l
-	cp 26
-	jp nz, l_636
-; 342                     FtpViewFileCurrentPosUpdateA(a = 0x01);
-	ld a, 1
-	call ftpviewfilecurrentposupdatea
 	jp l_637
 l_636:
-; 343                 } else if ((a = l) == 0x19) { //up
+; 346             } else {
+; 347                 if ((a = l) == 0x1A) { //down
 	ld a, l
-	cp 25
+	cp 26
 	jp nz, l_638
-; 344                     FtpViewFileCurrentPosUpdateA(a = 0xFF);
-	ld a, 255
+; 348                     FtpViewFileCurrentPosUpdateA(a = 0x01);
+	ld a, 1
 	call ftpviewfilecurrentposupdatea
 	jp l_639
 l_638:
-; 345                 } else if ((a = l) == 0x0D) { //Enter
+; 349                 } else if ((a = l) == 0x19) { //up
+	ld a, l
+	cp 25
+	jp nz, l_640
+; 350                     FtpViewFileCurrentPosUpdateA(a = 0xFF);
+	ld a, 255
+	call ftpviewfilecurrentposupdatea
+	jp l_641
+l_640:
+; 351                 } else if ((a = l) == 0x0D) { //Enter
 	ld a, l
 	cp 13
-	jp nz, l_640
-; 346                     if ((a = FtpViewFileCurrentPos) == 0) { // Dir UP
+	jp nz, l_642
+; 352                     if ((a = FtpViewFileCurrentPos) == 0) { // Dir UP
 	ld a, (ftpviewfilecurrentpos)
 	or a
-	jp nz, l_642
-; 347                         NetFtpChangeDirUp();
-	call netftpchangedirup
-; 348                         FtpViewNetLoadAndUpdate();
-	call ftpviewnetloadandupdate
-	jp l_643
-l_642:
-; 349                     } else {
-; 350                         FtpViewCurrentPosIsDir();
-	call ftpviewcurrentposisdir
-; 351                         if (a == 1) { // Enter Dir
-	cp 1
 	jp nz, l_644
-; 352                             FtpViewShowSelectLineA(a = 0); // TODO надо убрать...
-	ld a, 0
-	call ftpviewshowselectlinea
-; 353                             NetFtpChangeDirIndexA(a = FtpViewFileCurrentPos);
-	ld a, (ftpviewfilecurrentpos)
-	call netftpchangedirindexa
-; 354                             FtpViewNetLoadAndUpdate();
+; 353                         NetFtpChangeDirUp();
+	call netftpchangedirup
+; 354                         FtpViewNetLoadAndUpdate();
 	call ftpviewnetloadandupdate
 	jp l_645
 l_644:
-; 355                         } else { // Load file
-; 356                             FtpViewLoadFile();
-	call ftpviewloadfile
-l_645:
-l_643:
-	jp l_641
-l_640:
-; 357                         }
-; 358                     }
-; 359                 } else if ((a = l) == 'R') { // Обновление папки
-	ld a, l
-	cp 82
+; 355                     } else {
+; 356                         FtpViewCurrentPosIsDir();
+	call ftpviewcurrentposisdir
+; 357                         if (a == 1) { // Enter Dir
+	cp 1
 	jp nz, l_646
-; 360                     FtpViewNetLoadAndUpdate();
+; 358                             FtpViewShowSelectLineA(a = 0); // TODO надо убрать...
+	ld a, 0
+	call ftpviewshowselectlinea
+; 359                             NetFtpChangeDirIndexA(a = FtpViewFileCurrentPos);
+	ld a, (ftpviewfilecurrentpos)
+	call netftpchangedirindexa
+; 360                             FtpViewNetLoadAndUpdate();
 	call ftpviewnetloadandupdate
 	jp l_647
 l_646:
-; 361                 } else if ((a = l) == 'C') { // загрузка файла
-	ld a, l
-	cp 67
-	jp nz, l_648
-; 362                     FtpViewCurrentPosIsDir();
-	call ftpviewcurrentposisdir
-; 363                     if (a == 0) { // Проверим что это файл
-	or a
-	jp nz, l_650
-; 364                         FtpViewLoadFile();
+; 361                         } else { // Load file
+; 362                             FtpViewLoadFile();
 	call ftpviewloadfile
-l_650:
+l_647:
+l_645:
+	jp l_643
+l_642:
+; 363                         }
+; 364                     }
+; 365                 } else if ((a = l) == 'R') { // Обновление папки
+	ld a, l
+	cp 82
+	jp nz, l_648
+; 366                     FtpViewNetLoadAndUpdate();
+	call ftpviewnetloadandupdate
 	jp l_649
 l_648:
-; 365                     }
-; 366                 } else if ((a = l) == 'H') { // Перейти в домашную папку
+; 367                 } else if ((a = l) == 'C') { // загрузка файла
+	ld a, l
+	cp 67
+	jp nz, l_650
+; 368                     FtpViewCurrentPosIsDir();
+	call ftpviewcurrentposisdir
+; 369                     if (a == 0) { // Проверим что это файл
+	or a
+	jp nz, l_652
+; 370                         FtpViewLoadFile();
+	call ftpviewloadfile
+l_652:
+	jp l_651
+l_650:
+; 371                     }
+; 372                 } else if ((a = l) == 'H') { // Перейти в домашную папку
 	ld a, l
 	cp 72
-	jp nz, l_652
-; 367                     ThreadsNetFtpGoToHomeDir();
-	call threadsnetftpgotohomedir
-	jp l_653
-l_652:
-; 368                 } else if ((a = l) == 'E') { // Удалить файл
-	ld a, l
-	cp 69
 	jp nz, l_654
-; 369                     if ((a = FtpViewFileCurrentPos) > 0) {
-	ld a, (ftpviewfilecurrentpos)
-	or a
-	jp z, l_656
-; 370                         AllertYesNoViewShowHL(hl = StringLocaleEraseFile);
-	ld hl, stringlocaleerasefile
-	call allertyesnoviewshowhl
-; 371                         if (a == 1) {
-	cp 1
-	jp nz, l_658
-; 372                             ThreadsNetFtpDeleteFileA(a = FtpViewFileCurrentPos);
-	ld a, (ftpviewfilecurrentpos)
-	call threadsnetftpdeletefilea
-l_658:
-l_656:
+; 373                     ThreadsNetFtpGoToHomeDir();
+	call threadsnetftpgotohomedir
 	jp l_655
 l_654:
-; 373                         }
-; 374                     }
-; 375                 } else if ((a = l) == 'D') { // Создание новой папки
+; 374                 } else if ((a = l) == 'E') { // Удалить файл
+	ld a, l
+	cp 69
+	jp nz, l_656
+; 375                     if ((a = FtpViewFileCurrentPos) > 0) {
+	ld a, (ftpviewfilecurrentpos)
+	or a
+	jp z, l_658
+; 376                         AllertYesNoViewShowHL(hl = StringLocaleEraseFile);
+	ld hl, stringlocaleerasefile
+	call allertyesnoviewshowhl
+; 377                         if (a == 1) {
+	cp 1
+	jp nz, l_660
+; 378                             ThreadsNetFtpDeleteFileA(a = FtpViewFileCurrentPos);
+	ld a, (ftpviewfilecurrentpos)
+	call threadsnetftpdeletefilea
+l_660:
+l_658:
+	jp l_657
+l_656:
+; 379                         }
+; 380                     }
+; 381                 } else if ((a = l) == 'D') { // Создание новой папки
 	ld a, l
 	cp 68
-	jp nz, l_660
-; 376                     FtpMakeDirectoryShow();
+	jp nz, l_662
+; 382                     FtpMakeDirectoryShow();
 	call ftpmakedirectoryshow
-; 377                     NetGetAllStatus();
-	call netgetallstatus
-; 378                     FtpViewNetLoadAndUpdate();
-	call ftpviewnetloadandupdate
-l_660:
+l_662:
+l_657:
 l_655:
-l_653:
+l_651:
 l_649:
-l_647:
+l_643:
 l_641:
 l_639:
 l_637:
-l_635:
-l_632:
+l_634:
 	pop hl
 	ret
-; 379                 }
-; 380             }
-; 381         }
-; 382     }
-; 383 }
-; 384 
-; 385 void FtpViewLoadFile() {
+; 383                 }
+; 384             }
+; 385         }
+; 386     }
+; 387 }
+; 388 
+; 389 void FtpViewLoadFile() {
 ftpviewloadfile:
-; 386     LoadViewShowHL(hl = LoadViewLoadTitle);
+; 390     LoadViewShowHL(hl = LoadViewLoadTitle);
 	ld hl, loadviewloadtitle
 	call loadviewshowhl
-; 387     #ifdef _IS_SIMULATOR
-; 388         push_pop(bc) {
-; 389             b = 0;
-; 390             do {
-; 391                 LoadViewShowProgressA(a = b);
-; 392                 c = 1;
-; 393                 do {
-; 394                     delay50ms();
-; 395                     c--;
-; 396                 } while ((a = c) > 0);
-; 397                 b++;
-; 398             } while ((a = b) < 40);
-; 399             LoadViewClose();
-; 400             DiskViewUpdateDateAndUI();
-; 401         }
-; 402     #else
-; 403         FtpViewNeedLoad();
+; 391     #ifdef _IS_SIMULATOR
+; 392         push_pop(bc) {
+; 393             b = 0;
+; 394             do {
+; 395                 LoadViewShowProgressA(a = b);
+; 396                 c = 1;
+; 397                 do {
+; 398                     delay50ms();
+; 399                     c--;
+; 400                 } while ((a = c) > 0);
+; 401                 b++;
+; 402             } while ((a = b) < 40);
+; 403             LoadViewClose();
+; 404             DiskViewUpdateDateAndUI();
+; 405         }
+; 406     #else
+; 407         FtpViewNeedLoad();
 	call ftpviewneedload
-; 404         LoadViewClose();
+; 408         LoadViewClose();
 	call loadviewclose
-; 405         DiskViewUpdateDateAndUI();
+; 409         DiskViewUpdateDateAndUI();
 	jp diskviewupdatedateandui
-; 406     #endif
-; 407 }
-; 408 
-; 409 void FtpViewNeedLoad() {
+; 410     #endif
+; 411 }
+; 412 
+; 413 void FtpViewNeedLoad() {
 ftpviewneedload:
-; 410     NetFtpLoadFileA(a = FtpViewFileCurrentPos);
+; 414     NetFtpLoadFileA(a = FtpViewFileCurrentPos);
 	ld a, (ftpviewfilecurrentpos)
 	call netftploadfilea
-; 411     
-; 412     // Считываем текущий диск и устанавливаем его
-; 413     a = DiskViewDiskNum;
-	ld a, (diskviewdisknum)
-; 414     ordos_wnd();
-	call ordos_wnd
 ; 415     
-; 416     // Получаем адрес куда надо начинать писать данные
-; 417     ordos_mxdsk();
-	call ordos_mxdsk
-; 418     DiskViewStartNewFile = hl;
-	ld (diskviewstartnewfile), hl
+; 416     // Считываем текущий диск и устанавливаем его
+; 417     a = DiskViewDiskNum;
+	ld a, (diskviewdisknum)
+; 418     ordos_wnd();
+	call ordos_wnd
 ; 419     
-; 420     // Вызываем закачку
-; 421     NetFtpLoadFileNext();
+; 420     // Получаем адрес куда надо начинать писать данные
+; 421     ordos_mxdsk();
+	call ordos_mxdsk
+; 422     DiskViewStartNewFile = hl;
+	ld (diskviewstartnewfile), hl
+; 423     
+; 424     // Вызываем закачку
+; 425     NetFtpLoadFileNext();
 	jp netftploadfilenext
-; 422 }
-; 423 
-; 424 void FtpViewNetLoadAndUpdate() {
+; 426 }
+; 427 
+; 428 void FtpViewNetLoadAndUpdate() {
 ftpviewnetloadandupdate:
-; 425     FtpViewShowSelectLineA(a = 0);
+; 429     FtpViewShowSelectLineA(a = 0);
 	ld a, 0
 	call ftpviewshowselectlinea
-; 426     NetFtpGetCurrentPath();
+; 430     NetFtpGetCurrentPath();
 	call netftpgetcurrentpath
-; 427     if ((a = FtpStateViewStatus) == 1) {
+; 431     if ((a = FtpStateViewStatus) == 1) {
 	ld a, (ftpstateviewstatus)
 	cp 1
-	jp nz, l_662
-; 428         NetFtpUpdateList();
+	jp nz, l_664
+; 432         NetFtpUpdateList();
 	call netftpupdatelist
-; 429         NetFtpListFiles();
+; 433         NetFtpListFiles();
 	call netftplistfiles
-l_662:
-; 430     }
-; 431     a = 0;
+l_664:
+; 434     }
+; 435     a = 0;
 	ld a, 0
-; 432     FtpViewFileCurrentPos = a;
+; 436     FtpViewFileCurrentPos = a;
 	ld (ftpviewfilecurrentpos), a
-; 433     FtpViewShowFileList();
+; 437     FtpViewShowFileList();
 	call ftpviewshowfilelist
-; 434     FtpViewShowPath();
+; 438     FtpViewShowPath();
 	call ftpviewshowpath
-; 435     // Показываем курсор, если выбран FTP
-; 436     if ((a = CurrentViewId) == FtpViewId) {
+; 439     // Показываем курсор, если выбран FTP
+; 440     if ((a = CurrentViewId) == FtpViewId) {
 	ld a, (currentviewid)
 	cp 2
-	jp nz, l_664
-; 437         FtpViewShowSelectLineA(a = 1);
+	jp nz, l_666
+; 441         FtpViewShowSelectLineA(a = 1);
 	ld a, 1
 	call ftpviewshowselectlinea
-l_664:
+l_666:
 	ret
-; 438     }
-; 439 }
-; 440 
-; 441 void FtpViewCurrentPosIsDir() {
+; 442     }
+; 443 }
+; 444 
+; 445 void FtpViewCurrentPosIsDir() {
 ftpviewcurrentposisdir:
-; 442     push_pop(hl, bc) {
+; 446     push_pop(hl, bc) {
 	push hl
 	push bc
-; 443         hl = FtpViewFilesList;
+; 447         hl = FtpViewFilesList;
 	ld hl, ftpviewfileslist
-; 444         //--
-; 445         a = FtpViewFileCurrentPos;
+; 448         //--
+; 449         a = FtpViewFileCurrentPos;
 	ld a, (ftpviewfilecurrentpos)
-; 446         a &= 0x3F;
+; 450         a &= 0x3F;
 	and 63
-; 447         b = 0;
+; 451         b = 0;
 	ld b, 0
-; 448         carry_rotate_left(a, 4);
+; 452         carry_rotate_left(a, 4);
 	rla
 	rla
 	rla
 	rla
-; 449         if (flag_c) { // Если переполняние младшего разряда, инкремент старшего
-	jp nc, l_666
-; 450             b++;
+; 453         if (flag_c) { // Если переполняние младшего разряда, инкремент старшего
+	jp nc, l_668
+; 454             b++;
 	inc b
-l_666:
-; 451         }
-; 452         c = a;
+l_668:
+; 455         }
+; 456         c = a;
 	ld c, a
-; 453         //-- Смещаем на позицию файла
-; 454         hl += bc;
+; 457         //-- Смещаем на позицию файла
+; 458         hl += bc;
 	add hl, bc
-; 455         //-- Смещаем на признак директории
-; 456         bc = 10;
+; 459         //-- Смещаем на признак директории
+; 460         bc = 10;
 	ld bc, 10
-; 457         hl += bc;
+; 461         hl += bc;
 	add hl, bc
-; 458         //--
-; 459         a = *hl;
+; 462         //--
+; 463         a = *hl;
 	ld a, (hl)
-; 460         a &= 0x01;
+; 464         a &= 0x01;
 	and 1
 	pop bc
 	pop hl
 	ret
-; 461     }
-; 462 }
-; 463 
-; 464 void FtpViewEmptyList() {
+; 465     }
+; 466 }
+; 467 
+; 468 void FtpViewEmptyList() {
 ftpviewemptylist:
-; 465     push_pop(hl) {
+; 469     push_pop(hl) {
 	push hl
-; 466         a = 1;
+; 470         a = 1;
 	ld a, 1
-; 467         FtpViewFilesListCount = a;
+; 471         FtpViewFilesListCount = a;
 	ld (ftpviewfileslistcount), a
-; 468         a = 0;
+; 472         a = 0;
 	ld a, 0
-; 469         FtpViewFileCurrentPos = a;
+; 473         FtpViewFileCurrentPos = a;
 	ld (ftpviewfilecurrentpos), a
-; 470         hl = FtpViewFilesList;
+; 474         hl = FtpViewFilesList;
 	ld hl, ftpviewfileslist
-; 471         //--
-; 472         *hl = '.';
+; 475         //--
+; 476         *hl = '.';
 	ld (hl), 46
-; 473         hl++;
+; 477         hl++;
 	inc hl
-; 474         *hl = '.';
+; 478         *hl = '.';
 	ld (hl), 46
-; 475         hl++;
+; 479         hl++;
 	inc hl
-; 476         //--
-; 477         *hl = ' ';
-	ld (hl), 32
-; 478         hl++;
-	inc hl
-; 479         *hl = ' ';
-	ld (hl), 32
-; 480         hl++;
-	inc hl
+; 480         //--
 ; 481         *hl = ' ';
 	ld (hl), 32
 ; 482         hl++;
@@ -9578,56 +9578,64 @@ ftpviewemptylist:
 	ld (hl), 32
 ; 488         hl++;
 	inc hl
+; 489         *hl = ' ';
+	ld (hl), 32
+; 490         hl++;
+	inc hl
+; 491         *hl = ' ';
+	ld (hl), 32
+; 492         hl++;
+	inc hl
 	pop hl
-; 489     }
-; 490     //--
-; 491     FtpViewListUpdateUI();
-; 492 }
-; 493 
-; 494 void FtpViewListUpdateUI() {
+; 493     }
+; 494     //--
+; 495     FtpViewListUpdateUI();
+; 496 }
+; 497 
+; 498 void FtpViewListUpdateUI() {
 ftpviewlistupdateui:
-; 495     FtpViewShowSelectLineA(a = 0);
+; 499     FtpViewShowSelectLineA(a = 0);
 	ld a, 0
 	call ftpviewshowselectlinea
-; 496     a = 0;
+; 500     a = 0;
 	ld a, 0
-; 497     FtpViewFileCurrentPos = a;
+; 501     FtpViewFileCurrentPos = a;
 	ld (ftpviewfilecurrentpos), a
-; 498     FtpViewShowPath();
+; 502     FtpViewShowPath();
 	call ftpviewshowpath
-; 499     FtpViewShowFileList();
+; 503     FtpViewShowFileList();
 	call ftpviewshowfilelist
-; 500     if ((a = CurrentViewId) == FtpViewId) {
+; 504     if ((a = CurrentViewId) == FtpViewId) {
 	ld a, (currentviewid)
 	cp 2
-	jp nz, l_668
-; 501         FtpViewShowSelectLineA(a = 1);
+	jp nz, l_670
+; 505         FtpViewShowSelectLineA(a = 1);
 	ld a, 1
 	call ftpviewshowselectlinea
-l_668:
+l_670:
 	ret
-; 502     }
-; 503 }
-; 504 
-; 505 uint8_t FtpViewX = 0;
+; 506     }
+; 507 }
+; 508 
+; 509 uint8_t FtpViewX = 0;
 ftpviewx:
 	db 0
-; 506 uint8_t FtpViewY = 4;
+; 510 uint8_t FtpViewY = 4;
 ftpviewy:
 	db 4
-; 507 uint8_t FtpViewDX = 28;
+; 511 uint8_t FtpViewDX = 28;
 ftpviewdx:
 	db 28
-; 508 uint8_t FtpViewDY = 25;
+; 512 uint8_t FtpViewDY = 25;
 ftpviewdy:
 	db 25
-; 509 uint8_t FtpViewColor = 0x1F;
+; 513 uint8_t FtpViewColor = 0x1F;
 ftpviewcolor:
 	db 31
-; 510 uint8_t FtpViewInvColor = 0xF1;
+; 514 uint8_t FtpViewInvColor = 0xF1;
 ftpviewinvcolor:
 	db 241
-; 512 uint8_t FtpViewTitle[] = {0xB5, 'F', 'T', 'P', 0xC6, '\0'}; //"\x12" + "FTP";
+; 516 uint8_t FtpViewTitle[] = {0xB5, 'F', 'T', 'P', 0xC6, '\0'}; //"\x12" + "FTP";
 ftpviewtitle:
 	db 181
 	db 70
@@ -9635,17 +9643,17 @@ ftpviewtitle:
 	db 80
 	db 198
 	db 0
-; 513 uint8_t FtpViewPath[16] = "/";
+; 517 uint8_t FtpViewPath[16] = "/";
 ftpviewpath:
 	db 47
 	ds 15
-; 515 uint8_t FtpViewFileCurrentPos = 0;
+; 519 uint8_t FtpViewFileCurrentPos = 0;
 ftpviewfilecurrentpos:
 	db 0
-; 529 uint8_t FtpViewFilesListCount = 1;
+; 533 uint8_t FtpViewFilesListCount = 1;
 ftpviewfileslistcount:
 	db 1
-; 530 uint8_t FtpViewFilesList[16 * 23] = {
+; 534 uint8_t FtpViewFilesList[16 * 23] = {
 ftpviewfileslist:
 	db 46
 	db 46
@@ -9730,7 +9738,7 @@ loadviewshowtitlehl:
 ; 42             b = 0;
 	ld b, 0
 ; 43             do {
-l_670:
+l_672:
 ; 44                 a = *hl;
 	ld a, (hl)
 ; 45                 c = a;
@@ -9742,18 +9750,18 @@ l_670:
 ; 48                 if ((a = LoadViewDX) < b) {
 	ld a, (loadviewdx)
 	cp b
-	jp nc, l_673
+	jp nc, l_675
 ; 49                     a = 0;
 	ld a, 0
 ; 50                     c = a;
 	ld c, a
+l_675:
 l_673:
-l_671:
 ; 51                 }
 ; 52             } while ((a = c) > 0);
 	ld a, c
 	or a
-	jp nz, l_670
+	jp nz, l_672
 	pop hl
 ; 53         }
 ; 54         a = LoadViewDX;
@@ -9800,7 +9808,7 @@ loadviewshowprogressa:
 ; 76         if ((a = LoadViewShowProgressOld) != c) {
 	ld a, (loadviewshowprogressold)
 	cp c
-	jp z, l_675
+	jp z, l_677
 ; 77             a = c;
 	ld a, c
 ; 78             LoadViewShowProgressOld = a;
@@ -9822,30 +9830,30 @@ loadviewshowprogressa:
 ; 87             b = 0;
 	ld b, 0
 ; 88             do {
-l_677:
+l_679:
 ; 89                 if ((a = b) < c) {
 	ld a, b
 	cp c
-	jp nc, l_680
+	jp nc, l_682
 ; 90                     printMyCharA(a = 0xDB);
 	ld a, 219
 	call printmychara
-	jp l_681
-l_680:
+	jp l_683
+l_682:
 ; 91                 } else {
 ; 92                     printMyCharA(a = 0xB0); //0xB0 0xB1 0xB2
 	ld a, 176
 	call printmychara
-l_681:
+l_683:
 ; 93                 }
 ; 94                 b++;
 	inc b
-l_678:
+l_680:
 ; 95             } while ((a = b) < 40);
 	ld a, b
 	cp 40
-	jp c, l_677
-l_675:
+	jp c, l_679
+l_677:
 	pop bc
 	ret
 ; 96         }
@@ -9983,27 +9991,27 @@ wifinetworksviewfixdata:
 ; 55         b = 16;
 	ld b, 16
 ; 56         do {
-l_682:
+l_684:
 ; 57             a = *hl;
 	ld a, (hl)
 ; 58             if (a == 0) {
 	or a
-	jp nz, l_685
+	jp nz, l_687
 ; 59                 a = '-';
 	ld a, 45
 ; 60                 *hl = a;
 	ld (hl), a
-l_685:
+l_687:
 ; 61             }
 ; 62             hl += de;
 	add hl, de
 ; 63             b--;
 	dec b
-l_683:
+l_685:
 ; 64         } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_682
+	jp nz, l_684
 	pop de
 	pop bc
 	pop hl
@@ -10053,17 +10061,17 @@ wifinetworksviewshowtitle:
 ; 87         b = a;
 	ld b, a
 ; 88         do {
-l_687:
+l_689:
 ; 89             printMyCharA(a = 0x5F);
 	ld a, 95
 	call printmychara
 ; 90             b--;
 	dec b
-l_688:
+l_690:
 ; 91         } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_687
+	jp nz, l_689
 	pop de
 	pop bc
 	pop hl
@@ -10088,23 +10096,23 @@ wifinetworksviewkeya:
 ; 103         if ((a = c) == 0) {
 	ld a, c
 	or a
-	jp nz, l_690
+	jp nz, l_692
 ; 104             if ((a = CurrentViewId) == WiFiNetworksViewId) {
 	ld a, (currentviewid)
 	cp 7
-	jp nz, l_692
+	jp nz, l_694
 ; 105                 if ((a = l) == 0x1B) { //ESC выход
 	ld a, l
 	cp 27
-	jp nz, l_694
+	jp nz, l_696
 ; 106                     WiFiNetworksViewClose();
 	call wifinetworksviewclose
-	jp l_695
-l_694:
+	jp l_697
+l_696:
 ; 107                 } else if ((a = l) == 0x0D) { // Выбор
 	ld a, l
 	cp 13
-	jp nz, l_696
+	jp nz, l_698
 ; 108                     WiFiNetworksViewClose();
 	call wifinetworksviewclose
 ; 109                     //--
@@ -10118,31 +10126,31 @@ l_694:
 ; 115                     #endif
 ; 116                     WiFiSettingsViewShowValue();
 	call wifisettingsviewshowvalue
-	jp l_697
-l_696:
+	jp l_699
+l_698:
 ; 117                     //--
 ; 118                 } else if ((a = l) == 0x1A) { //down
 	ld a, l
 	cp 26
-	jp nz, l_698
+	jp nz, l_700
 ; 119                     WiFiNetworksViewPosUpdateA(a = 0x01);
 	ld a, 1
 	call wifinetworksviewposupdatea
-	jp l_699
-l_698:
+	jp l_701
+l_700:
 ; 120                 } else if ((a = l) == 0x19) { //up
 	ld a, l
 	cp 25
-	jp nz, l_700
+	jp nz, l_702
 ; 121                     WiFiNetworksViewPosUpdateA(a = 0xFF);
 	ld a, 255
 	call wifinetworksviewposupdatea
-l_700:
+l_702:
+l_701:
 l_699:
 l_697:
-l_695:
+l_694:
 l_692:
-l_690:
 	pop hl
 	ret
 ; 122                 }
@@ -10182,17 +10190,17 @@ wifinetworksviewcopyssidforsimul:
 ; 140         c = 0; // is 0 exist
 	ld c, 0
 ; 141         do {
-l_702:
+l_704:
 ; 142             a = *hl;
 	ld a, (hl)
 ; 143             *de = a;
 	ld (de), a
 ; 144             if (a == 0) {
 	or a
-	jp nz, l_705
+	jp nz, l_707
 ; 145                 c = 1;
 	ld c, 1
-l_705:
+l_707:
 ; 146             }
 ; 147             hl++;
 	inc hl
@@ -10200,23 +10208,23 @@ l_705:
 	inc de
 ; 149             b--;
 	dec b
-l_703:
+l_705:
 ; 150         } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_702
+	jp nz, l_704
 ; 151         //-- if stop byte (0)
 ; 152         if ((a = c) == 0) {
 	ld a, c
 	or a
-	jp nz, l_707
+	jp nz, l_709
 ; 153             de--;
 	dec de
 ; 154             a = 0;
 	ld a, 0
 ; 155             *de = a;
 	ld (de), a
-l_707:
+l_709:
 	pop de
 	pop bc
 	pop hl
@@ -10235,18 +10243,18 @@ wifinetworksviewcleardata:
 ; 163         b = 0xFF;
 	ld b, 255
 ; 164         do {
-l_709:
+l_711:
 ; 165             *hl = 0;
 	ld (hl), 0
 ; 166             hl++;
 	inc hl
 ; 167             b--;
 	dec b
-l_710:
+l_712:
 ; 168         } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_709
+	jp nz, l_711
 	pop bc
 	pop hl
 	ret
@@ -10278,7 +10286,7 @@ wifinetworksviewshowlist:
 	ld e, a
 ; 183         //
 ; 184         do {
-l_712:
+l_714:
 ; 185             //--
 ; 186             a = e;
 	ld a, e
@@ -10294,7 +10302,7 @@ l_712:
 ; 192             b = 16;
 	ld b, 16
 ; 193             do {
-l_715:
+l_717:
 ; 194                 printMyCharA(a = *hl);
 	ld a, (hl)
 	call printmychara
@@ -10302,18 +10310,18 @@ l_715:
 	inc hl
 ; 196                 b--;
 	dec b
-l_716:
+l_718:
 ; 197             } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_715
+	jp nz, l_717
 ; 198             c++;
 	inc c
-l_713:
+l_715:
 ; 199         } while ((a = WiFiNetworksViewSSIDCount) >= c);
 	ld a, (wifinetworksviewssidcount)
 	cp c
-	jp nc, l_712
+	jp nc, l_714
 ; 200         // Crean
 ; 201         a = WiFiNetworksViewSSIDCount;
 	ld a, (wifinetworksviewssidcount)
@@ -10325,7 +10333,7 @@ l_713:
 	sub c
 ; 205         if (a > 0) { // До добавляем пустые строки
 	or a
-	jp z, l_718
+	jp z, l_720
 ; 206             b = a;
 	ld b, a
 ; 207             //--
@@ -10339,7 +10347,7 @@ l_713:
 ; 212             h = 0;
 	ld h, 0
 ; 213             do {
-l_720:
+l_722:
 ; 214                 //--
 ; 215                 a = e;
 	ld a, e
@@ -10355,27 +10363,27 @@ l_720:
 ; 221                 c = 16;
 	ld c, 16
 ; 222                 do {
-l_723:
+l_725:
 ; 223                     printMyCharA(a = ' ');
 	ld a, 32
 	call printmychara
 ; 224                     c--;
 	dec c
-l_724:
+l_726:
 ; 225                 } while ((a = c) > 0);
 	ld a, c
 	or a
-	jp nz, l_723
+	jp nz, l_725
 ; 226                 b--;
 	dec b
 ; 227                 h++;
 	inc h
-l_721:
+l_723:
 ; 228             } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_720
-l_718:
+	jp nz, l_722
+l_720:
 	pop de
 	pop bc
 	pop hl
@@ -10397,12 +10405,12 @@ wifinetworksviewposupdatea:
 	ld b, a
 ; 241         if (a == 0) {
 	or a
-	jp nz, l_726
+	jp nz, l_728
 ; 242             WiFiNetworksViewSelectLineA(a = 1);
 	ld a, 1
 	call wifinetworksviewselectlinea
-	jp l_727
-l_726:
+	jp l_729
+l_728:
 ; 243         } else {
 ; 244             a = WiFiNetworksViewSSIDCount;
 	ld a, (wifinetworksviewssidcount)
@@ -10414,13 +10422,13 @@ l_726:
 ; 247             if ((a = c) == 0) { // нет ни одной записи
 	ld a, c
 	or a
-	jp nz, l_728
+	jp nz, l_730
 ; 248                 a = 0;
 	ld a, 0
 ; 249                 WiFiNetworksViewSelectPos = a;
 	ld (wifinetworksviewselectpos), a
-	jp l_729
-l_728:
+	jp l_731
+l_730:
 ; 250             } else { // если есть хоть одна запись
 ; 251                 a = WiFiNetworksViewSelectPos;
 	ld a, (wifinetworksviewselectpos)
@@ -10429,30 +10437,30 @@ l_728:
 ; 253                 //-- FIX
 ; 254                 if (a == 0xFF) {
 	cp 255
-	jp nz, l_730
+	jp nz, l_732
 ; 255                     a = c;
 	ld a, c
 ; 256                     a--;
 	dec a
-	jp l_731
-l_730:
+	jp l_733
+l_732:
 ; 257                 } else if (a == c) {
 	cp c
-	jp nz, l_732
+	jp nz, l_734
 ; 258                     a = 0;
 	ld a, 0
-l_732:
-l_731:
+l_734:
+l_733:
 ; 259                 }
 ; 260                 //--
 ; 261                 WiFiNetworksViewSelectPos = a;
 	ld (wifinetworksviewselectpos), a
-l_729:
+l_731:
 ; 262             }
 ; 263             WiFiNetworksViewSelectLineA(a = 1);
 	ld a, 1
 	call wifinetworksviewselectlinea
-l_727:
+l_729:
 	pop bc
 	ret
 ; 264         }
@@ -10503,15 +10511,15 @@ wifinetworksviewselectlinea:
 ; 291         if ((a = c) == 0) {
 	ld a, c
 	or a
-	jp nz, l_734
+	jp nz, l_736
 ; 292             a = WiFiNetworksViewColor;
 	ld a, (wifinetworksviewcolor)
-	jp l_735
-l_734:
+	jp l_737
+l_736:
 ; 293         } else {
 ; 294             a = WiFiNetworksViewInvColor;
 	ld a, (wifinetworksviewinvcolor)
-l_735:
+l_737:
 ; 295         }
 ; 296         c = a;
 	ld c, a
@@ -10957,7 +10965,7 @@ allertyesnoviewloopkey:
 ; 64         b = 0;
 	ld b, 0
 ; 65         do {
-l_736:
+l_738:
 ; 66             getKeyboardCharA();
 	call getkeyboardchara
 ; 67             c = a;
@@ -10965,77 +10973,77 @@ l_736:
 ; 68             if ((a = c) == 0x1B) { //ESC выход
 	ld a, c
 	cp 27
-	jp nz, l_739
+	jp nz, l_741
 ; 69                 b = 1;
 	ld b, 1
-	jp l_740
-l_739:
+	jp l_742
+l_741:
 ; 70             } else if ((a = c) == 0x0D) { //Enter
 	ld a, c
 	cp 13
-	jp nz, l_741
+	jp nz, l_743
 ; 71                 a = AllertYesNoViewPos;
 	ld a, (allertyesnoviewpos)
 ; 72                 AllertYesNoViewReturnValue = a;
 	ld (allertyesnoviewreturnvalue), a
 ; 73                 b = 1;
 	ld b, 1
-	jp l_742
-l_741:
+	jp l_744
+l_743:
 ; 74             } else if ((a = c) == 0x18) { // Вправл
 	ld a, c
 	cp 24
-	jp nz, l_743
+	jp nz, l_745
 ; 75                 AllertYesNoViewPosNext();
 	call allertyesnoviewposnext
 ; 76                 AllertYesNoViewPosUpdate();
 	call allertyesnoviewposupdate
-	jp l_744
-l_743:
+	jp l_746
+l_745:
 ; 77             } else if ((a = c) == 0x08) { // Влево
 	ld a, c
 	cp 8
-	jp nz, l_745
+	jp nz, l_747
 ; 78                 AllertYesNoViewPosNext();
 	call allertyesnoviewposnext
 ; 79                 AllertYesNoViewPosUpdate();
 	call allertyesnoviewposupdate
-	jp l_746
-l_745:
+	jp l_748
+l_747:
 ; 80             } else if ((a = c) == 'Y') {
 	ld a, c
 	cp 89
-	jp nz, l_747
+	jp nz, l_749
 ; 81                 a = 1;
 	ld a, 1
 ; 82                 AllertYesNoViewReturnValue = a;
 	ld (allertyesnoviewreturnvalue), a
 ; 83                 b = 1;
 	ld b, 1
-	jp l_748
-l_747:
+	jp l_750
+l_749:
 ; 84             } else if ((a = c) == 'N') {
 	ld a, c
 	cp 78
-	jp nz, l_749
+	jp nz, l_751
 ; 85                 a = 0;
 	ld a, 0
 ; 86                 AllertYesNoViewReturnValue = a;
 	ld (allertyesnoviewreturnvalue), a
 ; 87                 b = 1;
 	ld b, 1
-l_749:
+l_751:
+l_750:
 l_748:
 l_746:
 l_744:
 l_742:
-l_740:
-l_737:
+l_739:
 ; 88             }
 ; 89         } while ((a = b) == 0);
 	ld a, b
 	or a
-	jp z, l_736
+	jp z, l_738
 	pop bc
 ; 90     }
 ; 91     AllertYesNoViewClose();
@@ -11047,19 +11055,19 @@ allertyesnoviewposnext:
 ; 95     if ((a = AllertYesNoViewPos) == 0) {
 	ld a, (allertyesnoviewpos)
 	or a
-	jp nz, l_751
+	jp nz, l_753
 ; 96         a = 1;
 	ld a, 1
 ; 97         AllertYesNoViewPos = a;
 	ld (allertyesnoviewpos), a
-	jp l_752
-l_751:
+	jp l_754
+l_753:
 ; 98     } else {
 ; 99         a = 0;
 	ld a, 0
 ; 100         AllertYesNoViewPos = a;
 	ld (allertyesnoviewpos), a
-l_752:
+l_754:
 	ret
 ; 101     }
 ; 102 }
@@ -11069,15 +11077,15 @@ allertyesnoviewposupdate:
 ; 105     if ((a = AllertYesNoViewPos) == 0) {
 	ld a, (allertyesnoviewpos)
 	or a
-	jp nz, l_753
+	jp nz, l_755
 ; 106         ButtonShadowViewSelectA(a = 1);
 	ld a, 1
 	call buttonshadowviewselecta
 ; 107         ButtonShadowView2SelectA(a = 0);
 	ld a, 0
 	call buttonshadowview2selecta
-	jp l_754
-l_753:
+	jp l_756
+l_755:
 ; 108     } else {
 ; 109         ButtonShadowViewSelectA(a = 0);
 	ld a, 0
@@ -11085,7 +11093,7 @@ l_753:
 ; 110         ButtonShadowView2SelectA(a = 1);
 	ld a, 1
 	call buttonshadowview2selecta
-l_754:
+l_756:
 	ret
 ; 111     }
 ; 112 }
@@ -11116,7 +11124,7 @@ allertyesnoviewshowtitle:
 ; 125         c = a;
 	ld c, a
 ; 126         do {
-l_755:
+l_757:
 ; 127             a = *hl;
 	ld a, (hl)
 ; 128             d = a;
@@ -11125,24 +11133,24 @@ l_755:
 	inc hl
 ; 130             if (a > 0) {
 	or a
-	jp z, l_758
+	jp z, l_760
 ; 131                 b++;
 	inc b
-l_758:
+l_760:
 ; 132             }
 ; 133             if ((a = b) >= c) {
 	ld a, b
 	cp c
-	jp c, l_760
+	jp c, l_762
 ; 134                 d = 0;
 	ld d, 0
-l_760:
-l_756:
+l_762:
+l_758:
 ; 135             }
 ; 136         } while ((a = d) > 0);
 	ld a, d
 	or a
-	jp nz, l_755
+	jp nz, l_757
 ; 137         a = AllertYesNoViewDX;
 	ld a, (allertyesnoviewdx)
 ; 138         a -= b;
@@ -11283,15 +11291,15 @@ buttonshadowview2selecta:
 ; 60         if ((a = b) == 0) {
 	ld a, b
 	or a
-	jp nz, l_762
+	jp nz, l_764
 ; 61             a = ButtonShadowView2Color;
 	ld a, (buttonshadowview2color)
-	jp l_763
-l_762:
+	jp l_765
+l_764:
 ; 62         } else {
 ; 63             a = ButtonShadowView2InvColor;
 	ld a, (buttonshadowview2invcolor)
-l_763:
+l_765:
 ; 64         }
 ; 65         c = a;
 	ld c, a
@@ -11324,7 +11332,7 @@ buttonshadowview2showtitlebc:
 ; 78         c = a;
 	ld c, a
 ; 79         do {
-l_764:
+l_766:
 ; 80             a = *hl;
 	ld a, (hl)
 ; 81             d = a;
@@ -11333,24 +11341,24 @@ l_764:
 	inc hl
 ; 83             if (a > 0) {
 	or a
-	jp z, l_767
+	jp z, l_769
 ; 84                 b++;
 	inc b
-l_767:
+l_769:
 ; 85             }
 ; 86             if ((a = b) >= c) {
 	ld a, b
 	cp c
-	jp c, l_769
+	jp c, l_771
 ; 87                 d = 0;
 	ld d, 0
-l_769:
-l_765:
+l_771:
+l_767:
 ; 88             }
 ; 89         } while ((a = d) > 0);
 	ld a, d
 	or a
-	jp nz, l_764
+	jp nz, l_766
 ; 90         a = ButtonShadowView2DX;
 	ld a, (buttonshadowview2dx)
 ; 91         a -= b;
@@ -11487,7 +11495,7 @@ allertokviewloopkey:
 ; 50         b = 0;
 	ld b, 0
 ; 51         do {
-l_771:
+l_773:
 ; 52             getKeyboardCharA();
 	call getkeyboardchara
 ; 53             c = a;
@@ -11495,25 +11503,25 @@ l_771:
 ; 54             if ((a = c) == 0x1B) { //ESC выход
 	ld a, c
 	cp 27
-	jp nz, l_774
+	jp nz, l_776
 ; 55                 b = 1;
 	ld b, 1
-	jp l_775
-l_774:
+	jp l_777
+l_776:
 ; 56             } else if ((a = c) == 0x0D) { //Enter
 	ld a, c
 	cp 13
-	jp nz, l_776
+	jp nz, l_778
 ; 57                 b = 1;
 	ld b, 1
-l_776:
-l_775:
-l_772:
+l_778:
+l_777:
+l_774:
 ; 58             }
 ; 59         } while ((a = b) == 0);
 	ld a, b
 	or a
-	jp z, l_771
+	jp z, l_773
 ; 60         AllertOkViewClose();
 	call allertokviewclose
 	pop bc
@@ -11544,7 +11552,7 @@ allertokviewshowtitle:
 ; 74         c = a;
 	ld c, a
 ; 75         do {
-l_778:
+l_780:
 ; 76             a = *hl;
 	ld a, (hl)
 ; 77             d = a;
@@ -11553,24 +11561,24 @@ l_778:
 	inc hl
 ; 79             if (a > 0) {
 	or a
-	jp z, l_781
+	jp z, l_783
 ; 80                 b++;
 	inc b
-l_781:
+l_783:
 ; 81             }
 ; 82             if ((a = b) >= c) {
 	ld a, b
 	cp c
-	jp c, l_783
+	jp c, l_785
 ; 83                 d = 0;
 	ld d, 0
-l_783:
-l_779:
+l_785:
+l_781:
 ; 84             }
 ; 85         } while ((a = d) > 0);
 	ld a, d
 	or a
-	jp nz, l_778
+	jp nz, l_780
 ; 86         a = AllertOkViewDX;
 	ld a, (allertokviewdx)
 ; 87         a -= b;
@@ -11745,17 +11753,17 @@ ftpmakedirectoryshowtitle:
 ; 70         b = a;
 	ld b, a
 ; 71         do {
-l_785:
+l_787:
 ; 72             printMyCharA(a = 0x5F);
 	ld a, 95
 	call printmychara
 ; 73             b--;
 	dec b
-l_786:
+l_788:
 ; 74         } while ((a = b) > 0);
 	ld a, b
 	or a
-	jp nz, l_785
+	jp nz, l_787
 ; 75         // DIRECTORY
 ; 76         // Button
 ; 77         bc = StringLocaleOK;
@@ -11872,12 +11880,12 @@ ftpmakedirectoryselectlinea:
 ; 136         if ((a = FtpMakeDirectorySelectPos) == 0) {
 	ld a, (ftpmakedirectoryselectpos)
 	or a
-	jp nz, l_788
+	jp nz, l_790
 ; 137             ButtonShadowViewSelectA(a = c);
 	ld a, c
 	call buttonshadowviewselecta
-	jp l_789
-l_788:
+	jp l_791
+l_790:
 ; 138         } else {
 ; 139             FtpMakeDirectoryByPosBoxValue();
 	call ftpmakedirectorybyposboxvalue
@@ -11885,15 +11893,15 @@ l_788:
 ; 141             if ((a = c) == 0) {
 	ld a, c
 	or a
-	jp nz, l_790
+	jp nz, l_792
 ; 142                 a = FtpMakeDirectoryColor;
 	ld a, (ftpmakedirectorycolor)
-	jp l_791
-l_790:
+	jp l_793
+l_792:
 ; 143             } else {
 ; 144                 a = FtpMakeDirectoryInvColor;
 	ld a, (ftpmakedirectoryinvcolor)
-l_791:
+l_793:
 ; 145             }
 ; 146             c = a;
 	ld c, a
@@ -11902,7 +11910,7 @@ l_791:
 	ld a, 4
 ; 149             vboxOpenHLDECA();
 	call vboxopenhldeca
-l_789:
+l_791:
 	pop de
 	pop hl
 	pop bc
@@ -11924,12 +11932,12 @@ ftpmakedirectoryposupdatea:
 	ld b, a
 ; 162         if (a == 0) {
 	or a
-	jp nz, l_792
+	jp nz, l_794
 ; 163             FtpMakeDirectorySelectLineA(a = 1);
 	ld a, 1
 	call ftpmakedirectoryselectlinea
-	jp l_793
-l_792:
+	jp l_795
+l_794:
 ; 164         } else {
 ; 165             a = 2;
 	ld a, 2
@@ -11948,21 +11956,21 @@ l_792:
 ; 172             if ((a = b) == 0xFF) {
 	ld a, b
 	cp 255
-	jp nz, l_794
+	jp nz, l_796
 ; 173                 a = c;
 	ld a, c
 ; 174                 a--;
 	dec a
-	jp l_795
-l_794:
+	jp l_797
+l_796:
 ; 175             } else if ((a = b) == c) {
 	ld a, b
 	cp c
-	jp nz, l_796
+	jp nz, l_798
 ; 176                 a = 0;
 	ld a, 0
-l_796:
-l_795:
+l_798:
+l_797:
 ; 177             }
 ; 178             //--
 ; 179             FtpMakeDirectorySelectPos = a;
@@ -11970,7 +11978,7 @@ l_795:
 ; 180             FtpMakeDirectorySelectLineA(a = 1);
 	ld a, 1
 	call ftpmakedirectoryselectlinea
-l_793:
+l_795:
 	pop bc
 	ret
 ; 181         }
@@ -11982,111 +11990,113 @@ ftpmakedirectoryclose:
 ; 186     vboxClose();
 	call vboxclose
 ; 187     CurrentViewReturn();
-	jp currentviewreturn
-; 188 }
-; 189 
-; 190 void FtpMakeDirectoryKeyA() {
+	call currentviewreturn
+; 188     FtpViewNetLoadAndUpdate();
+	jp ftpviewnetloadandupdate
+; 189 }
+; 190 
+; 191 void FtpMakeDirectoryKeyA() {
 ftpmakedirectorykeya:
-; 191     push_pop(hl) {
+; 192     push_pop(hl) {
 	push hl
-; 192         l = a;
+; 193         l = a;
 	ld l, a
-; 193         if ((a = CurrentViewId) == FtpMakeDirectoryId) {
+; 194         if ((a = CurrentViewId) == FtpMakeDirectoryId) {
 	ld a, (currentviewid)
 	cp 11
-	jp nz, l_798
-; 194             if ((a = l) == 0x1B) { //ESC выход
+	jp nz, l_800
+; 195             if ((a = l) == 0x1B) { //ESC выход
 	ld a, l
 	cp 27
-	jp nz, l_800
-; 195                 FtpMakeDirectoryClose();
+	jp nz, l_802
+; 196                 FtpMakeDirectoryClose();
 	call ftpmakedirectoryclose
-	jp l_801
-l_800:
-; 196             } else if ((a = l) == 0x0D) { // Выбор
+	jp l_803
+l_802:
+; 197             } else if ((a = l) == 0x0D) { // Выбор
 	ld a, l
 	cp 13
-	jp nz, l_802
-; 197                 if ((a = FtpMakeDirectorySelectPos) == 0) { // OK
+	jp nz, l_804
+; 198                 if ((a = FtpMakeDirectorySelectPos) == 0) { // OK
 	ld a, (ftpmakedirectoryselectpos)
 	or a
-	jp nz, l_804
-; 198                     FtpMakeDirectoryClose();
-	call ftpmakedirectoryclose
+	jp nz, l_806
 ; 199                     #ifdef _IS_SIMULATOR
 ; 200                     #else
 ; 201                         NetFtpMakeDirectory();
 	call netftpmakedirectory
 ; 202                         ThreadsTickNow();
 	call threadsticknow
+; 203                     #endif
+; 204                     FtpMakeDirectoryClose();
+	call ftpmakedirectoryclose
+	jp l_807
+l_806:
+; 205                 } else { // Переход в редактирование
+; 206                     FtpMakeDirectoryByPosBoxValue();
+	call ftpmakedirectorybyposboxvalue
+; 207                     FtpMakeDirectoryByPosValue();
+	call ftpmakedirectorybyposvalue
+; 208                     EditFieldViewShow();
+	call editfieldviewshow
+; 209                     if (a == 1) { // что то изменилось
+	cp 1
+	jp nz, l_808
+; 210                         FtpMakeDirectoryShowValue();
+	call ftpmakedirectoryshowvalue
+l_808:
+l_807:
 	jp l_805
 l_804:
-; 203                     #endif
-; 204                 } else { // Переход в редактирование
-; 205                     FtpMakeDirectoryByPosBoxValue();
-	call ftpmakedirectorybyposboxvalue
-; 206                     FtpMakeDirectoryByPosValue();
-	call ftpmakedirectorybyposvalue
-; 207                     EditFieldViewShow();
-	call editfieldviewshow
-; 208                     if (a == 1) { // что то изменилось
-	cp 1
-	jp nz, l_806
-; 209                         FtpMakeDirectoryShowValue();
-	call ftpmakedirectoryshowvalue
-l_806:
-l_805:
-	jp l_803
-l_802:
-; 210                     }
-; 211                 }
-; 212             } else if ((a = l) == 0x1A) { //down
+; 211                     }
+; 212                 }
+; 213             } else if ((a = l) == 0x1A) { //down
 	ld a, l
 	cp 26
-	jp nz, l_808
-; 213                 FtpMakeDirectoryPosUpdateA(a = 0x01);
+	jp nz, l_810
+; 214                 FtpMakeDirectoryPosUpdateA(a = 0x01);
 	ld a, 1
 	call ftpmakedirectoryposupdatea
-	jp l_809
-l_808:
-; 214             } else if ((a = l) == 0x19) { //up
+	jp l_811
+l_810:
+; 215             } else if ((a = l) == 0x19) { //up
 	ld a, l
 	cp 25
-	jp nz, l_810
-; 215                 FtpMakeDirectoryPosUpdateA(a = 0xFF);
+	jp nz, l_812
+; 216                 FtpMakeDirectoryPosUpdateA(a = 0xFF);
 	ld a, 255
 	call ftpmakedirectoryposupdatea
-l_810:
-l_809:
+l_812:
+l_811:
+l_805:
 l_803:
-l_801:
-l_798:
+l_800:
 	pop hl
 	ret
-; 216             }
-; 217         }
-; 218     }
-; 219 }
-; 220 
-; 221 uint8_t FtpMakeDirectoryX = 14;
+; 217             }
+; 218         }
+; 219     }
+; 220 }
+; 221 
+; 222 uint8_t FtpMakeDirectoryX = 14;
 ftpmakedirectoryx:
 	db 14
-; 222 uint8_t FtpMakeDirectoryY = 11;
+; 223 uint8_t FtpMakeDirectoryY = 11;
 ftpmakedirectoryy:
 	db 11
-; 223 uint8_t FtpMakeDirectoryDX = 20;
+; 224 uint8_t FtpMakeDirectoryDX = 20;
 ftpmakedirectorydx:
 	db 20
-; 224 uint8_t FtpMakeDirectoryDY = 12;
+; 225 uint8_t FtpMakeDirectoryDY = 12;
 ftpmakedirectorydy:
 	db 12
-; 225 uint8_t FtpMakeDirectoryColor = 0x70;
+; 226 uint8_t FtpMakeDirectoryColor = 0x70;
 ftpmakedirectorycolor:
 	db 112
-; 226 uint8_t FtpMakeDirectoryInvColor = 0x07;
+; 227 uint8_t FtpMakeDirectoryInvColor = 0x07;
 ftpmakedirectoryinvcolor:
 	db 7
-; 228 uint8_t FtpMakeDirectoryTitle[] = "Make directory";
+; 229 uint8_t FtpMakeDirectoryTitle[] = "Make directory";
 ftpmakedirectorytitle:
 	db 77
 	db 97
@@ -12103,20 +12113,20 @@ ftpmakedirectorytitle:
 	db 114
 	db 121
 	ds 1
-; 229 uint8_t FtpMakeDirectoryValue[16] = "New";
+; 230 uint8_t FtpMakeDirectoryValue[16] = "New";
 ftpmakedirectoryvalue:
 	db 78
 	db 101
 	db 119
 	ds 13
-; 231 uint8_t FtpMakeDirectorySelectPos = 0;
+; 232 uint8_t FtpMakeDirectorySelectPos = 0;
 ftpmakedirectoryselectpos:
 	db 0
 ; 11 void ESPErrorParserA() {
 esperrorparsera:
 ; 12     if (a > 0) {
 	or a
-	jp z, l_812
+	jp z, l_814
 ; 13         push_pop(bc) {
 	push bc
 ; 14             b = a;
@@ -12124,38 +12134,38 @@ esperrorparsera:
 ; 15             if ((a = b) == ESPError_FtpDeleteFileError) {
 	ld a, b
 	cp 1
-	jp nz, l_814
+	jp nz, l_816
 ; 16                 AllertOkViewShowHL(hl = StringLocaleNetFtpDeleteFileError);
 	ld hl, stringlocalenetftpdeletefileerro
 	call allertokviewshowhl
-	jp l_815
-l_814:
+	jp l_817
+l_816:
 ; 17             } else if ((a = b) == ESPError_FtpConnectError) {
 	ld a, b
 	cp 2
-	jp nz, l_816
+	jp nz, l_818
 ; 18                 AllertOkViewShowHL(hl = StringLocaleNetFtpConnectError);
 	ld hl, stringlocalenetftpconnecterror
 	call allertokviewshowhl
-	jp l_817
-l_816:
+	jp l_819
+l_818:
 ; 19             } else if ((a = b) == ESPError_WiFiConnectError) {
 	ld a, b
 	cp 3
-	jp nz, l_818
+	jp nz, l_820
 ; 20                 AllertOkViewShowHL(hl = StringLocaleNetWiFiConnectError);
 	ld hl, stringlocalenetwificonnecterror
 	call allertokviewshowhl
-l_818:
+l_820:
+l_819:
 l_817:
-l_815:
 	pop bc
 ; 21             }
 ; 22         }
 ; 23         // Сброс ошибки
 ; 24         NetErrorClear();
 	call neterrorclear
-l_812:
+l_814:
 	ret
 ; 1 unsigned char FONT_8_8_RUS[] = {
 font_8_8_rus:
@@ -14277,7 +14287,7 @@ vboxclearcash:
 ; 47     push_pop(a) {
 	push af
 ; 48         do {
-l_820:
+l_822:
 ; 49             a = vboxBLW;
 	ld a, 16
 ; 50             a |= vboxERA;
@@ -14286,10 +14296,10 @@ l_820:
 	or 4
 ; 52             vboxCall();
 	call vboxcall
-l_821:
+l_823:
 ; 53         } while (a == 0x00);
 	or a
-	jp z, l_820
+	jp z, l_822
 	pop af
 	ret
 ; 54     }
@@ -14319,17 +14329,17 @@ vboxborderhlde:
 ; 68             b = 2;
 	ld b, 2
 ; 69             do {
-l_823:
+l_825:
 ; 70                 printMyCharA(a = 0xCD);
 	ld a, 205
 	call printmychara
 ; 71                 b++;
 	inc b
-l_824:
+l_826:
 ; 72             } while ((a = b) < d);
 	ld a, b
 	cp d
-	jp c, l_823
+	jp c, l_825
 ; 73             printMyCharA(a = 0xBB);
 	ld a, 187
 	call printmychara
@@ -14358,17 +14368,17 @@ l_824:
 ; 84             b = 2;
 	ld b, 2
 ; 85             do {
-l_826:
+l_828:
 ; 86                 printMyCharA(a = 0xCD);
 	ld a, 205
 	call printmychara
 ; 87                 b++;
 	inc b
-l_827:
+l_829:
 ; 88             } while ((a = b) < d);
 	ld a, b
 	cp d
-	jp c, l_826
+	jp c, l_828
 ; 89             printMyCharA(a = 0xBC);
 	ld a, 188
 	call printmychara
@@ -14392,7 +14402,7 @@ l_827:
 ; 98             b = 2;
 	ld b, 2
 ; 99             do {
-l_829:
+l_831:
 ; 100                 printMyCharA(a = 0xBA);
 	ld a, 186
 	call printmychara
@@ -14408,11 +14418,11 @@ l_829:
 	ld (mycharposy), a
 ; 106                 b++;
 	inc b
-l_830:
+l_832:
 ; 107             } while ((a = b) < e);
 	ld a, b
 	cp e
-	jp c, l_829
+	jp c, l_831
 	pop de
 	pop hl
 ; 108         }
@@ -14439,7 +14449,7 @@ l_830:
 ; 119             b = 2;
 	ld b, 2
 ; 120             do {
-l_832:
+l_834:
 ; 121                 printMyCharA(a = 0xBA);
 	ld a, 186
 	call printmychara
@@ -14455,11 +14465,11 @@ l_832:
 	ld (mycharposy), a
 ; 127                 b++;
 	inc b
-l_833:
+l_835:
 ; 128             } while ((a = b) < e);
 	ld a, b
 	cp e
-	jp c, l_832
+	jp c, l_834
 	pop de
 	pop hl
 	pop bc
@@ -14489,7 +14499,7 @@ validvbox:
 	or a
 ; 144     if (a == 0) {
 	or a
-	jp nz, l_835
+	jp nz, l_837
 ; 145         push_pop(bc, hl) {
 	push bc
 	push hl
@@ -14499,7 +14509,7 @@ validvbox:
 ; 147             b = 0;
 	ld b, 0
 ; 148             do {
-l_837:
+l_839:
 ; 149                 a = 'A';
 	ld a, 65
 ; 150                 a += b;
@@ -14515,26 +14525,26 @@ l_837:
 ; 155                 if ((a = b) == 4) {
 	ld a, b
 	cp 4
-	jp nz, l_840
+	jp nz, l_842
 ; 156                     c = 1;
 	ld c, 1
+l_842:
 l_840:
-l_838:
 ; 157                 }
 ; 158             } while ((a = c) == 0);
 	ld a, c
 	or a
-	jp z, l_837
+	jp z, l_839
 ; 159             if ((a = c) == 0xFF) {
 	ld a, c
 	cp 255
-	jp nz, l_842
+	jp nz, l_844
 ; 160                 loadVBOX();
 	call loadvbox
-l_842:
+l_844:
 	pop hl
 	pop bc
-l_835:
+l_837:
 	ret
 ; 161             }
 ; 162         }

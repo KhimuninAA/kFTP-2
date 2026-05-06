@@ -45,6 +45,12 @@ void FtpViewShowTitle() {
 }
 
 void FtpViewShowFileList() {
+    //-- нельзя обновлять, если есть хоть какое то открытое окно
+    CurrentViewDiskOrFtpViewByIdA(a = CurrentViewId);
+    if (a == 0) {
+        return;
+    }
+    //--
     push_pop(bc, de, hl) {
         b = 0;
         a = FtpViewFilesListCount;
@@ -374,8 +380,6 @@ void FtpViewKeyA() {
                     }
                 } else if ((a = l) == 'D') { // Создание новой папки
                     FtpMakeDirectoryShow();
-                    NetGetAllStatus();
-                    FtpViewNetLoadAndUpdate();
                 }
             }
         }

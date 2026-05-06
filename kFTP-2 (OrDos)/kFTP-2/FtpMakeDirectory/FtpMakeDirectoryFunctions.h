@@ -185,6 +185,7 @@ void FtpMakeDirectoryPosUpdateA() {
 void FtpMakeDirectoryClose() {
     vboxClose();
     CurrentViewReturn();
+    FtpViewNetLoadAndUpdate();
 }
 
 void FtpMakeDirectoryKeyA() {
@@ -195,12 +196,12 @@ void FtpMakeDirectoryKeyA() {
                 FtpMakeDirectoryClose();
             } else if ((a = l) == 0x0D) { // Выбор
                 if ((a = FtpMakeDirectorySelectPos) == 0) { // OK
-                    FtpMakeDirectoryClose();
                     #ifdef _IS_SIMULATOR
                     #else
                         NetFtpMakeDirectory();
                         ThreadsTickNow();
                     #endif
+                    FtpMakeDirectoryClose();
                 } else { // Переход в редактирование
                     FtpMakeDirectoryByPosBoxValue();
                     FtpMakeDirectoryByPosValue();
