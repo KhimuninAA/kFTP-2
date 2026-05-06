@@ -124,7 +124,7 @@ appname:
 
     DB 0x00, 0x01
 
-    DB 0x00, 0x35
+    DB 0xB0, 0x34
 
     DB 0x00, 0x00, 0x00, 0x00
 
@@ -14635,5 +14635,5 @@ net_buffer_len:
 ; 44 uint8_t Net_buffer[1];
 net_buffer:
 	ds 1
- savebin "kFTP2.ORD", 0x00f0, 0x3510
- savebin "test.ORD", 0x00f0, 0x3510
+ savebin "kFTP2.ORD", 0x00f0, 0x34C0
+ savebin "test.ORD", 0x00f0, 0x34C0

@@ -125,7 +125,7 @@
   124 00F8
   125 00F8 00 01            DB 0x00, 0x01
   126 00FA
-  127 00FA 00 35            DB 0x00, 0x35
+  127 00FA B0 34            DB 0xB0, 0x34
   128 00FC
   129 00FC 00 00 00 00      DB 0x00, 0x00, 0x00, 0x00
   130 0100
@@ -14636,7 +14636,7 @@
 14635 35AE              ; 44 uint8_t Net_buffer[1];
 14636 35AE              net_buffer:
 14637 35AE 00           	ds 1
-14638 35AF               savebin "kFTP2.ORD", 0x00f0, 0x3510
-14639 35AF               savebin "test.ORD", 0x00f0, 0x3510
+14638 35AF               savebin "kFTP2.ORD", 0x00f0, 0x34C0
+14639 35AF               savebin "test.ORD", 0x00f0, 0x34C0
 14640 35AF
 # file closed: main.asm
