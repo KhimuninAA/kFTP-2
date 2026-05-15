@@ -6,12 +6,21 @@
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
       buildArchitectures = "Automatic">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "echo &quot;Workspace Path: ${WORKSPACE_PATH}&quot;&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <PostActions>
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "rm /Users/khimuninaa/Documents/Orion128.app/Contents/Resources/test.ORD&#10;cp ${WORKSPACE_PATH}/../../&quot;test.ORD&quot; /Users/khimuninaa/Documents/Orion128/Orion128.app/Contents/Resources/&#10;">
+               scriptText = "rm /Users/khimuninaa/Documents/Orion128/Orion128.app/Contents/Resources/test.ORD&#10;cp ${WORKSPACE_PATH}/../../&quot;test.ORD&quot; /Users/khimuninaa/Documents/Orion128/Orion128.app/Contents/Resources/&#10;">
             </ActionContent>
          </ExecutionAction>
       </PostActions>

@@ -3,15 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		FD5059072F3A0AC800DC57D0 /* kFTP-2 */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "kFTP-2";
-			sourceTree = "<group>";
-		};
+		FD5059072F3A0AC800DC57D0 /* kFTP-2 */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "kFTP-2"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXGroup section */
@@ -27,11 +23,12 @@
 /* Begin PBXLegacyTarget section */
 		FD5059062F3A0AC800DC57D0 /* kFTP-2 */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "-m kFTP-2/main.c";
+			buildArgumentsString = "-m -I$HOME/i8080/c8080/include -IkFTP-2 kFTP-2/main.c";
 			buildConfigurationList = FD50590B2F3A0AC800DC57D0 /* Build configuration list for PBXLegacyTarget "kFTP-2" */;
 			buildPhases = (
 			);
 			buildToolPath = $HOME/i8080/c8080/c8080;
+			buildWorkingDirectory = "";
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
@@ -58,6 +55,7 @@
 				};
 			};
 			buildConfigurationList = FD5059052F3A0AC800DC57D0 /* Build configuration list for PBXProject "kFTP-2" */;
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -66,7 +64,6 @@
 			);
 			mainGroup = FD5059012F3A0AC800DC57D0;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
