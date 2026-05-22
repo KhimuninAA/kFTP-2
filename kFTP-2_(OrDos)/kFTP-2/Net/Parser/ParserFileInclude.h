@@ -18,6 +18,10 @@ void ParserFileUploadCreateBuffer();
 void ParserFileUploadParse();
 void ParserFileUploadParseSum();
 
+void ParserFileDiskRequest();
+void ParserFileDiskResponse();
+void ParserFileDiskResponseSum();
+
 void ParserFileDESubHL();
 
 #endif /* ParserFileInclude_h */

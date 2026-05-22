@@ -260,7 +260,19 @@ void DiskViewNextDiskNum() {
 }
 
 void DiskViewSetDiskNumA() {
-    DiskViewDiskNum = a;
+    push_pop(bc) {
+        c = a;
+        a = DiskViewDiskNum;
+        if (a != c) {
+            a = c;
+            DiskViewDiskNum = a;
+            NetDiskSetNum();
+            DiskViewReload();
+        }
+    }
+}
+
+void DiskViewReload() {
     DiskViewShowSelectLineA(a = 0);
     a = 0;
     DiskViewFileCurrentPos = a;

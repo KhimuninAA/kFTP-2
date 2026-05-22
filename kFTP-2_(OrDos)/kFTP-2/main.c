@@ -23,7 +23,7 @@ asm{
     //Start
     DB 0x00, 0x01
     //Len
-    DB 0xB0, 0x34 //0x34C0 0x00, 0x35
+    DB 0x00, 0x39 //0x34C0 0x00, 0x35
     //Reserved
     DB 0x00, 0x00, 0x00, 0x00
 }
@@ -94,6 +94,11 @@ void KeyboardEventA() {
             if (a == 1) {
                 WiFiSettingsViewShow();
             }
+        } else if ((a = b) == 0x00) { //F1 Open help
+            CurrentViewDiskOrFtpViewByIdA(a = CurrentViewId);
+            if (a == 1) {
+                HelpInfoViewShow();
+            }
         }
         
         c = 0;
@@ -118,11 +123,14 @@ void KeyboardEventA() {
         } else if ((a = CurrentViewId) == FtpMakeDirectoryId) {
             FtpMakeDirectoryKeyA(a = b);
             c = 1;
+        } else if ((a = CurrentViewId) == HelpInfoViewId) {
+            HelpInfoViewKeyA(a = b);
+            c = 1;
         }
     }
 }
 
 #include "Functions.h"
 
-asm(" savebin \"kFTP2.ORD\", 0x00f0, 0x34C0"); //0x3210 3510
-asm(" savebin \"test.ORD\", 0x00f0, 0x34C0");
+asm(" savebin \"kFTP2.ORD\", 0x00f0, 0x3910"); //0x3210 3510
+asm(" savebin \"test.ORD\", 0x00f0, 0x3910");

@@ -9,9 +9,9 @@
 #define Include_h
 
 //#define _IS_MAIN_STACK
-#define _IS_SIMULATOR
+//#define _IS_SIMULATOR
 //#define _IS_ESP_DELAY
-//#define _IS_STATUSBAR_BW
+#define _IS_STATUSBAR_BW
 
 extern unsigned char FONT_8_8_RUS[2048];
 
@@ -45,6 +45,7 @@ extern unsigned char FONT_8_8_RUS[2048];
 #include "ButtonShadowView2/ButtonShadowView2Include.h"
 #include "AllertOkView/AllertOkViewInclude.h"
 #include "FtpMakeDirectory/FtpMakeDirectoryInclude.h"
+#include "HelpInfoView/HelpInfoViewInclude.h"
 #include "ESP/ESPError/ESPErrorInclude.h"
 
 

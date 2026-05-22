@@ -19,6 +19,7 @@ const uint8_t FtpSettingsViewId = 0x08;
 const uint8_t AllertYesNoViewId = 0x09;
 const uint8_t AllertOkViewId = 0x0A;
 const uint8_t FtpMakeDirectoryId = 0x0B;
+const uint8_t HelpInfoViewId = 0x0C;
 
 extern uint8_t CurrentViewId;
 extern uint8_t CurrentViewReturnIds[16];

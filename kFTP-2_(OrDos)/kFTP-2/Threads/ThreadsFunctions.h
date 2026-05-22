@@ -81,6 +81,11 @@ void delay50ms() {
 }
 
 void NetUpdateData() {
+    NetDiskGetNum();
+    if (a == 1) { // Обновляем локальный диск
+        DiskViewReload();
+    }
+    // NEXT
     ThreadsNetNeedUpdateFtpValue();
     ThreadsNetNeedUpdateWiFiValue();
 }

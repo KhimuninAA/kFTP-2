@@ -233,6 +233,19 @@ void EspEventsExec() {
         ftpClientA.makeDirectory(tempStr);
       }
       break;
+
+    case GET_DISK:
+      interruptData.isProcessed = true;
+      EventsExt_Disk_Request();
+      interruptData.answerCount = 3;
+      interruptData.answerIndex = 0;
+      break;
+    case SET_DISK:
+      interruptData.isProcessed = true;
+      EventsExt_Disk_Response();
+      EEPROMStoreSave();
+      EEPROMStoreLoad();
+      break;  
     default:
       break;
   }

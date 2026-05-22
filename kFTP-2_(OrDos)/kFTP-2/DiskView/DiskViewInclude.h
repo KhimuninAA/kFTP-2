@@ -44,5 +44,6 @@ void DiskViewUpdateDiskTitle();
 void DiskViewUpdateDateAndUI();
 void DiskViewDeleteSelectedFile();
 void DiskViewUploadSelectedFile();
+void DiskViewReload();
 
 #endif /* DiskViewInclude_h */

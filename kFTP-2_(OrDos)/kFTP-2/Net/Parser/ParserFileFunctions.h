@@ -148,6 +148,73 @@ void ParserFileUploadParseSum() {
     }
 }
 
+void ParserFileDiskRequest() {
+    push_pop(de, bc) {
+        // SUMM
+        c = 0;
+        //-- Buffer
+        de = Net_buffer;
+        // - init
+        a = 0x3C;
+        *de = a;
+        de++;
+        a += c;
+        c = a;
+        // - disk
+        a = DiskViewDiskNum;
+        *de = a;
+        de++;
+        a += c;
+        c = a;
+        // - summ
+        a = c;
+        *de = a;
+    }
+}
+
+// Вых [A] - 1 - Успешно. 0 - Ошибка
+void ParserFileDiskResponse() {
+    ParserFileDiskResponseSum();
+    if (a == 1) {
+        push_pop(de, bc) {
+            de = Net_buffer;
+            // init == 0x3C
+            a = *de;
+            de++;
+            if (a == 0x3C) {
+                a = *de;
+                DiskViewDiskNum = a;
+                a = 1;
+            } else {
+                a = 0;
+            }
+        }
+    } else {
+        a = 0;
+    }
+}
+
+void ParserFileDiskResponseSum() {
+    push_pop(de, bc) {
+        de = Net_buffer;
+        b = 2;
+        c = 0;
+        do {
+            a = *de;
+            a += c;
+            c = a;
+            de++;
+            b--;
+        } while ((a = b) > 0);
+        a = *de;
+        if (a == c) {
+            a = 1;
+        } else {
+            a = 0;
+        }
+    }
+}
+
 // DE = DE - HL
 void ParserFileDESubHL() {
     a = e;  // Load low byte of E into accumulator

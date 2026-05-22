@@ -35,6 +35,7 @@
 #include "ButtonShadowView2/ButtonShadowView2Functions.h"
 #include "AllertOkView/AllertOkViewFunctions.h"
 #include "FtpMakeDirectory/FtpMakeDirectoryFunctions.h"
+#include "HelpInfoView/HelpInfoViewFunctions.h"
 #include "ESP/ESPError/ESPErrorFunctions.h"
 
 #include "Orion/font8x8.h"

@@ -23,7 +23,7 @@
 /* Begin PBXLegacyTarget section */
 		FD5059062F3A0AC800DC57D0 /* kFTP-2 */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "-m -I$HOME/i8080/c8080/include -IkFTP-2 kFTP-2/main.c";
+			buildArgumentsString = "-m kFTP-2/main.c";
 			buildConfigurationList = FD50590B2F3A0AC800DC57D0 /* Build configuration list for PBXLegacyTarget "kFTP-2" */;
 			buildPhases = (
 			);

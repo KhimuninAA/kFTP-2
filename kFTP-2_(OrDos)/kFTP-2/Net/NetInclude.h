@@ -47,4 +47,7 @@ void NetFtpDeleteFileIndexA();
 void NetFtpUploadFileInitHL();
 void NetFtpMakeDirectory();
 
+void NetDiskGetNum();
+void NetDiskSetNum();
+
 #endif /* NetInclude_h */

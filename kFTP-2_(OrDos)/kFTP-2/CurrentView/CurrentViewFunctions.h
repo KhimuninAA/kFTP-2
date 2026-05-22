@@ -53,6 +53,9 @@ void CurrentViewSetIdA() {
         } else if ((a = CurrentViewId) == FtpMakeDirectoryId) {
             FtpViewShowSelectLineA(a = 0);
             DiskViewShowSelectLineA(a = 0);
+        } else if ((a = CurrentViewId) == HelpInfoViewId) {
+            FtpViewShowSelectLineA(a = 0);
+            DiskViewShowSelectLineA(a = 0);
         }
     }
 }

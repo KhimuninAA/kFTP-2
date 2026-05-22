@@ -30,6 +30,9 @@ void EEPROMStoreLoad() {
   //ftpHomeDir
   EEPROM.get(addr, data.ftpHomeDir);
   addr += sizeof(data.ftpHomeDir);
+  //Disk
+  EEPROM.get(addr, data.disk);
+  addr += sizeof(data.disk);
 
   EEPROMStoreEmptyFix();
 }
@@ -79,6 +82,11 @@ void EEPROMStoreEmptyFix() {
     data.ssidPass[0] = '-';
     data.ssidPass[1] = 0;
   }
+  //Disk
+  byte = data.disk[0];
+  if (byte == 0xFF) {
+    data.disk[0] = 'B';
+  }
 }
 
 void EEPROMStoreSave() {
@@ -104,6 +112,9 @@ void EEPROMStoreSave() {
   //ftpHomeDir
   EEPROM.put(addr, data.ftpHomeDir);
   addr += sizeof(data.ftpHomeDir);
+  //Disk
+  EEPROM.put(addr, data.disk);
+  addr += sizeof(data.disk);
   //SAVE!
   EEPROM.commit();
 }

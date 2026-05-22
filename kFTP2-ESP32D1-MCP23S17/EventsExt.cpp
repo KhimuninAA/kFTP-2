@@ -152,3 +152,22 @@ void ftpFileToBuffer() {
   //--
   interruptData.answerBuffer[15] = sum;
 }
+
+void EventsExt_Disk_Request() {
+  uint8_t sum = 0;
+  interruptData.answerBuffer[0] = 0x3C;
+  sum += interruptData.answerBuffer[0];
+  interruptData.answerBuffer[1] = data.disk[0];
+  sum += interruptData.answerBuffer[1];
+  interruptData.answerBuffer[2] = sum;
+}
+
+void EventsExt_Disk_Response() {
+  uint8_t sum = 0;
+  for (int i = 0; i < 2; i++) {
+    sum += interruptData.buffer[i];
+  }
+  if (sum == interruptData.buffer[2] && interruptData.buffer[0] == 0x3C) {
+    data.disk[0] = interruptData.buffer[1];
+  }
+}

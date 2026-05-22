@@ -406,4 +406,23 @@ void NetFtpUploadFileInitHL() {
     } while (a > 0);
 }
 
+// Вых [A] - 1 - Успешно. 0 - Ошибка
+void NetDiskGetNum() {
+    push_pop(hl, bc) {
+        h = 35; // GET_DISK, // 35
+        l = 0; // Len NedBuffer
+        ESPSendAndGetHL();
+        ParserFileDiskResponse();
+    }
+}
+
+void NetDiskSetNum() {
+    push_pop(hl, bc) {
+        ParserFileDiskRequest();
+        h = 36; // SET_DISK, // 36
+        l = 3; // Len NedBuffer
+        ESPSendHL();
+    }
+}
+
 #endif /* NetFunctions_h */
