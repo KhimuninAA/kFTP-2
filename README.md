@@ -22,7 +22,7 @@
 <img align="center" width=600 src="img/kFTP2 ESP32 D1 Mini v60.png" />
 
 ### Схема
-<img align="center" width=600 src="img/kFTP2 ESP32 D1 Mini v60_1.png" />
+<img align="center" width=600 src="shematic/kFTP2 ESP32 D1 Mini v60.png" />
 
 ### Общий вид приложения
 <img align="center" width=600 src="img/IMG_1219.jpg" />
