@@ -425,4 +425,10 @@ void NetDiskSetNum() {
     }
 }
 
+void NetGetHardwareAndSoftware() {
+    h = 37; // GET_HARDWARE_AND_SOFTWARE, // 37
+    l = 0; // Len NedBuffer
+    ESPSendAndGetHL();
+}
+
 #endif /* NetFunctions_h */

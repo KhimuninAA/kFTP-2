@@ -47,6 +47,7 @@ enum EspEvents_TYPE {
   FTP_FILE_UPLOAD_NEXT, // 34
   GET_DISK, // 35
   SET_DISK, // 36
+  GET_HARDWARE_AND_SOFTWARE, // 37
 };
 
 void EspEventsExec();

@@ -1,5 +1,8 @@
 #include "EventsExt.h"
 
+int8_t HARDWARE_VERSION = 2;
+int8_t SOFTWARE_VERSION = 2;
+
 extern InterruptData interruptData;
 extern FTPClient ftpClientA;
 extern ESPErrorData espError;
@@ -170,4 +173,15 @@ void EventsExt_Disk_Response() {
   if (sum == interruptData.buffer[2] && interruptData.buffer[0] == 0x3C) {
     data.disk[0] = interruptData.buffer[1];
   }
+}
+
+void EventsExt_HardwareAndSoftware_Request() { //GET_HARDWARE_AND_SOFTWARE
+  uint8_t sum = 0;
+  interruptData.answerBuffer[0] = 0x3C;
+  sum += interruptData.answerBuffer[0];
+  interruptData.answerBuffer[1] = HARDWARE_VERSION;
+  sum += interruptData.answerBuffer[1];
+  interruptData.answerBuffer[2] = SOFTWARE_VERSION;
+  sum += interruptData.answerBuffer[2];
+  interruptData.answerBuffer[3] = sum;
 }

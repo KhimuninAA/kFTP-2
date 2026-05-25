@@ -88,6 +88,7 @@ void EspEventsExec() {
       interruptData.isProcessed = true;
       memcpy(data.ftpServerUrl, interruptData.buffer, 16);
       EEPROMStoreSave();
+      ftpClientA.ftpDisconnect();
       break;
     case GET_FTP_USER:
       interruptData.isProcessed = true;
@@ -99,6 +100,7 @@ void EspEventsExec() {
       interruptData.isProcessed = true;
       memcpy(data.ftpUser, interruptData.buffer, 16);
       EEPROMStoreSave();
+      ftpClientA.ftpDisconnect();
       break;
     case GET_FTP_PASS:
       interruptData.isProcessed = true;
@@ -110,6 +112,7 @@ void EspEventsExec() {
       interruptData.isProcessed = true;
       memcpy(data.ftpPass, interruptData.buffer, 16);
       EEPROMStoreSave();
+      ftpClientA.ftpDisconnect();
       break;
     case GET_FTP_HOME_DIR:
       interruptData.isProcessed = true;
@@ -133,6 +136,7 @@ void EspEventsExec() {
       interruptData.isProcessed = true;
       memcpy(data.ftpPort, interruptData.buffer, 6);
       EEPROMStoreSave();
+      ftpClientA.ftpDisconnect();
       break;
     case FTP_CONNECT:
       ftpClientA.ftpConnect();
@@ -246,6 +250,12 @@ void EspEventsExec() {
       EEPROMStoreSave();
       EEPROMStoreLoad();
       break;  
+    case GET_HARDWARE_AND_SOFTWARE:
+      interruptData.isProcessed = true;
+      EventsExt_HardwareAndSoftware_Request();
+      interruptData.answerCount = 4;
+      interruptData.answerIndex = 0;
+      break;
     default:
       break;
   }

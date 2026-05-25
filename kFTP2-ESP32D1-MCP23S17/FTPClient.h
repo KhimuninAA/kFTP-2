@@ -28,6 +28,9 @@ class FTPClient {
     uint8_t maxFilesInList = 13;
     enum TransferModeType {ASCII, BINARY};
     FtpFileDownloadInfo fileDownloadInfo;
+    bool isAnonymous();
+    bool isParentDirector(FtpFileData fileData);
+    FtpFileData parentDirectoryData();
 
     void getStatus();
     void parseStatus();
@@ -67,6 +70,7 @@ class FTPClient {
     uint8_t uploadFile(String fileName);
     uint8_t uploadFileData();
     void noop();
+    void ftpDisconnect();
 };
 
 #endif

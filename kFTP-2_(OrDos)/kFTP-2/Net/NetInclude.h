@@ -50,4 +50,6 @@ void NetFtpMakeDirectory();
 void NetDiskGetNum();
 void NetDiskSetNum();
 
+void NetGetHardwareAndSoftware();
+
 #endif /* NetInclude_h */

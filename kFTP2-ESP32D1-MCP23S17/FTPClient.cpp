@@ -8,6 +8,11 @@ FTPClient::FTPClient() {
   fileDownloadInfo.loadSize = 64; //240; //128;
 }
 
+void FTPClient::ftpDisconnect() {
+  ftpDataClient.stop();
+  ftpClient.stop();
+}
+
 void FTPClient::ftpConnect() {
   ftpClient.stop();
   ftpClientResponseOldCode = 0;
@@ -117,14 +122,28 @@ void FTPClient::needActionByChangeCode() {
 
 void FTPClient::sendAuthenticationUsername() {
   ftpClient.print(F("USER "));
-  ftpClient.println(data.ftpUser);
+  if (isAnonymous() == true) {
+    ftpClient.println(F("anonymous"));
+  } else {
+    ftpClient.println(data.ftpUser);
+  }
   getStatus();
 }
 
 void FTPClient::sendAuthenticationPassword() {
   ftpClient.print(F("PASS "));
-  ftpClient.println(data.ftpPass);
+  if (isAnonymous() == true) {
+    ftpClient.println(F("guest"));
+  } else {
+    ftpClient.println(data.ftpPass);
+  }
   getStatus();
+}
+
+bool FTPClient::isAnonymous() {
+  int ftpUserLen = strlen(data.ftpUser); 
+  int ftpPassLen = strlen(data.ftpPass);
+  return ((ftpUserLen == 0) && (ftpPassLen == 0));
 }
 
 void FTPClient::setPassiveMode() {
@@ -299,6 +318,21 @@ String FTPClient::getCurrentFolder() {
   return curDir;
 }
 
+bool FTPClient::isParentDirector(FtpFileData fileData) {
+  return fileData.name == "..";
+}
+
+FtpFileData FTPClient::parentDirectoryData() {
+  FtpFileData parentDirData;
+  parentDirData.name = "..";
+  parentDirData.isDir = true;
+  parentDirData.data = "";
+  parentDirData.size = 0;
+  parentDirData.isHidden = false;
+  parentDirData.date = "";
+  return parentDirData;
+}
+
 void FTPClient::updateFtpList(uint8_t fileCount) {
   // Очистить список и интедкс
 
@@ -324,14 +358,21 @@ void FTPClient::updateFtpList(uint8_t fileCount) {
   if (fileCount > maxFilesInList) {
     maxFileCount = fileCount;
   }
+
+  //Add parent directory
+  ftpFiles[ftpFilesCount] = parentDirectoryData();
+  ftpFilesCount++;
+
   while(ftpDataClient.available()) {
     if( ftpFilesCount < maxFileCount ) {
       String fileDataStr = ftpDataClient.readStringUntil('\n');
       FtpFileData ftpFileData = FtpFileDataHelper::parse(fileDataStr);
       if (ftpFileData.isHidden == false) {
-        Serial.println(ftpFileData.name);
-        ftpFiles[ftpFilesCount] = ftpFileData;
-        ftpFilesCount++;
+        //Serial.println(ftpFileData.name);
+        if (isParentDirector(ftpFileData) == false) {
+          ftpFiles[ftpFilesCount] = ftpFileData;
+          ftpFilesCount++;
+        }
       }
     } else {
       String empty = ftpDataClient.readStringUntil('\n');

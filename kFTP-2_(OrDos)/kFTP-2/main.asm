@@ -1592,6 +1592,17 @@ netdisksetnum:
 	pop bc
 	pop hl
 	ret
+; 425     }
+; 426 }
+; 427 
+; 428 void NetGetHardwareAndSoftware() {
+netgethardwareandsoftware:
+; 429     h = 37; // GET_HARDWARE_AND_SOFTWARE, // 37
+	ld h, 37
+; 430     l = 0; // Len NedBuffer
+	ld l, 0
+; 431     ESPSendAndGetHL();
+	jp espsendandgethl
 ; 14 void ParserBufferToHL() {
 parserbuffertohl:
 ; 15     push_pop(de) {

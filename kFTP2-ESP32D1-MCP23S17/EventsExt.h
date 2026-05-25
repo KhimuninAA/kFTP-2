@@ -11,5 +11,6 @@ void EventsExt_UploadAnswer(bool isCorrect, uint8_t progress);
 bool EventsExt_VerifyAnswerBufferSum(int from, int count);
 void EventsExt_Disk_Request();
 void EventsExt_Disk_Response();
+void EventsExt_HardwareAndSoftware_Request();
 
 #endif
