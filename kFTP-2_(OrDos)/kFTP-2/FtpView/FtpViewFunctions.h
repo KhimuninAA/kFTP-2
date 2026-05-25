@@ -63,6 +63,7 @@ void FtpViewShowFileList() {
             myCharPosY = a;
             FtpViewShowFileHL();
             // HL + 16 next file
+            a ^= a;
             a = 16;
             a += l;
             l = a;
@@ -355,11 +356,12 @@ void FtpViewKeyA() {
                     } else {
                         FtpViewCurrentPosIsDir();
                         if (a == 1) { // Enter Dir
+                            printMyCharA(a = 'Y');
                             FtpViewShowSelectLineA(a = 0); // TODO надо убрать...
                             NetFtpChangeDirIndexA(a = FtpViewFileCurrentPos);
                             FtpViewNetLoadAndUpdate();
                         } else { // Load file
-                            FtpViewLoadFile();
+                            FtpViewAccessDiskSpace();
                         }
                     }
                 } else if ((a = l) == 'R') { // Обновление папки
@@ -367,7 +369,7 @@ void FtpViewKeyA() {
                 } else if ((a = l) == 'C') { // загрузка файла
                     FtpViewCurrentPosIsDir();
                     if (a == 0) { // Проверим что это файл
-                        FtpViewLoadFile();
+                        FtpViewAccessDiskSpace();
                     }
                 } else if ((a = l) == 'H') { // Перейти в домашную папку
                     ThreadsNetFtpGoToHomeDir();
@@ -386,7 +388,58 @@ void FtpViewKeyA() {
     }
 }
 
+void FtpViewAccessDiskSpace() {
+    push_pop(de, hl) {
+//        a = 0;
+//        myCharPosX = a;
+//        a = 0;
+//        myCharPosY = a;
+        // Находим указатель на файл
+        d = 0;
+        a ^= a;
+        a = FtpViewFileCurrentPos;
+        carry_rotate_left(a, 4);
+        e = a;
+        if (flag_c) {
+            d = 1;
+        }
+        hl = FtpViewFilesList;
+        hl += de;
+        // Сдвигаем к размеру файла и читаем размер
+        de = 8;
+        hl += de;
+        //
+        a = *hl;
+        d = a;
+        hl++;
+        a = *hl;
+        e = a;
+        //
+//        printMyHexA(a = d);
+//        printMyHexA(a = e);
+        //
+        DiskViewIsDiskSpaceDE();
+        if (a == 1) {
+            FtpViewLoadFile();
+        } else {
+            AllertOkViewShowHL(hl = StringLocaleDiskFull);
+        }
+    }
+}
+
 void FtpViewLoadFile() {
+    //--
+    a ^= a;
+    d = 0;
+    a = FtpViewFileCurrentPos;
+    carry_rotate_left(a, 4);
+    e = a;
+    if (flag_c) {
+        d++;
+    }
+    hl = FtpViewFilesList;
+    hl += de;
+    //--
     LoadViewShowHL(hl = LoadViewLoadTitle);
     #ifdef _IS_SIMULATOR
         push_pop(bc) {
@@ -446,6 +499,7 @@ void FtpViewCurrentPosIsDir() {
     push_pop(hl, bc) {
         hl = FtpViewFilesList;
         //--
+        a ^= a;
         a = FtpViewFileCurrentPos;
         a &= 0x3F;
         b = 0;

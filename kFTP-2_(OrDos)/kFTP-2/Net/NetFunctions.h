@@ -198,6 +198,7 @@ void NetWiFiGetList() {
                 //--
                 hl = WiFiNetworksViewSSIDList;
                 d = 0;
+                a ^= a;
                 a = c;
                 carry_rotate_left(a, 4);
                 if (flag_c) { // Если переполняние младшего разряда, инкремент старшего

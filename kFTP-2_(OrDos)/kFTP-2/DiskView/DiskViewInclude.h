@@ -45,5 +45,9 @@ void DiskViewUpdateDateAndUI();
 void DiskViewDeleteSelectedFile();
 void DiskViewUploadSelectedFile();
 void DiskViewReload();
+/// Проверка, хватит ли места на текущем диске для файла
+/// вх[DE] - размер предпологаемого файла. Еще надо прибавить 16 - для заголовка
+/// вых[A] - 0 - места нет, 1 - место есть
+void DiskViewIsDiskSpaceDE();
 
 #endif /* DiskViewInclude_h */

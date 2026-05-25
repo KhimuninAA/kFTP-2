@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F907CCBC-259D-48F5-80EF-83789476E6BD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "kFTP-2/DiskView/DiskViewFunctions.h"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "DiskViewDeleteSelectedFile()"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "EF207047-A384-47E4-A97E-C59D28EDD2DD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -30,8 +14,8 @@
             filePath = "kFTP-2/Net/Parser/ParserFunctions.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
             landmarkName = "ParserBufferSumToHL()"
             landmarkType = "9">
          </BreakpointContent>
@@ -46,8 +30,8 @@
             filePath = "kFTP-2/Net/Parser/ParserFunctions.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "NetFtpLoadFileNextParseCalkDiskPosToHL()"
             landmarkType = "9">
          </BreakpointContent>
@@ -62,8 +46,8 @@
             filePath = "kFTP-2/Net/Parser/ParserFunctions.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
             landmarkName = "ParserBufferErrorSumShow()"
             landmarkType = "9">
          </BreakpointContent>
@@ -71,16 +55,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BCC8A9F7-D219-43F6-B415-1117084BB867"
+            uuid = "12F40DFB-C9B3-4961-A401-E67CD547A187"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "kFTP-2/DiskView/DiskViewFunctions.h"
+            filePath = "kFTP-2/FtpView/FtpViewFunctions.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "DiskViewKeyA()"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
+            landmarkName = "FtpViewLoadFile()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

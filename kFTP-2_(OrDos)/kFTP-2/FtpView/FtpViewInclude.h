@@ -43,4 +43,6 @@ void FtpViewLoadFile();
 void FtpViewEmptyList();
 void FtpViewListUpdateUI();
 
+void FtpViewAccessDiskSpace();
+
 #endif /* FtpViewInclude_h */

@@ -23,7 +23,7 @@ asm{
     //Start
     DB 0x00, 0x01
     //Len
-    DB 0x00, 0x39 //0x34C0 0x00, 0x35
+    DB 0x00, 0x3A //0x34C0 0x00, 0x35
     //Reserved
     DB 0x00, 0x00, 0x00, 0x00
 }
@@ -57,6 +57,7 @@ void mainStart() {
     CurrentViewChangeIdA(a = FtpViewId);
     
     #ifdef _IS_SIMULATOR
+        DiskViewReload();
     #else
         NetUpdateData();
         ThreadsTickNow();
@@ -132,5 +133,5 @@ void KeyboardEventA() {
 
 #include "Functions.h"
 
-asm(" savebin \"kFTP2.ORD\", 0x00f0, 0x3910"); //0x3210 3510
-asm(" savebin \"test.ORD\", 0x00f0, 0x3910");
+asm(" savebin \"kFTP2.ORD\", 0x00f0, 0x3A10"); //0x3210 3510
+asm(" savebin \"test.ORD\", 0x00f0, 0x3A10");

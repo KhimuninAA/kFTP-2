@@ -17,5 +17,6 @@ extern uint8_t StringLocaleFileReadOnly[15];
 extern uint8_t StringLocaleNetTimeOut[12];
 extern uint8_t StringLocaleNetFtpDeleteFileError[20];
 extern uint8_t StringLocaleNetFtpConnectError[18];
+extern uint8_t StringLocaleDiskFull[10];
 
 #endif /* StringLocaleInclude_h */

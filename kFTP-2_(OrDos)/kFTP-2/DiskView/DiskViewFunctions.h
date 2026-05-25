@@ -128,6 +128,7 @@ void DiskViewDeleteSelectedFile() {
         a = DiskViewDiskNum;
         ordos_wnd();
         hl = DiskViewDirBufer;
+        a ^= a;
         a = DiskViewFileCurrentPos;
         a -= 1; // Удалить корневой переход на другой диск
         b = 0;
@@ -183,6 +184,7 @@ void DiskViewUploadSelectedFile() {
         LoadViewShowProgressA(a = 0);
         //-- create point File
         hl = DiskViewDirBufer;
+        a ^= a;
         a = DiskViewFileCurrentPos;
         a -= 1; // Удалить корневой переход на другой диск
         b = 0;
@@ -250,6 +252,49 @@ void DiskViewKeyA() {
     }
 }
 
+/// Проверка, хватит ли места на текущем диске для файла
+/// вх[DE] - размер предпологаемого файла. Еще надо прибавить 16 - для заголовка
+/// вых[A] - 0 - места нет, 1 - место есть
+void DiskViewIsDiskSpaceDE() {
+    push_pop(hl, de) {
+        //-- Add 16
+        hl = 16;
+        hl += de;
+        d = h;
+        e = l;
+        //--
+        push_pop(de) {
+            a = DiskViewDiskNum;
+            ordos_wnd();
+            ordos_mxdsk();
+        }
+        a ^= a;
+        hl += de;
+        if (flag_c) {
+            a = 0; // Сумма > FFFF
+        } else {
+            d = h;
+            e = l;
+            ordos_rmax();
+            //--
+            a = d; // Инвертируем старший байт D
+            invert(a);
+            d = a;
+            a = e; // Инвертируем младший байт E
+            invert(a);
+            e = a;
+            de++; // Получаем точный дополнительный код DE (-DE)
+            a ^= a;
+            hl += de; // HL = HL + (-DE), что эквивалентно HL - DE
+            if (flag_c) { // Если HL > DE: перенос будет C = 1.
+                a = 1;
+            } else {
+                a = 0;
+            }
+        }
+    }
+}
+
 void DiskViewNextDiskNum() {
     a = DiskViewDiskNum;
     a++;
@@ -266,7 +311,10 @@ void DiskViewSetDiskNumA() {
         if (a != c) {
             a = c;
             DiskViewDiskNum = a;
-            NetDiskSetNum();
+            #ifdef _IS_SIMULATOR
+            #else
+                NetDiskSetNum();
+            #endif
             DiskViewReload();
         }
     }

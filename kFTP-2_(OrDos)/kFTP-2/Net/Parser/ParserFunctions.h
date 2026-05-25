@@ -54,6 +54,7 @@ void NetFtpListFilesParse() {
                 //--
                 hl = FtpViewFilesList;
                 d = 0;
+                a ^= a;
                 a = c;
                 carry_rotate_left(a, 4);
                 if (flag_c) { // Если переполняние младшего разряда, инкремент старшего
@@ -163,6 +164,7 @@ void NetFtpLoadFileNextParseCalkDiskPosToHL() {
         d = h;
         e = l;
         hl = DiskViewStartNewFile;
+        a ^= a;
         a = l;
         a += e;
         if (flag_c) {

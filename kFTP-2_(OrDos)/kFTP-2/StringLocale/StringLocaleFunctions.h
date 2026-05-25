@@ -19,5 +19,6 @@ uint8_t StringLocaleNetTimeOut[] = "Net timeout";
 uint8_t StringLocaleNetFtpDeleteFileError[] = "FTP file not delete";
 uint8_t StringLocaleNetFtpConnectError[] = "FTP connect error";
 uint8_t StringLocaleNetWiFiConnectError[] = "WiFi connect error";
+uint8_t StringLocaleDiskFull[] = "Disk full";
 
 #endif /* StringLocaleFunctions_h */

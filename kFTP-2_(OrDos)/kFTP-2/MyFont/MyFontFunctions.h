@@ -125,6 +125,7 @@ void printMyCharA() {
         a &= 0x07;
         a += h;
         h = a;
+        a ^= a;
         a = b;
         a &= 0xF8;
         a += l;
