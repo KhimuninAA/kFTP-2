@@ -49,5 +49,13 @@ void DiskViewReload();
 /// вх[DE] - размер предпологаемого файла. Еще надо прибавить 16 - для заголовка
 /// вых[A] - 0 - места нет, 1 - место есть
 void DiskViewIsDiskSpaceDE();
+/// HL = HL + (-DE)
+/// вх[DE,HL]
+/// вых[HL, A] - HL - результат вычитания , A = 1 HL > DE
+void DiskViewHLSubDE();
+/// Возвращает свободное место на диске
+/// вых[HL] - результат
+void DiskViewDiskFreeSpaceHL();
+void DiskViewShowFreeSpace();
 
 #endif /* DiskViewInclude_h */

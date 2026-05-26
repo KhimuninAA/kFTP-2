@@ -44,5 +44,6 @@ void FtpViewEmptyList();
 void FtpViewListUpdateUI();
 
 void FtpViewAccessDiskSpace();
+void FtpViewShow4CharSizeDE();
 
 #endif /* FtpViewInclude_h */

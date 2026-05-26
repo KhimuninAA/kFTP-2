@@ -179,22 +179,7 @@ void FtpViewShowFileSize() {
                     }
                 }
                 if ((a = h) == 0) { // Показываем размер
-                    //hl = 0x0400;
-                    //compareHlDe();
-                    if ((a = d) < 4) { // < 1024 в байтах //flag_c
-                        push_pop(hl) {
-                            h = d;
-                            l = e;
-                            printMyAsDec4095HL();
-                        }
-                    } else { // В Кб
-                        a = d;
-                        a &= 0xFC;
-                        cyclic_rotate_right(a, 2);
-                        printMyAsDec99A();
-                        printMyCharA(a = 'K');
-                        printMyCharA(a = 'b');
-                    }
+                    FtpViewShow4CharSizeDE();
                 } else { // Файл слишком большой
                     printMyCharA(a = ' ');
                     printMyCharA(a = 'B');
@@ -210,6 +195,23 @@ void FtpViewShowFileSize() {
             printMyCharA(a = ' ');
             FtpViewShowIsDirA(a = 1);
         }
+    }
+}
+
+void FtpViewShow4CharSizeDE() {
+    if ((a = d) < 4) { // < 1024 в байтах //flag_c
+        push_pop(hl) {
+            h = d;
+            l = e;
+            printMyAsDec4095HL();
+        }
+    } else { // В Кб
+        a = d;
+        a &= 0xFC;
+        cyclic_rotate_right(a, 2);
+        printMyAsDec99A();
+        printMyCharA(a = 'K');
+        printMyCharA(a = 'b');
     }
 }
 

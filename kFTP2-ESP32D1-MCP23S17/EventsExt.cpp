@@ -171,7 +171,9 @@ void EventsExt_Disk_Response() {
     sum += interruptData.buffer[i];
   }
   if (sum == interruptData.buffer[2] && interruptData.buffer[0] == 0x3C) {
-    data.disk[0] = interruptData.buffer[1];
+    if (interruptData.buffer[1] >= 'A' && interruptData.buffer[1] <= 'D') {
+      data.disk[0] = interruptData.buffer[1];
+    }
   }
 }
 

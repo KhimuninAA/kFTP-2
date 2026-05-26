@@ -84,7 +84,7 @@ void EEPROMStoreEmptyFix() {
   }
   //Disk
   byte = data.disk[0];
-  if (byte == 0xFF) {
+  if (byte < 'A' || byte > 'D') {
     data.disk[0] = 'B';
   }
 }

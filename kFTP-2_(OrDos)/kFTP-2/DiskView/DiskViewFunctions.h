@@ -263,35 +263,72 @@ void DiskViewIsDiskSpaceDE() {
         d = h;
         e = l;
         //--
-        push_pop(de) {
-            a = DiskViewDiskNum;
-            ordos_wnd();
-            ordos_mxdsk();
-        }
+        DiskViewDiskFreeSpaceHL();
+        DiskViewHLSubDE();
+    }
+}
+
+/// HL = HL + (-DE)
+/// вх[DE,HL]
+/// вых[HL, A] - HL - результат вычитания , A = 1 HL > DE
+void DiskViewHLSubDE() {
+    push_pop(de) {
+        a = d; // Инвертируем старший байт D
+        invert(a);
+        d = a;
+        a = e; // Инвертируем младший байт E
+        invert(a);
+        e = a;
+        de++; // Получаем точный дополнительный код DE (-DE)
         a ^= a;
-        hl += de;
-        if (flag_c) {
-            a = 0; // Сумма > FFFF
+        hl += de; // HL = HL + (-DE), что эквивалентно HL - DE
+        if (flag_c) { // Если HL > DE: перенос будет C = 1.
+            a = 1;
         } else {
-            d = h;
-            e = l;
-            ordos_rmax();
-            //--
-            a = d; // Инвертируем старший байт D
-            invert(a);
-            d = a;
-            a = e; // Инвертируем младший байт E
-            invert(a);
-            e = a;
-            de++; // Получаем точный дополнительный код DE (-DE)
-            a ^= a;
-            hl += de; // HL = HL + (-DE), что эквивалентно HL - DE
-            if (flag_c) { // Если HL > DE: перенос будет C = 1.
-                a = 1;
-            } else {
-                a = 0;
-            }
+            a = 0;
         }
+    }
+}
+
+/// Возвращает свободное место на диске
+/// вых[HL] - результат
+void DiskViewDiskFreeSpaceHL() {
+    push_pop(de) {
+        a = DiskViewDiskNum;
+        ordos_wnd();
+        ordos_mxdsk();
+        d = h;
+        e = l;
+        //--
+        ordos_rmax();
+        //--
+        DiskViewHLSubDE();
+    }
+}
+
+void DiskViewShowFreeSpace() {
+    push_pop(de, hl) {
+        a = DiskViewX;
+        e = a;
+        a = DiskViewDX;
+        a += e;
+        a -= 7;
+        myCharPosX = a;
+        a = DiskViewY;
+        e = a;
+        a = DiskViewDY;
+        a += e;
+        a--;
+        myCharPosY = a;
+        //-- 0xB5
+        printMyCharA(a = 0xB5);
+        //--
+        DiskViewDiskFreeSpaceHL();
+        d = h;
+        e = l;
+        FtpViewShow4CharSizeDE();
+        //-- 0xC6
+        printMyCharA(a = 0xC6);
     }
 }
 
@@ -334,6 +371,7 @@ void DiskViewUpdateDateAndUI() {
     if ((a = CurrentViewId) == DiskViewId) {
         DiskViewShowSelectLineA(a = 1);
     }
+    DiskViewShowFreeSpace();
 }
 
 void DiskViewUpdateDiskTitle() {
