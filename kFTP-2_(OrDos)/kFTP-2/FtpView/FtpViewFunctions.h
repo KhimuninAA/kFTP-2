@@ -358,7 +358,6 @@ void FtpViewKeyA() {
                     } else {
                         FtpViewCurrentPosIsDir();
                         if (a == 1) { // Enter Dir
-                            printMyCharA(a = 'Y');
                             FtpViewShowSelectLineA(a = 0); // TODO надо убрать...
                             NetFtpChangeDirIndexA(a = FtpViewFileCurrentPos);
                             FtpViewNetLoadAndUpdate();

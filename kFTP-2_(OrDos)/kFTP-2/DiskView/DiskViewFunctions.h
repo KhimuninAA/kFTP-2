@@ -79,8 +79,19 @@ void DiskViewShowDir() {
                 } while ((a = c) > 0);
                 hl++;
                 hl++;
-                hl++;
-                hl++;
+                push_pop(de) {
+                    a = *hl;
+                    e = a;
+                    hl++;
+                    a = *hl;
+                    d = a;
+                    printMyCharA(a = ' ');
+                    printMyCharA(a = ' ');
+                    printMyCharA(a = ' ');
+                    printMyCharA(a = ' ');
+                    FtpViewShow4CharSizeDE();
+                    hl++;
+                }
                 hl++;
                 hl++;
                 hl++;
@@ -123,10 +134,8 @@ void DiskViewShowDir() {
     }
 }
 
-void DiskViewDeleteSelectedFile() {
-    push_pop(hl, bc) {
-        a = DiskViewDiskNum;
-        ordos_wnd();
+void DiskViewCurrentFileNameHL() {
+    push_pop(bc) {
         hl = DiskViewDirBufer;
         a ^= a;
         a = DiskViewFileCurrentPos;
@@ -154,6 +163,14 @@ void DiskViewDeleteSelectedFile() {
                 b--;
             } while ((a = b) > 0);
         }
+    }
+}
+
+void DiskViewDeleteSelectedFile() {
+    push_pop(hl, bc) {
+        a = DiskViewDiskNum;
+        ordos_wnd();
+        DiskViewCurrentFileNameHL();
         ordos_sdma();
         ordos_eras();
         //а = 1 - нет файла
@@ -231,8 +248,8 @@ void DiskViewKeyA() {
                 } else if ((a = l) == 0x0D) { //Enter
                     if ((a = DiskViewFileCurrentPos) == 0) { // Смена диска
                         DiskViewNextDiskNum();
-                    } else { // Закачка на FTP
-                        
+                    } else { // Запуск приложения
+                        DiskViewSelectFileExec();
                     }
                 } else if ((a = l) == 'E') {
                     if ((a = DiskViewFileCurrentPos) > 0) {
@@ -244,11 +261,60 @@ void DiskViewKeyA() {
                 } else if ((a = l) == 'D') { //  Показать выбор диска
                     SelectDiskViewShow();
                 } else if ((a = l) == 'C') { // Загрузка файла на FTP
-                    DiskViewUploadSelectedFile();
-                    FtpViewNetLoadAndUpdate(); // обновляем список файлов FTP
+                    if ((a = DiskViewFileCurrentPos) != 0) {
+                        DiskViewUploadSelectedFile();
+                        FtpViewNetLoadAndUpdate(); // обновляем список файлов FTP
+                    }
+                } else if ((a = l) == 'F') { //  Отформатировать диск
+                    DiskViewFormat();
                 }
             }
         }
+    }
+}
+
+void DiskViewFormat() {
+    push_pop(hl) {
+        AllertYesNoViewShowHL(hl = StringLocaleDiskFormat);
+        if (a == 1) {
+            a = DiskViewDiskNum;
+            ordos_wnd();
+            hl = 0;
+            ordos_wdisk(a = 0xFF);
+            DiskViewReload();
+        }
+    }
+}
+
+void DiskViewSelectFileExec() {
+    push_pop(hl,de,bc) {
+        //
+        unpackCharCode();
+        //-- ResidentProgram Copy
+        push_pop(de,bc) {
+            de = DiskViewExecData;
+            hl = 0xA800; //0xF000;
+            b = 8;
+            do {
+                a = *de;
+                *hl = a;
+                de++;
+                hl++;
+                b--;
+            } while ((a = b) > 0);
+        }
+        //--
+        //unpackCharCode();
+        //--
+        a = DiskViewDiskNum;
+        ordos_wnd();
+        DiskViewCurrentFileNameHL();
+        DiskViewResidentProgram();
+        //-- Go to height
+//        ordos_sdma();
+//        ordos_rfile();
+//        
+//        return hl();
     }
 }
 
@@ -464,5 +530,8 @@ uint16_t DiskViewStartNewFile = 0x0000;
 
 uint8_t DiskViewDirRootTitle[] = "..";
 uint8_t DiskViewTitle[] = {0xB5, 'D', 'i', 's', 'k', ':', 'A', 0xC6, '\0'};
+
+
+uint8_t DiskViewExecData[] = {0xCD , 0xD0 , 0xBF , 0xCD , 0xFA , 0xBF , 0xE9 , 0x00};
 
 #endif /* DiskViewFunctions_h */

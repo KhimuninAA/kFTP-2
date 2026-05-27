@@ -23,6 +23,11 @@ extern uint16_t DiskViewStartNewFile;
 extern uint8_t DiskViewTitle[9];
 extern uint8_t DiskViewDirRootTitle[3];
 
+extern uint8_t DiskViewExecData[8];
+
+///запуск резидентного выполнения
+void DiskViewResidentProgram() __address(0xA800); //0xA800 0xF000
+
 void DiskViewShow();
 void DiskViewShowTitle();
 void DiskViewUpdateDir();
@@ -57,5 +62,8 @@ void DiskViewHLSubDE();
 /// вых[HL] - результат
 void DiskViewDiskFreeSpaceHL();
 void DiskViewShowFreeSpace();
+void DiskViewFormat();
+void DiskViewCurrentFileNameHL();
+void DiskViewSelectFileExec();
 
 #endif /* DiskViewInclude_h */
