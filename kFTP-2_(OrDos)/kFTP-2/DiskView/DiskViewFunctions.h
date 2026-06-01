@@ -45,7 +45,184 @@ void DiskViewUpdateDir() {
     }
 }
 
+/// HL
+void DiskViewDirBuferStartIndexToHL() {
+    push_pop(de) {
+        hl = DiskViewDirBufer;
+        d = 0;
+        a ^= a;
+        a = DiskViewDirStartIndex;
+        carry_rotate_left(a, 4);
+        e = a;
+        if (flag_c) { // Если переполняние младшего разряда, инкремент старшего
+            d++;
+        }
+        hl += de;
+    }
+}
+
+void DiskViewDirEndIndexCalc() {
+    push_pop(bc) {
+        //--
+        a = DiskViewDirPageCoint;
+        c = a;
+        //--
+        a = DiskViewDirStartIndex;
+        b = a;
+        a = DiskViewDirCount;
+        a -= b;
+        if (a >= c) {
+            a = c;
+        }
+        DiskViewDirEndIndex = a;
+    }
+}
+
+void DiskViewDirProgressLineCalk() {
+    push_pop(bc) {
+        a = DiskViewDirPageCoint;
+        b = a;
+        a = DiskViewDirCount;
+        a -= b;
+        b = a;
+        if (a < DiskViewDirProgressCount) {
+            a = DiskViewDirProgressCount;
+            a -= b;
+            DiskViewDirProgressLen = a;
+        } else {
+            a = 1;
+            DiskViewDirProgressLen = a;
+        }
+    }
+}
+
+void DiskViewDirProgressCharByIndexA() {
+    push_pop(bc, de) {
+        b = a;
+        //--
+        a = DiskViewDirProgressLen;
+        d = a;
+        //--
+        a = DiskViewDirStartIndex;
+        c = a;
+        a = b;
+        a -= c;
+        c = a;
+        if (a == 0) {
+            a = 0xB1;
+        } else if ((a = c) < d ) {
+            a = 0xB1;
+        } else if ((a = DiskViewDirStartIndex) >= DiskViewDirProgressCount ) {
+            //printMyCharA(a = 'F');
+            if ((a = b) == DiskViewDirProgressCount-1) {
+                a = 0xB1;
+            } else {
+                a = 0xB0;
+            }
+        } else {
+            a = 0xB0;
+        }
+    }
+}
+
+void DiskViewDirProgress() {
+    push_pop(bc, de) {
+        //-- d = x
+        a = DiskViewX;
+        d = a;
+        a = DiskViewDX;
+        a += d;
+        a--;
+        d = a;
+        //-- e = start y
+        a = DiskViewY;
+        a += 2; //4;
+        e = a;
+        //--
+        a = DiskViewDirCount;
+        c = a;
+        if ((a = DiskViewDirPageCoint) < c) {
+            DiskViewDirProgressLineCalk();
+            //-- TOP
+            a = d;
+            myCharPosX = a;
+            a = e;
+            myCharPosY = a;
+            e++;
+            printMyCharA(a = 0x1E);
+            //--
+            b = 0;
+            do {
+                //-- Set pos
+                a = d;
+                myCharPosX = a;
+                a = e;
+                myCharPosY = a;
+                //--
+                DiskViewDirProgressCharByIndexA(a = b);
+                printMyCharA();
+                //-- Inc pos
+                e++;
+                //--
+                b++;
+            } while ((a = b) < DiskViewDirProgressCount);
+            //-- BOTTOM
+            a = d;
+            myCharPosX = a;
+            a = e;
+            myCharPosY = a;
+            printMyCharA(a = 0x1F);
+        } else {
+            b = DiskViewDirProgressCount;
+            b++; // Добавлены 2 символа вверх и вниз
+            b++;
+            do {
+                //-- Set pos
+                a = d;
+                myCharPosX = a;
+                a = e;
+                myCharPosY = a;
+                //--
+                printMyCharA(a = 0xBA);
+                //-- Inc pos
+                e++;
+                //--
+                b--;
+            } while ((a = b) > 0);
+        }
+    }
+}
+
+void DiskViewDirEndIndexCalcFix() {
+    DiskViewDirEndIndexCalc();
+    push_pop(bc) {
+        a = DiskViewDirPageCoint;
+        c = a;
+        a = DiskViewDirCount;
+        b = a;
+        if ((a = DiskViewDirStartIndex) > 0) {
+            if ((a = DiskViewDirEndIndex) < c) {
+                if ((a = c) >= b) { // Если кол-во файлов равно странице
+                    a = 0;
+                    DiskViewDirStartIndex = a;
+                    a = DiskViewDirCount;
+                    DiskViewDirEndIndex = a;
+                } else {
+                    a = DiskViewDirPageCoint;
+                    DiskViewDirEndIndex = a;
+                    b = a;
+                    a = DiskViewDirCount;
+                    a -= b;
+                    DiskViewDirStartIndex = a;
+                }
+            }
+        }
+    }
+}
+
 void DiskViewShowDir() {
+    DiskViewDirEndIndexCalcFix();
+    DiskViewDirProgress();
     push_pop(hl, bc, de) {
         //-----
         a = DiskViewX;
@@ -63,7 +240,8 @@ void DiskViewShowDir() {
         printMyHLStr(hl = DiskViewDirRootTitle);
         //-----
         if ((a = DiskViewDirCount) >= 1) {
-            hl = DiskViewDirBufer;
+            //hl = DiskViewDirBufer;
+            DiskViewDirBuferStartIndexToHL();
             b = 0;
             do {
                 a = d;
@@ -97,18 +275,18 @@ void DiskViewShowDir() {
                 hl++;
                 hl++;
                 b++;
-                a = DiskViewDirCount;
+                a = DiskViewDirEndIndex;
                 a--;
             } while (a >= b);
         }
         // show empty rows
-        a = DiskViewDirCount;
+        a = DiskViewDirEndIndex;
         b = a;
         // PosY
         a = e;
         a += b;
         e = a;
-        //
+        // DY - 4 позиции и - b (кол-во отображаемых файлов)
         a = DiskViewDY;
         a -= 4;
         a -= b;
@@ -136,16 +314,18 @@ void DiskViewShowDir() {
 
 void DiskViewCurrentFileNameHL() {
     push_pop(bc) {
-        hl = DiskViewDirBufer;
-        a ^= a;
-        a = DiskViewFileCurrentPos;
-        a -= 1; // Удалить корневой переход на другой диск
-        b = 0;
-        carry_rotate_left(a, 4);
-        if (flag_c) { // Если переполняние младшего разряда, инкремент старшего
-            b++;
-        }
+        h = 0;
+        a = DiskViewDirStartIndex;
         c = a;
+        a = DiskViewFileCurrentPos;
+        a += c; // Прибавить скрол
+        a -= 1; // Удалить корневой переход на другой диск
+        l = a;
+        hl <<= 4;
+        b = h;
+        c = l;
+        hl = DiskViewDirBufer;
+        
         hl += bc;
         push_pop(hl) { // Проставляем 0 в конце строки
             bc = 7;
@@ -200,33 +380,7 @@ void DiskViewUploadSelectedFile() {
         LoadViewShowHL(hl = LoadViewUploadTitle);
         LoadViewShowProgressA(a = 0);
         //-- create point File
-        hl = DiskViewDirBufer;
-        a ^= a;
-        a = DiskViewFileCurrentPos;
-        a -= 1; // Удалить корневой переход на другой диск
-        b = 0;
-        carry_rotate_left(a, 4);
-        if (flag_c) { // Если переполняние младшего разряда, инкремент старшего
-            b++;
-        }
-        c = a;
-        hl += bc;
-        push_pop(hl) { // Проставляем 0 в конце строки
-            bc = 7;
-            hl += bc;
-            b = 7;
-            do {
-                a = *hl;
-                if (a == 0x20) {
-                    a = 0;
-                    *hl = a;
-                } else {
-                    b = 1;
-                }
-                hl--;
-                b--;
-            } while ((a = b) > 0);
-        }
+        DiskViewCurrentFileNameHL();
         // NET
         NetFtpUploadFileInitHL();
         // Close progress
@@ -303,9 +457,6 @@ void DiskViewSelectFileExec() {
                 b--;
             } while ((a = b) > 0);
         }
-        //--
-        //unpackCharCode();
-        //--
         a = DiskViewDiskNum;
         ordos_wnd();
         DiskViewCurrentFileNameHL();
@@ -426,6 +577,7 @@ void DiskViewSetDiskNumA() {
 void DiskViewReload() {
     DiskViewShowSelectLineA(a = 0);
     a = 0;
+    DiskViewDirStartIndex = a;
     DiskViewFileCurrentPos = a;
     DiskViewUpdateDiskTitle();
     DiskViewUpdateDateAndUI();
@@ -455,23 +607,77 @@ void DiskViewUpdateDiskTitle() {
 /// 1 - вверх
 /// 0xFF - вниз
 void DiskViewFileCurrentPosUpdateA() {
-    push_pop(bc) {
+    push_pop(bc, de) {
         b = a;
+        DiskViewDirEndIndexCalc();
         if (a == 0) {
             DiskViewShowSelectLineA(a = 1);
         } else {
-            a = DiskViewDirCount;
+            a = DiskViewDirEndIndex; //DiskViewDirCount;
             a += 1;
             c = a;
             DiskViewShowSelectLineA(a = 0);
             a = DiskViewFileCurrentPos;
             a += b;
+            d = a;
             //
             if (a == 0xFF) {
-                a = c;
-                a--;
+                // Можно ли скролить вверх
+                a = DiskViewDirStartIndex;
+                if (a > 0) {
+                    a--;
+                    DiskViewDirStartIndex = a;
+                    DiskViewShowDir();
+                    a = 0;
+                } else {
+                    #ifdef _IS_CYCLIC_MOVEMENT_THROUGH_THE_LIST_OF_FILES
+                        a = 0;
+                    #else
+                        push_pop(bc) {
+                            a = DiskViewDirPageCoint;
+                            b = a;
+                            a = DiskViewDirCount;
+                            if (a >= b) {
+                                a -= b;
+                                DiskViewDirStartIndex = a;
+                            } else {
+                                a = 0;
+                                DiskViewDirStartIndex = a;
+                            }
+                        }
+                        DiskViewShowDir();
+                        a = c;
+                        a--;
+                    #endif
+                }
             } else if (a == c) {
-                a = 0;
+                // Можно ли еще скролить вниз
+                push_pop(bc) {
+                    b = a;
+                    a = DiskViewDirCount;
+                    a++;
+                    c = a;
+                    a = DiskViewDirStartIndex;
+                    a += b;
+                    if (a < c) {
+                        a = DiskViewDirStartIndex;
+                        a++;
+                        DiskViewDirStartIndex = a;
+                        DiskViewShowDir();
+                        a = b;
+                        a--;
+                    } else {
+                        #ifdef _IS_CYCLIC_MOVEMENT_THROUGH_THE_LIST_OF_FILES
+                            a = d;
+                            a--;
+                        #else
+                            a = 0;
+                            DiskViewDirStartIndex = a;
+                            DiskViewShowDir();
+                            a = 0;
+                        #endif
+                    }
+                }
             }
             DiskViewFileCurrentPos = a;
             DiskViewShowSelectLineA(a = 1);
@@ -525,6 +731,12 @@ uint8_t DiskViewDiskNum = 'B';
 uint8_t DiskViewDirCount = 0;
 uint16_t DiskViewDirBufer = 0x0000;
 uint8_t DiskViewFileCurrentPos = 0;
+
+uint8_t DiskViewDirStartIndex = 0;
+uint8_t DiskViewDirEndIndex = 0;
+uint8_t DiskViewDirPageCoint = 20;
+
+uint8_t DiskViewDirProgressLen = 0;
 
 uint16_t DiskViewStartNewFile = 0x0000;
 

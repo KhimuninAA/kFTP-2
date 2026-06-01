@@ -8,6 +8,8 @@
 #ifndef DiskViewInclude_h
 #define DiskViewInclude_h
 
+const uint8_t DiskViewDirProgressCount = 19;
+
 extern uint8_t DiskViewX;
 extern uint8_t DiskViewY;
 extern uint8_t DiskViewDX;
@@ -20,10 +22,16 @@ extern uint16_t DiskViewDirBufer;
 extern uint8_t DiskViewFileCurrentPos;
 extern uint16_t DiskViewStartNewFile;
 
+extern uint8_t DiskViewDirStartIndex;
+extern uint8_t DiskViewDirEndIndex;
+extern uint8_t DiskViewDirPageCoint;
+
 extern uint8_t DiskViewTitle[9];
 extern uint8_t DiskViewDirRootTitle[3];
 
 extern uint8_t DiskViewExecData[8];
+
+extern uint8_t DiskViewDirProgressLen;
 
 ///запуск резидентного выполнения
 void DiskViewResidentProgram() __address(0xA800); //0xA800 0xF000
@@ -65,5 +73,12 @@ void DiskViewShowFreeSpace();
 void DiskViewFormat();
 void DiskViewCurrentFileNameHL();
 void DiskViewSelectFileExec();
+
+void DiskViewDirBuferStartIndexToHL();
+void DiskViewDirEndIndexCalc();
+void DiskViewDirEndIndexCalcFix();
+void DiskViewDirProgress();
+void DiskViewDirProgressLineCalk();
+void DiskViewDirProgressCharByIndexA();
 
 #endif /* DiskViewInclude_h */

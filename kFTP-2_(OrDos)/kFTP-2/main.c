@@ -8,12 +8,12 @@
 #include <cmm.h>
 #include "Include.h"
 
-void goToVBOX() __address(0x0106);
+void goToVBOX() __address(0x1006);
 void mainStart();
 void KeyboardEventA();
 
 asm{
-    org 0x00F0
+    org 0x0FF0
 }
 
 ///App Name
@@ -21,9 +21,9 @@ uint8_t appName[] = {'K','F','T','P','2','$',' ',' '};
 
 asm{
     //Start
-    DB 0x00, 0x01
+    DB 0x00, 0x10
     //Len
-    DB 0x00, 0x3A //0x34C0 0x00, 0x35
+    DB 0x00, 0x3C //0x34C0 0x00, 0x35
     //Reserved
     DB 0x00, 0x00, 0x00, 0x00
 }
@@ -100,6 +100,11 @@ void KeyboardEventA() {
             if (a == 1) {
                 HelpInfoViewShow();
             }
+        #ifdef _IS_DEBUG_ADD_FILES_O
+        } else if ((a = b) == 'O') { // o - create file
+            DebugFilesCreate();
+        #else
+        #endif
         }
         
         c = 0;
@@ -133,5 +138,5 @@ void KeyboardEventA() {
 
 #include "Functions.h"
 
-asm(" savebin \"kFTP2.ORD\", 0x00f0, 0x3A10"); //0x3210 3510
-asm(" savebin \"test.ORD\", 0x00f0, 0x3A10");
+asm(" savebin \"kFTP2.ORD\", 0x0ff0, 0x3C10"); //0x3210 3510
+asm(" savebin \"test.ORD\", 0x0ff0, 0x3C10");

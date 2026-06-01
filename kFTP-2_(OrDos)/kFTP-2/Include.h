@@ -9,9 +9,20 @@
 #define Include_h
 
 //#define _IS_MAIN_STACK
+
+/// Для работы симулятора / прод
 //#define _IS_SIMULATOR
+
 //#define _IS_ESP_DELAY
+
+/// Цветовой стил статус окон
 #define _IS_STATUSBAR_BW
+
+/// Циклическое перемешение по списку файлам
+#define _IS_CYCLIC_MOVEMENT_THROUGH_THE_LIST_OF_FILES
+
+/// Добавление массива файлов на выбранный квазидиск по клавише O
+//#define _IS_DEBUG_ADD_FILES_O
 
 extern unsigned char FONT_8_8_RUS[2048];
 
