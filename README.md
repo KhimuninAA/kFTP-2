@@ -20,7 +20,9 @@
 
 ### Сетевая карта:
 - Для работы приложениянеобходима сетевая карта
-<img align="center" width=600 src="img/kFTP2 ESP32 D1 Mini v60.png" />
+<img align="center" width=600 src="./img/kFTP2 ESP32 D1 Mini v60.png" />
+
+### [Сборка ver: 001](AssemblyAndConfigurationV001.md)
 
 ### Схема
 <img align="center" width=600 src="shematic/kFTP2 ESP32 D1 Mini v60.png" />

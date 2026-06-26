@@ -9,7 +9,8 @@ void IRAM_ATTR handleInterrupt() {
 
 void SerialExpanderInit(uint8_t cs_pin) {
   // ~/Documents/Arduino/libraries/Adafruit_MCP23017_Arduino_Library/src/Adafruit_MCP23XXX.cpp
-  if (!mcp.begin_SPI(cs_pin)) {
+  //if (!mcp.begin_SPI(cs_pin)) {
+  if (!mcp.begin_SPI(cs_pin, 18, 19, 23, 0)) {
     Serial.println("Error.");
   }
   SerialExpanderRegSettings();
