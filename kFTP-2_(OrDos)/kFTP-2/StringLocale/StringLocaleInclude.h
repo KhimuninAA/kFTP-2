@@ -20,4 +20,16 @@ extern uint8_t StringLocaleNetFtpConnectError[18];
 extern uint8_t StringLocaleDiskFull[10];
 extern uint8_t StringLocaleDiskFormat[17];
 
+extern uint16_t StringLocaleAddress;
+
+void StringLocaleAddSpaceInHL();
+void StringLocaleCreateLoadTitleA();
+void StringLocaleAddDEInHL();
+void StringLocaleShow4CharSizeDEByHL();
+void StringLocaleMyAsDec99AToHL();
+void StringLocaleCharAToHL();
+void StringLocaleAsDec4095HL();
+void StringLocaleCharAToAddress();
+void StringLocaleCreateUploadTitleA();
+
 #endif /* StringLocaleInclude_h */

@@ -346,6 +346,8 @@ void FtpViewKeyA() {
         if ((a = CurrentViewId) == FtpViewId) {
             if ((a = l) == 0x09) { //0x09 TAB
                 CurrentViewChangeIdA(a = DiskViewId);
+            } else if ((a = l) == 0x18) { //0x18 Вправо
+                CurrentViewChangeIdA(a = DiskViewId);
             } else {
                 if ((a = l) == 0x1A) { //down
                     FtpViewFileCurrentPosUpdateA(a = 0x01);
@@ -429,17 +431,18 @@ void FtpViewAccessDiskSpace() {
 }
 
 void FtpViewLoadFile() {
+    StringLocaleCreateLoadTitleA();
     //--
-    a ^= a;
-    d = 0;
-    a = FtpViewFileCurrentPos;
-    carry_rotate_left(a, 4);
-    e = a;
-    if (flag_c) {
-        d++;
-    }
-    hl = FtpViewFilesList;
-    hl += de;
+//    a ^= a;
+//    d = 0;
+//    a = FtpViewFileCurrentPos;
+//    carry_rotate_left(a, 4);
+//    e = a;
+//    if (flag_c) {
+//        d++;
+//    }
+//    hl = FtpViewFilesList;
+//    hl += de;
     //--
     LoadViewShowHL(hl = LoadViewLoadTitle);
     #ifdef _IS_SIMULATOR

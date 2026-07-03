@@ -71,7 +71,7 @@ void AllertYesNoViewLoopKey() {
                 a = AllertYesNoViewPos;
                 AllertYesNoViewReturnValue = a;
                 b = 1;
-            } else if ((a = c) == 0x18) { // Вправл
+            } else if ((a = c) == 0x18) { // Вправо
                 AllertYesNoViewPosNext();
                 AllertYesNoViewPosUpdate();
             } else if ((a = c) == 0x08) { // Влево

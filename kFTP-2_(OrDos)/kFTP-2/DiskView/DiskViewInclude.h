@@ -81,4 +81,6 @@ void DiskViewDirProgress();
 void DiskViewDirProgressLineCalk();
 void DiskViewDirProgressCharByIndexA();
 
+void DiskViewCurrentFilePointToHL();
+
 #endif /* DiskViewInclude_h */

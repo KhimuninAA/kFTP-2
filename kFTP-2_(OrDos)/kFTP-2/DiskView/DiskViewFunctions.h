@@ -312,7 +312,7 @@ void DiskViewShowDir() {
     }
 }
 
-void DiskViewCurrentFileNameHL() {
+void DiskViewCurrentFilePointToHL() {
     push_pop(bc) {
         h = 0;
         a = DiskViewDirStartIndex;
@@ -327,6 +327,12 @@ void DiskViewCurrentFileNameHL() {
         hl = DiskViewDirBufer;
         
         hl += bc;
+    }
+}
+
+void DiskViewCurrentFileNameHL() {
+    push_pop(bc) {
+        DiskViewCurrentFilePointToHL();
         push_pop(hl) { // Проставляем 0 в конце строки
             bc = 7;
             hl += bc;
@@ -376,6 +382,7 @@ void DiskViewDeleteSelectedFile() {
 
 void DiskViewUploadSelectedFile() {
     push_pop(hl, bc) {
+        StringLocaleCreateUploadTitleA();
         // Open progress view
         LoadViewShowHL(hl = LoadViewUploadTitle);
         LoadViewShowProgressA(a = 0);
@@ -393,6 +400,8 @@ void DiskViewKeyA() {
         l = a;
         if ((a = CurrentViewId) == DiskViewId) {
             if ((a = l) == 0x09) { //0x09 TAB
+                CurrentViewChangeIdA(a = FtpViewId);
+            } else if ((a = l) == 0x08) { // 0x08 Влево
                 CurrentViewChangeIdA(a = FtpViewId);
             } else {
                 if ((a = l) == 0x1A) { //down

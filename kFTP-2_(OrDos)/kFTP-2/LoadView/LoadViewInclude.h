@@ -18,9 +18,20 @@ extern uint8_t LoadViewProgress;
 extern uint8_t LoadViewLoadTitle[8];
 extern uint8_t LoadViewUploadTitle[10];
 
+extern uint8_t LoadViewFTPPrefix[5];
+extern uint8_t LoadViewInfoString[41];
+extern uint8_t LoadViewInfoSubString[41];
+
+extern uint8_t LoadViewStrFrom[6];
+extern uint8_t LoadViewStrTo[4];
+extern uint8_t LoadViewStrName[6];
+extern uint8_t LoadViewStrSize[6];
+
 void LoadViewShowHL();
 void LoadViewShowTitleHL();
 void LoadViewShowProgressA();
 void LoadViewClose();
+void LoadViewShowInfoString();
+void LoadViewShowInfoSubString();
 
 #endif /* LoadViewInclude_h */
