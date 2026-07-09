@@ -211,6 +211,9 @@ void StringLocaleCreateLoadTitleA() {
                 StringLocaleAddSpaceInHL();
             }
             b--;
+            if ((a = b) < (27 - 7 - 16 + 1)) {
+                c = 1;
+            }
         } while ((a = b) > 0);
         // Name
         de = LoadViewStrName;
@@ -367,6 +370,9 @@ void StringLocaleCreateUploadTitleA() {
                 StringLocaleAddSpaceInHL();
             }
             b--;
+            if ((a = b) < (27 - 5 - 16 + 1)) {
+                c = 1;
+            }
         } while ((a = b) > 0);
         // Size
         de = LoadViewStrSize;
