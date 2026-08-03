@@ -41,4 +41,7 @@ void getKeyboardCodeA() __address(0xF81B);
 ///РАСПАКОВКА ВНУТРЕННЕГО ЗНАКОГЕНЕРАТОРА
 void unpackCharCode() __address(0xF82D);
 
+///чтение байта из доп. страниц озу. вход: hl - адрес, a - номер доп. страницы (1-3). выход: c - считанный байт
+void readMemPageAAddrHL() __address(0xF836);
+
 #endif /* monitor_h */
