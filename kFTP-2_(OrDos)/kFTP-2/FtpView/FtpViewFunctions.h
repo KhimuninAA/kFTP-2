@@ -61,7 +61,7 @@ void FtpViewShowFileList() {
             a += 2;
             a += b;
             myCharPosY = a;
-            FtpViewShowFileHL();
+            FtpViewShowFileFromHL();
             // HL + 16 next file
             a ^= a;
             a = 16;
@@ -112,8 +112,9 @@ void FtpViewShowFileList() {
     }
 }
 
-void FtpViewShowFileHL() {
+void FtpViewShowFileFromHL() {
     push_pop(bc, hl) {
+        // b == 0 - Директория
         if ((a = b) == 0) {
             FtpViewShowFileName();
         } else {

@@ -24,7 +24,7 @@ extern uint8_t FtpViewFileCurrentPos;
 void FtpViewShow();
 void FtpViewShowTitle();
 void FtpViewShowFileList();
-void FtpViewShowFileHL();
+void FtpViewShowFileFromHL();
 void FtpViewShowFileName();
 void FtpViewShowFileSize();
 void FtpViewShowFileDate();
