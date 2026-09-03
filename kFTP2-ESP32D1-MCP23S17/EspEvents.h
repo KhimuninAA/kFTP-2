@@ -48,6 +48,7 @@ enum EspEvents_TYPE {
   GET_DISK, // 35
   SET_DISK, // 36
   GET_HARDWARE_AND_SOFTWARE, // 37
+  SET_IS_DSDOS, // 38
 };
 
 void EspEventsExec();

@@ -7,6 +7,7 @@ extern InterruptData interruptData;
 extern FTPClient ftpClientA;
 extern ESPErrorData espError;
 extern bool WIFIflag;
+extern bool isDsDos;
 
 bool EventsExt_VerifyAnswerBufferSum(int from, int count) {
   //interruptData.index
@@ -99,14 +100,22 @@ void ftpFileToBuffer() {
     } else if (c == 0xD0) {
       i++;
       c = tempName[i];
-      c -= 0x10;
+      if (isDsDos == false) {
+        c -= 0x10;
+      } else {
+        c = utfD080[c - 0x80];
+      }
       interruptData.answerBuffer[pos] = c;
       sum += c;
       pos ++;
     } else if (c == 0xD1) {
       i++;
       c = tempName[i];
-      c += 0x60;
+      if (isDsDos == false) {
+        c += 0x60;
+      } else {
+        c = utfD180[c - 0x80];
+      }
       interruptData.answerBuffer[pos] = c;
       sum += c;
       pos ++;

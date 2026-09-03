@@ -2,6 +2,7 @@
 
 extern InterruptData interruptData;
 extern ESPErrorData espError;
+extern bool isDsDos;
 
 FTPClient::FTPClient() {
   ftpDataConnected = false;
@@ -299,13 +300,21 @@ String FTPClient::getCurrentFolder() {
     } else if (c == 0xD0) {
       i++;
       uint8_t utC = chDir[i];
-      utC -= 0x10;
+      if (isDsDos == false) {
+        utC -= 0x10;
+      } else {
+        utC = utfD080[utC - 0x80];
+      }
       tempDir[pos] = utC;
       pos ++;
     } else if (c == 0xD1) {
       i++;
       uint8_t utC = chDir[i];
-      utC += 0x60;
+      if (isDsDos == false) {
+        utC += 0x60;
+      } else {
+        utC = utfD180[utC - 0x80];
+      }
       tempDir[pos] = utC;
       pos ++;
     }

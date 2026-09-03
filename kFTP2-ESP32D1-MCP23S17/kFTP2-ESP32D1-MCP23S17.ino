@@ -12,10 +12,14 @@ FTPClient ftpClientA = FTPClient();
 
 bool isInterrupt = false;
 int loopCount = 0;
+bool isDsDos = false;
 
 //#define USE_DEBUG_MODE
 
 void setup() {
+    //240 МГц, но ее можно снизить до 160, 80, 40, 20, 10 или 2
+  //setCpuFrequencyMhz(80);
+  
   Serial.begin(115200);
   Serial.println("Start!");
 

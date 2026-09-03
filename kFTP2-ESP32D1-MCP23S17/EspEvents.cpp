@@ -7,6 +7,7 @@ extern SSIDData ssidsData[MAX_ENTRIES];
 extern uint8_t SSIDListCount;
 extern uint8_t SSIDListSendCount;
 extern FTPClient ftpClientA;
+extern bool isDsDos;
 
 void EspEventsExec() {
   SerialExpanderSetBusy(true);
@@ -185,6 +186,11 @@ void EspEventsExec() {
     case FTP_FILE_DELETE_INDEX:
       if (interruptData.index > 0) {
         ftpClientA.deleteFile((int)interruptData.buffer[0]);
+      }
+      break;
+    case SET_IS_DSDOS:
+      if (interruptData.index > 0) {
+        isDsDos = (bool)interruptData.buffer[0];
       }
       break;
     case FTP_FILE_DOWNLOAD_NEXT:

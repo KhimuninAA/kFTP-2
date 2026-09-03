@@ -2,6 +2,7 @@
 
 extern EEPROMData data;
 extern ESPErrorData espError;
+extern bool isDsDos;
 
 bool WIFIflag = false;
 SSIDData ssidsData[MAX_ENTRIES];
@@ -74,13 +75,21 @@ void updateListSSID() {
           } else if (c == 0xD0) {
             i++;
             uint8_t utC = ssidCh[i];
-            utC -= 0x10;
+            if (isDsDos == false) {
+              utC -= 0x10;
+            } else {
+              utC = utfD080[utC - 0x80];
+            }
             ssidsData[SSIDListCount].ssidCh[pos] = utC;
             pos ++;
           } else if (c == 0xD1) {
             i++;
             uint8_t utC = ssidCh[i];
-            utC += 0x60;
+            if (isDsDos == false) {
+              utC += 0x60;
+            } else {
+              utC = utfD180[utC - 0x80];
+            }
             ssidsData[SSIDListCount].ssidCh[pos] = utC;
             pos ++;
           }
