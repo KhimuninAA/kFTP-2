@@ -10,6 +10,7 @@
 
 const uint8_t ESPError_No = 0x00;
 const uint8_t ESPError_TimeOut = 0x01;
+const uint8_t ESPError_Response = 0x02;
 
 /// Сигнал тактирования
 #define ESP_Reg_Sck 0x10; //(ESP GPB pin 0x08 (GPB3->11))

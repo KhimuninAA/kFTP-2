@@ -8,6 +8,16 @@
 #ifndef NetFunctions_h
 #define NetFunctions_h
 
+void NetSetIsDsDos() {
+    push_pop(hl) {
+        hl = Net_buffer;
+        *hl = (a = 0);
+        h = 38; // SET_IS_DSDOS, // 38
+        l = 1; // Len NedBuffer
+        ESPSendHL();
+    }
+}
+
 void NetWiFiGetSsidPassword() {
     push_pop(hl, bc) {
         h = 1; // GET_SSID_PASSWORD, // 1
@@ -338,7 +348,8 @@ void NetFtpLoadFileA() {
 }
 
 void NetFtpLoadFileNext() {
-    push_pop(hl) {
+    push_pop(hl, bc) {
+        b = 0;
         a = 1;
         NetFtpLoadFileNextParseSumState = a;
         do {
@@ -351,7 +362,20 @@ void NetFtpLoadFileNext() {
             l = 1; // Len NedBuffer
             ESPSendAndGetHL();
             //--
-            NetFtpLoadFileNextParse();
+            if ((a = l) > 0) {
+                NetFtpLoadFileNextParse();
+                if ((a = NetFtpLoadFileNextParseSumState) == 0x01) {
+                    if ((a = b) == 0) {
+                        b = l;
+                    } else {
+                        if ((a = l) < b) {
+                            l = 0; // Новый пакет короче старого - скорее всего больше нет данных
+                        } else {
+                            b = l;
+                        }
+                    }
+                }
+            }
         } while ((a = l) > 0);
     }
 }

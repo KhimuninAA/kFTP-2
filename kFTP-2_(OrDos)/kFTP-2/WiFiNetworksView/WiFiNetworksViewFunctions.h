@@ -38,6 +38,7 @@ void WiFiNetworksViewUpdateList() {
 
     #else
         WiFiNetworksViewClearData();
+        NetSetIsDsDos();
         NetWiFiListUpdate();
         NetWiFiGetList();
         WiFiNetworksViewFixData();

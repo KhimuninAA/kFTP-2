@@ -8,14 +8,13 @@
 #ifndef Include_h
 #define Include_h
 
-//#define _IS_MAIN_STACK
-
 /// Для работы симулятора / прод
 //#define _IS_SIMULATOR
 
+/// Задержка для обмена с сетевой картой
 //#define _IS_ESP_DELAY
 
-/// Цветовой стил статус окон
+/// Цветовой стиль статус окон
 #define _IS_STATUSBAR_BW
 
 /// Циклическое перемешение по списку файлам
@@ -58,6 +57,7 @@ extern unsigned char FONT_8_8_RUS[2048];
 #include "FtpMakeDirectory/FtpMakeDirectoryInclude.h"
 #include "HelpInfoView/HelpInfoViewInclude.h"
 #include "ESP/ESPError/ESPErrorInclude.h"
+#include "DetectHardware/DetectHardwareInclude.h"
 
 
 #endif /* Include_h */

@@ -150,9 +150,12 @@ void WiFiSettingsViewKeyA() {
                     if ((a = WiFiSettingsViewSelectPos) == 0) { // OK
                         WiFiSettingsViewClose();
                         if ((a = WiFiSettingsViewSSIDIsConnected) == 0) {
-                            NetWiFiConnect(); // Подключиться
-                            ThreadsTickNow(); // Обновить
-                            ThreadsNetDetectError();
+                            #ifdef _IS_SIMULATOR
+                            #else
+                                NetWiFiConnect(); // Подключиться
+                                ThreadsTickNow(); // Обновить
+                                ThreadsNetDetectError();
+                            #endif
                         }
                     } else if ((a = WiFiSettingsViewSelectPos) == 1) { // Выбор SSID
                         WiFiNetworksViewShow();

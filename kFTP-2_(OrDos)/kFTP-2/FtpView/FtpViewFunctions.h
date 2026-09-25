@@ -356,20 +356,29 @@ void FtpViewKeyA() {
                     FtpViewFileCurrentPosUpdateA(a = 0xFF);
                 } else if ((a = l) == 0x0D) { //Enter
                     if ((a = FtpViewFileCurrentPos) == 0) { // Dir UP
-                        NetFtpChangeDirUp();
-                        FtpViewNetLoadAndUpdate();
+                        #ifdef _IS_SIMULATOR
+                        #else
+                            NetFtpChangeDirUp();
+                            FtpViewNetLoadAndUpdate();
+                        #endif
                     } else {
                         FtpViewCurrentPosIsDir();
                         if (a == 1) { // Enter Dir
-                            FtpViewShowSelectLineA(a = 0); // TODO надо убрать...
-                            NetFtpChangeDirIndexA(a = FtpViewFileCurrentPos);
-                            FtpViewNetLoadAndUpdate();
+                            #ifdef _IS_SIMULATOR
+                            #else
+                                FtpViewShowSelectLineA(a = 0); // TODO надо убрать...
+                                NetFtpChangeDirIndexA(a = FtpViewFileCurrentPos);
+                                FtpViewNetLoadAndUpdate();
+                            #endif
                         } else { // Load file
                             FtpViewAccessDiskSpace();
                         }
                     }
                 } else if ((a = l) == 'R') { // Обновление папки
-                    FtpViewNetLoadAndUpdate();
+                    #ifdef _IS_SIMULATOR
+                    #else
+                        FtpViewNetLoadAndUpdate();
+                    #endif
                 } else if ((a = l) == 'C') { // загрузка файла
                     FtpViewCurrentPosIsDir();
                     if (a == 0) { // Проверим что это файл
@@ -381,7 +390,10 @@ void FtpViewKeyA() {
                     if ((a = FtpViewFileCurrentPos) > 0) {
                         AllertYesNoViewShowHL(hl = StringLocaleEraseFile);
                         if (a == 1) {
-                            ThreadsNetFtpDeleteFileA(a = FtpViewFileCurrentPos);
+                            #ifdef _IS_SIMULATOR
+                            #else
+                             ThreadsNetFtpDeleteFileA(a = FtpViewFileCurrentPos);
+                            #endif
                         }
                     }
                 } else if ((a = l) == 'D') { // Создание новой папки
@@ -485,8 +497,10 @@ void FtpViewNeedLoad() {
 
 void FtpViewNetLoadAndUpdate() {
     FtpViewShowSelectLineA(a = 0);
+    NetSetIsDsDos();
     NetFtpGetCurrentPath();
     if ((a = FtpStateViewStatus) == 1) {
+        NetSetIsDsDos();
         NetFtpUpdateList();
         NetFtpListFiles();
     }

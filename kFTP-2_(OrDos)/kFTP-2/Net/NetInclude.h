@@ -14,6 +14,8 @@ extern uint8_t Net_buffer[1];
 void NetGetAllStatus();
 void NetErrorClear();
 
+void NetSetIsDsDos();
+
 void NetWiFiGetSsidPassword();
 void NetWiFiSetSsidPassword();
 void NetWiFiGetSsidIp();

@@ -185,7 +185,10 @@ void FtpMakeDirectoryPosUpdateA() {
 void FtpMakeDirectoryClose() {
     vboxClose();
     CurrentViewReturn();
-    FtpViewNetLoadAndUpdate();
+    #ifdef _IS_SIMULATOR
+    #else
+        FtpViewNetLoadAndUpdate();
+    #endif
 }
 
 void FtpMakeDirectoryKeyA() {

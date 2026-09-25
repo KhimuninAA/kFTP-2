@@ -277,26 +277,32 @@ void FtpSettingsViewKeyA() {
                     if ((a = FtpSettingsViewSelectPos) == 0) { // OK
                         WiFiSettingsViewClose();
                         if ((a = FtpStateViewStatus) == 0) {
-                            NetFtpConnect();
-                            ThreadsTickNow();
+                            #ifdef _IS_SIMULATOR
+                            #else
+                                NetFtpConnect();
+                                ThreadsTickNow();
+                            #endif
                         }
                     } else { // Переход в редактирование
                         FtpSettingsViewByPosBoxValue();
                         FtpSettingsViewByPosValue();
                         EditFieldViewShow();
                         if (a == 1) { // что то изменилось
-                            if ((a = FtpSettingsViewSelectPos) == 5) {
-                                ThreadsNetFtpHomeDirUpdate();
-                            } else if ((a = FtpSettingsViewSelectPos) == 3) {
-                                ThreadsNetFtpUserUpdate();
-                            } else if ((a = FtpSettingsViewSelectPos) == 4) {
-                                ThreadsNetFtpPasswordUpdate();
-                            } else if ((a = FtpSettingsViewSelectPos) == 1) { // IP
-                                ThreadsNetFtpServerUrlUpdate();
-                                FtpStateViewShowValue();
-                            } else if ((a = FtpSettingsViewSelectPos) == 2) { // PORT
-                                ThreadsNetFtpPortUpdate();
-                            }
+                            #ifdef _IS_SIMULATOR
+                            #else
+                                if ((a = FtpSettingsViewSelectPos) == 5) {
+                                    ThreadsNetFtpHomeDirUpdate();
+                                } else if ((a = FtpSettingsViewSelectPos) == 3) {
+                                    ThreadsNetFtpUserUpdate();
+                                } else if ((a = FtpSettingsViewSelectPos) == 4) {
+                                    ThreadsNetFtpPasswordUpdate();
+                                } else if ((a = FtpSettingsViewSelectPos) == 1) { // IP
+                                    ThreadsNetFtpServerUrlUpdate();
+                                    FtpStateViewShowValue();
+                                } else if ((a = FtpSettingsViewSelectPos) == 2) { // PORT
+                                    ThreadsNetFtpPortUpdate();
+                                }
+                            #endif
                             FtpSettingsViewShowValue();
                         }
                     }

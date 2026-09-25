@@ -444,7 +444,15 @@ void FTPClient::downloadFileNext() {
   //ftpDataClient.available();
 
   //-- Load
-  size_t getSize = ftpDataClient.readBytes(interruptData.answerBuffer + 4, fileDownloadInfo.loadSize);
+  size_t getSize = 0;
+  if (fileDownloadInfo.fileSize > fileDownloadInfo.addr) {
+    size_t fileRemainingSize = fileDownloadInfo.fileSize - fileDownloadInfo.addr;
+    size_t loadSize = fileDownloadInfo.loadSize;
+    if (loadSize > fileRemainingSize) {
+      loadSize = fileRemainingSize;
+    }
+    getSize = ftpDataClient.readBytes(interruptData.answerBuffer + 4, loadSize);
+  }
   if (getSize == 0) {
     interruptData.answerCount = 0;
     fileDownloadInfo.answerCount = 0;

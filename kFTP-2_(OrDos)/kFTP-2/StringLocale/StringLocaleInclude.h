@@ -19,6 +19,7 @@ extern uint8_t StringLocaleNetFtpDeleteFileError[20];
 extern uint8_t StringLocaleNetFtpConnectError[18];
 extern uint8_t StringLocaleDiskFull[10];
 extern uint8_t StringLocaleDiskFormat[17];
+extern uint8_t StringLocaleHardwareFail[20];
 
 extern uint16_t StringLocaleAddress;
 

@@ -23,19 +23,15 @@ asm{
     //Start
     DB 0x00, 0x10
     //Len
-    DB 0x00, 0x3F //0x34C0 0x00, 0x35
+    DB 0x00, 0x42 //0x34C0 0x00, 0x35
     //Reserved
     DB 0x00, 0x00, 0x00, 0x00
 }
 
 void main(){
-    #ifdef _IS_MAIN_STACK
-        sp = 0x6FFF;
-    #else
-        nop();
-        nop();
-        nop();
-    #endif
+    nop();
+    nop();
+    nop();
     mainStart();
 }
 
@@ -44,6 +40,19 @@ uint8_t jmpToVBOX = 0xc3;
 uint16_t startVboxAddr = 0x0000;
 
 void mainStart() {
+    myCharPosX = (a = 0);
+    myCharPosY = (a = 1);
+    DetectHardwareVersion();
+    if (a == 0) {
+        myCharPosX = (a = 0);
+        myCharPosY = (a = 2);
+        printMyHLStr(hl = StringLocaleHardwareFail);
+        
+        getKeyboardCharA();
+        vboxClearCash();
+        ordos_start();
+    }
+    
     h = 24;
     l = 60;
     setPosCursor();
@@ -138,5 +147,5 @@ void KeyboardEventA() {
 
 #include "Functions.h"
 
-asm(" savebin \"kFTP2.ORD\", 0x0ff0, 0x3F10"); //0x3210 3510
-asm(" savebin \"test.ORD\", 0x0ff0, 0x3F10");
+asm(" savebin \"kFTP2.ORD\", 0x0ff0, 0x4210"); //0x3210 3510
+asm(" savebin \"test.ORD\", 0x0ff0, 0x4210");

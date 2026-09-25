@@ -5,6 +5,7 @@
 #include "Interrupt.h"
 
 void ftpFileToBuffer();
+void createBoardIDToBuffer();
 void createStatusToBuffer();
 void createBufferByString(String data);
 void EventsExt_UploadAnswer(bool isCorrect, uint8_t progress);

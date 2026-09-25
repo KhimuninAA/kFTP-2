@@ -37,6 +37,7 @@
 #include "FtpMakeDirectory/FtpMakeDirectoryFunctions.h"
 #include "HelpInfoView/HelpInfoViewFunctions.h"
 #include "ESP/ESPError/ESPErrorFunctions.h"
+#include "DetectHardware/DetectHardwareFunctions.h"
 
 #include "Orion/font8x8.h"
 #include "VBOX/VBOXFunctions.h"

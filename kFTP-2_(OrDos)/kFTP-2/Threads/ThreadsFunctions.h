@@ -143,12 +143,14 @@ void ThreadsNetSetWiFiStateA() {
 void ThreadsNetNeedUpdateFtpData() {
     FtpStateViewShowValue();
     // Update ftp dir
+    NetSetIsDsDos();
     NetFtpGetCurrentPath();
     FtpViewShowPath();
     //
     CurrentViewDiskOrFtpViewByIdA(a = CurrentViewId);
     if (a == 1) {
         if ((a = FtpStateViewStatus) == 1) {
+            NetSetIsDsDos();
             NetFtpUpdateList();
             NetFtpListFiles();
         } else {
@@ -195,6 +197,7 @@ void ThreadsNetFtpPortUpdate() {
 
 void ThreadsNetFtpGoToHomeDir() {
     NetFtpGoToHomeDir();
+    NetSetIsDsDos();
     NetFtpGetCurrentPath();
     FtpViewShowPath();
     if ((a = FtpStateViewStatus) == 1) {
@@ -208,6 +211,7 @@ void ThreadsNetFtpGoToHomeDir() {
 
 void ThreadsNetFtpDeleteFileA() {
     NetFtpDeleteFileIndexA();
+    NetSetIsDsDos();
     NetFtpUpdateList();
     NetFtpListFiles();
     FtpViewListUpdateUI();

@@ -52,6 +52,23 @@ void createBufferByString(String data) {
   interruptData.answerCount = length + 2;
 }
 
+void createBoardIDToBuffer() {
+  interruptData.isProcessed = true;
+  uint8_t sum = 0;
+  //--
+  interruptData.answerBuffer[0] = 0x00;
+  interruptData.answerBuffer[1] = 0x08;
+  interruptData.answerBuffer[2] = 0x3C;
+  //--
+  sum += interruptData.answerBuffer[0];
+  sum += interruptData.answerBuffer[1];
+  sum += interruptData.answerBuffer[2];
+  //--
+  interruptData.answerBuffer[3] = sum;
+  interruptData.answerCount = 4;
+  interruptData.answerIndex = 0;
+}
+
 void createStatusToBuffer() {
   interruptData.isProcessed = true;
   uint8_t sum = 0;

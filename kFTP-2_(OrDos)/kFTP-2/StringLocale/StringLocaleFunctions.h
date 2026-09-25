@@ -21,6 +21,7 @@ uint8_t StringLocaleNetFtpConnectError[] = "FTP connect error";
 uint8_t StringLocaleNetWiFiConnectError[] = "WiFi connect error";
 uint8_t StringLocaleDiskFull[] = "Disk full";
 uint8_t StringLocaleDiskFormat[] = "Format the disk?";
+uint8_t StringLocaleHardwareFail[] = "Not detect NetCard!";
 
 uint16_t StringLocaleAddress = 0;
 

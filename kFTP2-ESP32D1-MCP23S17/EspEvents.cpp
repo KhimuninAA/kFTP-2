@@ -21,6 +21,9 @@ void EspEventsExec() {
   }
   interruptData.key = -1;
   switch (type) {
+    case GET_BoardID:
+      createBoardIDToBuffer();
+      break;
     case GET_STATUS:
       createStatusToBuffer();
       break;
