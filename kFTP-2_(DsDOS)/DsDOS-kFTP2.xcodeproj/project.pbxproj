@@ -1,0 +1,606 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXFileReference section */
+		FD0A68C1303F4B650037594E /* StringLocaleFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringLocaleFunctions.h; sourceTree = "<group>"; };
+		FD0A68C2303F4B780037594E /* StringLocaleInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringLocaleInclude.h; sourceTree = "<group>"; };
+		FD0A68C4303F4CB00037594E /* ButtonShadowViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonShadowViewFunctions.h; sourceTree = "<group>"; };
+		FD0A68C5303F4CC10037594E /* ButtonShadowViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonShadowViewInclude.h; sourceTree = "<group>"; };
+		FD0A68C7303F9AA00037594E /* EditFieldViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditFieldViewFunctions.h; sourceTree = "<group>"; };
+		FD0A68C8303F9AB30037594E /* EditFieldViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditFieldViewInclude.h; sourceTree = "<group>"; };
+		FD0A68CA30402D540037594E /* i8255Functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i8255Functions.h; sourceTree = "<group>"; };
+		FD0A68CB30402D540037594E /* i8255Include.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i8255Include.h; sourceTree = "<group>"; };
+		FD0A68CE30402E840037594E /* ESPFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESPFunctions.h; sourceTree = "<group>"; };
+		FD0A68CF30402E840037594E /* ESPInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESPInclude.h; sourceTree = "<group>"; };
+		FD0A68D030402E8F0037594E /* ESPErrorFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESPErrorFunctions.h; sourceTree = "<group>"; };
+		FD0A68D130402E8F0037594E /* ESPErrorInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESPErrorInclude.h; sourceTree = "<group>"; };
+		FD0A68D430402FC90037594E /* NetFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetFunctions.h; sourceTree = "<group>"; };
+		FD0A68D530402FD90037594E /* NetInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetInclude.h; sourceTree = "<group>"; };
+		FD0A68D7304031050037594E /* ThreadsFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadsFunctions.h; sourceTree = "<group>"; };
+		FD0A68D8304031050037594E /* ThreadsInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadsInclude.h; sourceTree = "<group>"; };
+		FD0A68D9304031AE0037594E /* ParserFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParserFunctions.h; sourceTree = "<group>"; };
+		FD0A68DA304031BD0037594E /* ParserInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParserInclude.h; sourceTree = "<group>"; };
+		FD0A68DC30403B260037594E /* WiFiNetworksViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WiFiNetworksViewFunctions.h; sourceTree = "<group>"; };
+		FD0A68DD30403B260037594E /* WiFiNetworksViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WiFiNetworksViewInclude.h; sourceTree = "<group>"; };
+		FD0A68DF304185850037594E /* FtpSettingsViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FtpSettingsViewFunctions.h; sourceTree = "<group>"; };
+		FD0A68E0304185930037594E /* FtpSettingsViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FtpSettingsViewInclude.h; sourceTree = "<group>"; };
+		FD0A68E23042F1DB0037594E /* ButtonShadowView2Functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonShadowView2Functions.h; sourceTree = "<group>"; };
+		FD0A68E33042F1EA0037594E /* ButtonShadowView2Include.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonShadowView2Include.h; sourceTree = "<group>"; };
+		FD0A68E53042F3930037594E /* AllertYesNoViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllertYesNoViewFunctions.h; sourceTree = "<group>"; };
+		FD0A68E63042F3A10037594E /* AllertYesNoViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllertYesNoViewInclude.h; sourceTree = "<group>"; };
+		FD0A68E83042F6BC0037594E /* AllertOkViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllertOkViewFunctions.h; sourceTree = "<group>"; };
+		FD0A68E93042F6C90037594E /* AllertOkViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllertOkViewInclude.h; sourceTree = "<group>"; };
+		FD23AE3D3066C43C00C9B211 /* DetectHardwareFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetectHardwareFunctions.h; sourceTree = "<group>"; };
+		FD23AE3E3066C44A00C9B211 /* DetectHardwareInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetectHardwareInclude.h; sourceTree = "<group>"; };
+		FD23AE403066C4DD00C9B211 /* DetectHardwareESPFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetectHardwareESPFunctions.h; sourceTree = "<group>"; };
+		FD23AE413066C4ED00C9B211 /* DetectHardwareESPInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetectHardwareESPInclude.h; sourceTree = "<group>"; };
+		FD5B5D783002684400F75F29 /* HelpFooterViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpFooterViewFunctions.h; sourceTree = "<group>"; };
+		FD5B5D793002685000F75F29 /* HelpFooterViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpFooterViewInclude.h; sourceTree = "<group>"; };
+		FD621BD43000DDCE00ED4443 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		FD621BF230011D8400ED4443 /* Include.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Include.h; sourceTree = "<group>"; };
+		FD621BF430011DF000ED4443 /* DsdosBios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DsdosBios.h; sourceTree = "<group>"; };
+		FD621BF530011E9C00ED4443 /* Functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Functions.h; sourceTree = "<group>"; };
+		FD621BF730011FA400ED4443 /* MyViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyViewFunctions.h; sourceTree = "<group>"; };
+		FD621BF830011FB700ED4443 /* MyViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyViewInclude.h; sourceTree = "<group>"; };
+		FD621BFA3001230E00ED4443 /* FtpHeaderViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FtpHeaderViewFunctions.h; sourceTree = "<group>"; };
+		FD621BFB3001231D00ED4443 /* FtpHeaderViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FtpHeaderViewInclude.h; sourceTree = "<group>"; };
+		FD621BFD300142A200ED4443 /* WiFiHeaderViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WiFiHeaderViewFunctions.h; sourceTree = "<group>"; };
+		FD621BFE300142B000ED4443 /* WiFiHeaderViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WiFiHeaderViewInclude.h; sourceTree = "<group>"; };
+		FD621C0030014F6E00ED4443 /* WiFiSettingsViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WiFiSettingsViewFunctions.h; sourceTree = "<group>"; };
+		FD621C0130014F7C00ED4443 /* WiFiSettingsViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WiFiSettingsViewInclude.h; sourceTree = "<group>"; };
+		FD621C033001525000ED4443 /* MyFuncFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFuncFunctions.h; sourceTree = "<group>"; };
+		FD621C043001525C00ED4443 /* MyFuncInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFuncInclude.h; sourceTree = "<group>"; };
+		FD684BFC30039A69005FAB80 /* FtpViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FtpViewFunctions.h; sourceTree = "<group>"; };
+		FD684BFD30039A7D005FAB80 /* FtpViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FtpViewInclude.h; sourceTree = "<group>"; };
+		FD684BFF30039DCA005FAB80 /* DiskViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskViewFunctions.h; sourceTree = "<group>"; };
+		FD684C0030039DD7005FAB80 /* DiskViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskViewInclude.h; sourceTree = "<group>"; };
+		FD6D0C71303D87FC00835A56 /* DebugFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebugFunctions.h; sourceTree = "<group>"; };
+		FD6D0C72303D87FC00835A56 /* DebugInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebugInclude.h; sourceTree = "<group>"; };
+		FD6D0C74303D880600835A56 /* CurrentViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurrentViewFunctions.h; sourceTree = "<group>"; };
+		FD6D0C75303D880600835A56 /* CurrentViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurrentViewInclude.h; sourceTree = "<group>"; };
+		FD6D0CDA303D89B700835A56 /* SelectDiskViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectDiskViewFunctions.h; sourceTree = "<group>"; };
+		FD6D0CDB303D89C400835A56 /* SelectDiskViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectDiskViewInclude.h; sourceTree = "<group>"; };
+		FD6D0CF5303DA2F400835A56 /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
+		FDC0B38A300FA577009805AB /* main.lst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lst; sourceTree = "<group>"; };
+		FDCE6C09304822D900788B5F /* LoadViewFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadViewFunctions.h; sourceTree = "<group>"; };
+		FDCE6C0A304822E500788B5F /* LoadViewInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadViewInclude.h; sourceTree = "<group>"; };
+		FDCE6C28304A189500788B5F /* FileParserFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileParserFunctions.h; sourceTree = "<group>"; };
+		FDCE6C29304A18A600788B5F /* FileParserInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileParserInclude.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		FD0A68C0303F4B400037594E /* StringLocale */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68C1303F4B650037594E /* StringLocaleFunctions.h */,
+				FD0A68C2303F4B780037594E /* StringLocaleInclude.h */,
+			);
+			path = StringLocale;
+			sourceTree = "<group>";
+		};
+		FD0A68C3303F4CA10037594E /* ButtonShadowView */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68C4303F4CB00037594E /* ButtonShadowViewFunctions.h */,
+				FD0A68C5303F4CC10037594E /* ButtonShadowViewInclude.h */,
+			);
+			path = ButtonShadowView;
+			sourceTree = "<group>";
+		};
+		FD0A68C6303F9A920037594E /* EditFieldView */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68C7303F9AA00037594E /* EditFieldViewFunctions.h */,
+				FD0A68C8303F9AB30037594E /* EditFieldViewInclude.h */,
+			);
+			path = EditFieldView;
+			sourceTree = "<group>";
+		};
+		FD0A68C930402D3A0037594E /* i8255 */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68CA30402D540037594E /* i8255Functions.h */,
+				FD0A68CB30402D540037594E /* i8255Include.h */,
+			);
+			path = i8255;
+			sourceTree = "<group>";
+		};
+		FD0A68CC30402DB70037594E /* ESP */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68CD30402DC10037594E /* ESPError */,
+				FD0A68CE30402E840037594E /* ESPFunctions.h */,
+				FD0A68CF30402E840037594E /* ESPInclude.h */,
+			);
+			path = ESP;
+			sourceTree = "<group>";
+		};
+		FD0A68CD30402DC10037594E /* ESPError */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68D030402E8F0037594E /* ESPErrorFunctions.h */,
+				FD0A68D130402E8F0037594E /* ESPErrorInclude.h */,
+			);
+			path = ESPError;
+			sourceTree = "<group>";
+		};
+		FD0A68D230402F390037594E /* Net */ = {
+			isa = PBXGroup;
+			children = (
+				FDCE6C27304A187200788B5F /* FileParser */,
+				FD0A68D330402F460037594E /* Parser */,
+				FD0A68D430402FC90037594E /* NetFunctions.h */,
+				FD0A68D530402FD90037594E /* NetInclude.h */,
+			);
+			path = Net;
+			sourceTree = "<group>";
+		};
+		FD0A68D330402F460037594E /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68D9304031AE0037594E /* ParserFunctions.h */,
+				FD0A68DA304031BD0037594E /* ParserInclude.h */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
+		FD0A68D6304030E30037594E /* Threads */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68D7304031050037594E /* ThreadsFunctions.h */,
+				FD0A68D8304031050037594E /* ThreadsInclude.h */,
+			);
+			path = Threads;
+			sourceTree = "<group>";
+		};
+		FD0A68DB30403B150037594E /* WiFiNetworksView */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68DC30403B260037594E /* WiFiNetworksViewFunctions.h */,
+				FD0A68DD30403B260037594E /* WiFiNetworksViewInclude.h */,
+			);
+			path = WiFiNetworksView;
+			sourceTree = "<group>";
+		};
+		FD0A68DE304185750037594E /* FtpSettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68DF304185850037594E /* FtpSettingsViewFunctions.h */,
+				FD0A68E0304185930037594E /* FtpSettingsViewInclude.h */,
+			);
+			path = FtpSettingsView;
+			sourceTree = "<group>";
+		};
+		FD0A68E13042F1CA0037594E /* ButtonShadowView2 */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68E23042F1DB0037594E /* ButtonShadowView2Functions.h */,
+				FD0A68E33042F1EA0037594E /* ButtonShadowView2Include.h */,
+			);
+			path = ButtonShadowView2;
+			sourceTree = "<group>";
+		};
+		FD0A68E43042F37E0037594E /* AllertYesNoView */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68E53042F3930037594E /* AllertYesNoViewFunctions.h */,
+				FD0A68E63042F3A10037594E /* AllertYesNoViewInclude.h */,
+			);
+			path = AllertYesNoView;
+			sourceTree = "<group>";
+		};
+		FD0A68E73042F6AF0037594E /* AllertOkView */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A68E83042F6BC0037594E /* AllertOkViewFunctions.h */,
+				FD0A68E93042F6C90037594E /* AllertOkViewInclude.h */,
+			);
+			path = AllertOkView;
+			sourceTree = "<group>";
+		};
+		FD23AE3C3066C42800C9B211 /* DetectHardware */ = {
+			isa = PBXGroup;
+			children = (
+				FD23AE3F3066C4CF00C9B211 /* DetectHardwareESP */,
+				FD23AE3D3066C43C00C9B211 /* DetectHardwareFunctions.h */,
+				FD23AE3E3066C44A00C9B211 /* DetectHardwareInclude.h */,
+			);
+			path = DetectHardware;
+			sourceTree = "<group>";
+		};
+		FD23AE3F3066C4CF00C9B211 /* DetectHardwareESP */ = {
+			isa = PBXGroup;
+			children = (
+				FD23AE403066C4DD00C9B211 /* DetectHardwareESPFunctions.h */,
+				FD23AE413066C4ED00C9B211 /* DetectHardwareESPInclude.h */,
+			);
+			path = DetectHardwareESP;
+			sourceTree = "<group>";
+		};
+		FD5B5D773002682000F75F29 /* HelpFooterView */ = {
+			isa = PBXGroup;
+			children = (
+				FD5B5D783002684400F75F29 /* HelpFooterViewFunctions.h */,
+				FD5B5D793002685000F75F29 /* HelpFooterViewInclude.h */,
+			);
+			path = HelpFooterView;
+			sourceTree = "<group>";
+		};
+		FD621BCD3000DDCD00ED4443 = {
+			isa = PBXGroup;
+			children = (
+				FDC0B38A300FA577009805AB /* main.lst */,
+				FD621BD33000DDCD00ED4443 /* DsDOS-kFTP2 */,
+			);
+			sourceTree = "<group>";
+		};
+		FD621BD33000DDCD00ED4443 /* DsDOS-kFTP2 */ = {
+			isa = PBXGroup;
+			children = (
+				FD23AE3C3066C42800C9B211 /* DetectHardware */,
+				FDCE6C08304822CA00788B5F /* LoadView */,
+				FD0A68E73042F6AF0037594E /* AllertOkView */,
+				FD0A68E43042F37E0037594E /* AllertYesNoView */,
+				FD0A68C3303F4CA10037594E /* ButtonShadowView */,
+				FD0A68E13042F1CA0037594E /* ButtonShadowView2 */,
+				FD0A68DE304185750037594E /* FtpSettingsView */,
+				FD0A68DB30403B150037594E /* WiFiNetworksView */,
+				FD0A68D6304030E30037594E /* Threads */,
+				FD0A68D230402F390037594E /* Net */,
+				FD0A68CC30402DB70037594E /* ESP */,
+				FD0A68C930402D3A0037594E /* i8255 */,
+				FD0A68C6303F9A920037594E /* EditFieldView */,
+				FD0A68C0303F4B400037594E /* StringLocale */,
+				FD6D0CF4303DA2CA00835A56 /* Orion */,
+				FD6D0CD9303D89A000835A56 /* SelectDiskView */,
+				FD6D0C70303D87F900835A56 /* CurrentView */,
+				FD6D0C73303D87FC00835A56 /* Debug */,
+				FD684BFE30039DBB005FAB80 /* DiskView */,
+				FD684BFB30039A59005FAB80 /* FtpView */,
+				FD5B5D773002682000F75F29 /* HelpFooterView */,
+				FD621C023001523600ED4443 /* MyFunc */,
+				FD621BFF30014F5D00ED4443 /* WiFiSettingsView */,
+				FD621BFC3001427D00ED4443 /* WiFiHeaderView */,
+				FD621BF9300122E400ED4443 /* FtpHeaderView */,
+				FD621BF630011F0D00ED4443 /* MyView */,
+				FD621BF330011DC600ED4443 /* DSDOS */,
+				FD621BD43000DDCE00ED4443 /* main.c */,
+				FD621BF230011D8400ED4443 /* Include.h */,
+				FD621BF530011E9C00ED4443 /* Functions.h */,
+			);
+			path = "DsDOS-kFTP2";
+			sourceTree = "<group>";
+		};
+		FD621BF330011DC600ED4443 /* DSDOS */ = {
+			isa = PBXGroup;
+			children = (
+				FD621BF430011DF000ED4443 /* DsdosBios.h */,
+			);
+			path = DSDOS;
+			sourceTree = "<group>";
+		};
+		FD621BF630011F0D00ED4443 /* MyView */ = {
+			isa = PBXGroup;
+			children = (
+				FD621BF730011FA400ED4443 /* MyViewFunctions.h */,
+				FD621BF830011FB700ED4443 /* MyViewInclude.h */,
+			);
+			path = MyView;
+			sourceTree = "<group>";
+		};
+		FD621BF9300122E400ED4443 /* FtpHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				FD621BFA3001230E00ED4443 /* FtpHeaderViewFunctions.h */,
+				FD621BFB3001231D00ED4443 /* FtpHeaderViewInclude.h */,
+			);
+			path = FtpHeaderView;
+			sourceTree = "<group>";
+		};
+		FD621BFC3001427D00ED4443 /* WiFiHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				FD621BFD300142A200ED4443 /* WiFiHeaderViewFunctions.h */,
+				FD621BFE300142B000ED4443 /* WiFiHeaderViewInclude.h */,
+			);
+			path = WiFiHeaderView;
+			sourceTree = "<group>";
+		};
+		FD621BFF30014F5D00ED4443 /* WiFiSettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				FD621C0030014F6E00ED4443 /* WiFiSettingsViewFunctions.h */,
+				FD621C0130014F7C00ED4443 /* WiFiSettingsViewInclude.h */,
+			);
+			path = WiFiSettingsView;
+			sourceTree = "<group>";
+		};
+		FD621C023001523600ED4443 /* MyFunc */ = {
+			isa = PBXGroup;
+			children = (
+				FD621C033001525000ED4443 /* MyFuncFunctions.h */,
+				FD621C043001525C00ED4443 /* MyFuncInclude.h */,
+			);
+			path = MyFunc;
+			sourceTree = "<group>";
+		};
+		FD684BFB30039A59005FAB80 /* FtpView */ = {
+			isa = PBXGroup;
+			children = (
+				FD684BFC30039A69005FAB80 /* FtpViewFunctions.h */,
+				FD684BFD30039A7D005FAB80 /* FtpViewInclude.h */,
+			);
+			path = FtpView;
+			sourceTree = "<group>";
+		};
+		FD684BFE30039DBB005FAB80 /* DiskView */ = {
+			isa = PBXGroup;
+			children = (
+				FD684BFF30039DCA005FAB80 /* DiskViewFunctions.h */,
+				FD684C0030039DD7005FAB80 /* DiskViewInclude.h */,
+			);
+			path = DiskView;
+			sourceTree = "<group>";
+		};
+		FD6D0C70303D87F900835A56 /* CurrentView */ = {
+			isa = PBXGroup;
+			children = (
+				FD6D0C74303D880600835A56 /* CurrentViewFunctions.h */,
+				FD6D0C75303D880600835A56 /* CurrentViewInclude.h */,
+			);
+			path = CurrentView;
+			sourceTree = "<group>";
+		};
+		FD6D0C73303D87FC00835A56 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				FD6D0C71303D87FC00835A56 /* DebugFunctions.h */,
+				FD6D0C72303D87FC00835A56 /* DebugInclude.h */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		FD6D0CD9303D89A000835A56 /* SelectDiskView */ = {
+			isa = PBXGroup;
+			children = (
+				FD6D0CDA303D89B700835A56 /* SelectDiskViewFunctions.h */,
+				FD6D0CDB303D89C400835A56 /* SelectDiskViewInclude.h */,
+			);
+			path = SelectDiskView;
+			sourceTree = "<group>";
+		};
+		FD6D0CF4303DA2CA00835A56 /* Orion */ = {
+			isa = PBXGroup;
+			children = (
+				FD6D0CF5303DA2F400835A56 /* Monitor.h */,
+			);
+			path = Orion;
+			sourceTree = "<group>";
+		};
+		FDCE6C08304822CA00788B5F /* LoadView */ = {
+			isa = PBXGroup;
+			children = (
+				FDCE6C09304822D900788B5F /* LoadViewFunctions.h */,
+				FDCE6C0A304822E500788B5F /* LoadViewInclude.h */,
+			);
+			path = LoadView;
+			sourceTree = "<group>";
+		};
+		FDCE6C27304A187200788B5F /* FileParser */ = {
+			isa = PBXGroup;
+			children = (
+				FDCE6C28304A189500788B5F /* FileParserFunctions.h */,
+				FDCE6C29304A18A600788B5F /* FileParserInclude.h */,
+			);
+			path = FileParser;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		FD621BD23000DDCD00ED4443 /* DsDOS-kFTP2 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "-m DsDOS-kFTP2/main.c -amain.asm";
+			buildConfigurationList = FD621BD73000DDCE00ED4443 /* Build configuration list for PBXLegacyTarget "DsDOS-kFTP2" */;
+			buildPhases = (
+			);
+			buildToolPath = $HOME/i8080/c8080/c8080;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = "DsDOS-kFTP2";
+			passBuildSettingsInEnvironment = 1;
+			productName = "DsDOS-Command-1";
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		FD621BCE3000DDCD00ED4443 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					FD621BD23000DDCD00ED4443 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = FD621BD13000DDCD00ED4443 /* Build configuration list for PBXProject "DsDOS-kFTP2" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FD621BCD3000DDCD00ED4443;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FD621BD23000DDCD00ED4443 /* DsDOS-kFTP2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		FD621BD53000DDCE00ED4443 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		FD621BD63000DDCE00ED4443 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+			};
+			name = Release;
+		};
+		FD621BD83000DDCE00ED4443 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FD621BD93000DDCE00ED4443 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FD621BD13000DDCD00ED4443 /* Build configuration list for PBXProject "DsDOS-kFTP2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD621BD53000DDCE00ED4443 /* Debug */,
+				FD621BD63000DDCE00ED4443 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD621BD73000DDCE00ED4443 /* Build configuration list for PBXLegacyTarget "DsDOS-kFTP2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD621BD83000DDCE00ED4443 /* Debug */,
+				FD621BD93000DDCE00ED4443 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FD621BCE3000DDCD00ED4443 /* Project object */;
+}

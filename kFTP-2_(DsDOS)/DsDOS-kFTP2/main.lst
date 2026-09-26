@@ -1,0 +1,663 @@
+# file opened: main.asm
+  1   0000                  device zxspectrum48 ; There is no ZX Spectrum, it is needed for the sjasmplus assembler.
+  2   0000              bios equ 61440
+  3   0000              cmdbuffer equ 62256
+  4   0000
+  5   0000                  org 0x0FF0
+  6   0FF0
+  7   0FF0              ; 16 uint8_t appName[] = {'G','E','T','C','M','D','$',' '};
+  8   0FF0              appname:
+  9   0FF0 47           	db 71
+ 10   0FF1 45           	db 69
+ 11   0FF2 54           	db 84
+ 12   0FF3 43           	db 67
+ 13   0FF4 4D           	db 77
+ 14   0FF5 44           	db 68
+ 15   0FF6 24           	db 36
+ 16   0FF7 20           	db 32
+ 17   0FF8
+ 18   0FF8
+ 19   0FF8 00 10            DB 0x00, 0x10
+ 20   0FFA
+ 21   0FFA 00 08            DB 0x00, 0x08
+ 22   0FFC
+ 23   0FFC 00 01 01 0B      DB 0x00, 0x01, 0x01, 0x0B
+ 24   1000
+ 25   1000              ; 27 void main(){
+ 26   1000              main:
+ 27   1000              ; 28 //    c = 0x21; //'A';
+ 28   1000              ; 29 //    bios(a = biosPrintByteC);
+ 29   1000              ; 30
+ 30   1000              ; 31     b = 0;
+ 31   1000 06 00        	ld b, 0
+ 32   1002              ; 32     e = 16;
+ 33   1002 1E 10        	ld e, 16
+ 34   1004              ; 33     h = 5;
+ 35   1004 26 05        	ld h, 5
+ 36   1006              ; 34     do {
+ 37   1006              __l_0:
+ 38   1006              ; 35         d = 16;
+ 39   1006 16 10        	ld d, 16
+ 40   1008              ; 36         l = 0;
+ 41   1008 2E 00        	ld l, 0
+ 42   100A              ; 37         bios(a = biosSetPositionCursoreHL, l = 0);
+ 43   100A 3E 1C        	ld a, 28
+ 44   100C 2E 00        	ld l, 0
+ 45   100E CD 00 F0     	call bios
+ 46   1011              ; 38         h++;
+ 47   1011 24           	inc h
+ 48   1012              ; 39         do {
+ 49   1012              __l_3:
+ 50   1012              ; 40             bios(a = biosPrintC, c = b);
+ 51   1012 3E 00        	ld a, 0
+ 52   1014 48           	ld c, b
+ 53   1015 CD 00 F0     	call bios
+ 54   1018              ; 41             b++;
+ 55   1018 04           	inc b
+ 56   1019              ; 42             d--;
+ 57   1019 15           	dec d
+ 58   101A              __l_4:
+ 59   101A              ; 43         } while ((a = d) > 0);
+ 60   101A 7A           	ld a, d
+ 61   101B B7           	or a
+ 62   101C C2 12 10     	jp nz, __l_3
+ 63   101F              ; 44         e--;
+ 64   101F 1D           	dec e
+ 65   1020              __l_1:
+ 66   1020              ; 45     } while ((a = e) > 0);
+ 67   1020 7B           	ld a, e
+ 68   1021 B7           	or a
+ 69   1022 C2 06 10     	jp nz, __l_0
+ 70   1025              ; 46
+ 71   1025              ; 47     //bios(a = biosSetTempDiskC, c = 'E');
+ 72   1025              ; 48     //bios(a = biosSetExtDRVConfigB, b = 0x02);
+ 73   1025              ; 49
+ 74   1025              ; 50     FtpHeaderViewStart();
+ 75   1025 CD C9 10     	call ftpheaderviewstart
+ 76   1028              ; 51     WiFiHeaderViewStart();
+ 77   1028 CD E8 10     	call wifiheaderviewstart
+ 78   102B              ; 52
+ 79   102B              ; 53     for (;;) {
+ 80   102B              __l_7:
+ 81   102B C3 2B 10     	jp __l_7
+ 82   102E              ; 15 void MyViewShow() {
+ 83   102E              myviewshow:
+ 84   102E              ; 16     MyViewByte = (a = b);
+ 85   102E 78           	ld a, b
+ 86   102F 32 C8 10     	ld (myviewbyte), a
+ 87   1032              ; 17     bios(a = biosSetColorC);
+ 88   1032 3E 12        	ld a, 18
+ 89   1034 CD 00 F0     	call bios
+ 90   1037              ; 18     push_pop(hl) {
+ 91   1037 E5           	push hl
+ 92   1038              ; 19         h = d;
+ 93   1038 62           	ld h, d
+ 94   1039              ; 20         l = e;
+ 95   1039 6B           	ld l, e
+ 96   103A              ; 21         MyViewDyDx = hl;
+ 97   103A 22 C6 10     	ld (myviewdydx), hl
+ 98   103D E1           	pop hl
+ 99   103E              ; 22     }
+100   103E              ; 23     do {
+101   103E              __l_9:
+102   103E              ; 24         bios(a = biosSetPositionCursoreHL);
+103   103E 3E 1C        	ld a, 28
+104   1040 CD 00 F0     	call bios
+105   1043              ; 25         push_pop(de) {
+106   1043 D5           	push de
+107   1044              ; 26             do {
+108   1044              __l_12:
+109   1044              ; 27                 MyViewCalcCharByPosDE();
+110   1044 CD 5B 10     	call myviewcalccharbyposde
+111   1047              ; 28                 bios(a = biosPrintC);
+112   1047 3E 00        	ld a, 0
+113   1049 CD 00 F0     	call bios
+114   104C              ; 29                 e--;
+115   104C 1D           	dec e
+116   104D              __l_13:
+117   104D              ; 30             } while ((a = e) > 0);
+118   104D 7B           	ld a, e
+119   104E B7           	or a
+120   104F C2 44 10     	jp nz, __l_12
+121   1052 D1           	pop de
+122   1053              ; 31         }
+123   1053              ; 32         h++;
+124   1053 24           	inc h
+125   1054              ; 33         d--;
+126   1054 15           	dec d
+127   1055              __l_10:
+128   1055              ; 34     } while ((a = d) > 0);
+129   1055 7A           	ld a, d
+130   1056 B7           	or a
+131   1057 C2 3E 10     	jp nz, __l_9
+132   105A C9           	ret
+133   105B              ; 35 }
+134   105B              ; 36
+135   105B              ; 37 void MyViewCalcCharByPosDE() {
+136   105B              myviewcalccharbyposde:
+137   105B              ; 38     c = MyViewByteBorder + MyViewByteFrame;
+138   105B 0E 01        	ld c, 1
+139   105D              ; 39     a = MyViewByte;
+140   105D 3A C8 10     	ld a, (myviewbyte)
+141   1060              ; 40     a &= c;
+142   1060 A1           	and c
+143   1061              ; 41     if (a > 0) {
+144   1061 B7           	or a
+145   1062 CA C3 10     	jp z, __l_15
+146   1065              ; 42         push_pop(hl) {
+147   1065 E5           	push hl
+148   1066              ; 43             hl = MyViewDyDx;
+149   1066 2A C6 10     	ld hl, (myviewdydx)
+150   1069              ; 44             if ((a = d) == 1) { // Нижняя линия
+151   1069 7A           	ld a, d
+152   106A FE 01        	cp 1
+153   106C C2 89 10     	jp nz, __l_17
+154   106F              ; 45                 if ((a = e) == 1) {
+155   106F 7B           	ld a, e
+156   1070 FE 01        	cp 1
+157   1072 C2 7A 10     	jp nz, __l_19
+158   1075              ; 46                     c = 0x89;
+159   1075 0E 89        	ld c, 137
+160   1077 C3 86 10     	jp __l_20
+161   107A              __l_19:
+162   107A              ; 47                 } else if ((a = e) == l) {
+163   107A 7B           	ld a, e
+164   107B BD           	cp l
+165   107C C2 84 10     	jp nz, __l_21
+166   107F              ; 48                     c = 0x94;
+167   107F 0E 94        	ld c, 148
+168   1081 C3 86 10     	jp __l_22
+169   1084              __l_21:
+170   1084              ; 49                 } else {
+171   1084              ; 50                     c = 0x99;
+172   1084 0E 99        	ld c, 153
+173   1086              __l_22:
+174   1086              __l_20:
+175   1086 C3 BF 10     	jp __l_18
+176   1089              __l_17:
+177   1089              ; 51                 }
+178   1089              ; 52             } else if ((a = d) == h) { // Верхняя линия
+179   1089 7A           	ld a, d
+180   108A BC           	cp h
+181   108B C2 A8 10     	jp nz, __l_23
+182   108E              ; 53                 if ((a = e) == 1) {
+183   108E 7B           	ld a, e
+184   108F FE 01        	cp 1
+185   1091 C2 99 10     	jp nz, __l_25
+186   1094              ; 54                     c = 0x88;
+187   1094 0E 88        	ld c, 136
+188   1096 C3 A5 10     	jp __l_26
+189   1099              __l_25:
+190   1099              ; 55                 } else if ((a = e) == l) {
+191   1099 7B           	ld a, e
+192   109A BD           	cp l
+193   109B C2 A3 10     	jp nz, __l_27
+194   109E              ; 56                     c = 0x95;
+195   109E 0E 95        	ld c, 149
+196   10A0 C3 A5 10     	jp __l_28
+197   10A3              __l_27:
+198   10A3              ; 57                 } else {
+199   10A3              ; 58                     c = 0x99;
+200   10A3 0E 99        	ld c, 153
+201   10A5              __l_28:
+202   10A5              __l_26:
+203   10A5 C3 BF 10     	jp __l_24
+204   10A8              __l_23:
+205   10A8              ; 59                 }
+206   10A8              ; 60             } else { // Между верхней и нижней
+207   10A8              ; 61                 if ((a = e) == 1) {
+208   10A8 7B           	ld a, e
+209   10A9 FE 01        	cp 1
+210   10AB C2 B3 10     	jp nz, __l_29
+211   10AE              ; 62                     c = 0x87;
+212   10AE 0E 87        	ld c, 135
+213   10B0 C3 BF 10     	jp __l_30
+214   10B3              __l_29:
+215   10B3              ; 63                 } else if ((a = e) == l) {
+216   10B3 7B           	ld a, e
+217   10B4 BD           	cp l
+218   10B5 C2 BD 10     	jp nz, __l_31
+219   10B8              ; 64                     c = 0x87;
+220   10B8 0E 87        	ld c, 135
+221   10BA C3 BF 10     	jp __l_32
+222   10BD              __l_31:
+223   10BD              ; 65                 } else {
+224   10BD              ; 66                     c = ' ';
+225   10BD 0E 20        	ld c, 32
+226   10BF              __l_32:
+227   10BF              __l_30:
+228   10BF              __l_24:
+229   10BF              __l_18:
+230   10BF E1           	pop hl
+231   10C0 C3 C5 10     	jp __l_16
+232   10C3              __l_15:
+233   10C3              ; 67                 }
+234   10C3              ; 68             }
+235   10C3              ; 69         }
+236   10C3              ; 70     } else {
+237   10C3              ; 71         c = ' ';
+238   10C3 0E 20        	ld c, 32
+239   10C5              __l_16:
+240   10C5 C9           	ret
+241   10C6              ; 72     }
+242   10C6              ; 73 }
+243   10C6              ; 74
+244   10C6              ; 75 uint16_t MyViewDyDx = 0;
+245   10C6              myviewdydx:
+246   10C6 00 00        	dw 0
+247   10C8              ; 76 uint8_t MyViewByte = 0;
+248   10C8              myviewbyte:
+249   10C8 00           	db 0
+250   10C9              ; 11 void FtpHeaderViewStart() {
+251   10C9              ftpheaderviewstart:
+252   10C9              ; 12     FtpHeaderViewShow();
+253   10C9              ; 13 }
+254   10C9              ; 14
+255   10C9              ; 15 void FtpHeaderViewShow() {
+256   10C9              ftpheaderviewshow:
+257   10C9              ; 16     c = (a = FtpHeaderViewColor);
+258   10C9 3A E6 10     	ld a, (ftpheaderviewcolor)
+259   10CC 4F           	ld c, a
+260   10CD              ; 17     l = (a = FtpHeaderViewX);
+261   10CD 3A E2 10     	ld a, (ftpheaderviewx)
+262   10D0 6F           	ld l, a
+263   10D1              ; 18     h = (a = FtpHeaderViewY);
+264   10D1 3A E3 10     	ld a, (ftpheaderviewy)
+265   10D4 67           	ld h, a
+266   10D5              ; 19     e = (a = FtpHeaderViewDX);
+267   10D5 3A E4 10     	ld a, (ftpheaderviewdx)
+268   10D8 5F           	ld e, a
+269   10D9              ; 20     d = (a = FtpHeaderViewDY);
+270   10D9 3A E5 10     	ld a, (ftpheaderviewdy)
+271   10DC 57           	ld d, a
+272   10DD              ; 21     b = MyViewByteFrame;
+273   10DD 06 02        	ld b, 2
+274   10DF              ; 22     MyViewShow();
+275   10DF C3 2E 10     	jp myviewshow
+276   10E2              ; 23 }
+277   10E2              ; 24
+278   10E2              ; 25 uint8_t FtpHeaderViewX = 0;
+279   10E2              ftpheaderviewx:
+280   10E2 00           	db 0
+281   10E3              ; 26 uint8_t FtpHeaderViewY = 0;
+282   10E3              ftpheaderviewy:
+283   10E3 00           	db 0
+284   10E4              ; 27 uint8_t FtpHeaderViewDX = 24;
+285   10E4              ftpheaderviewdx:
+286   10E4 18           	db 24
+287   10E5              ; 28 uint8_t FtpHeaderViewDY = 4;
+288   10E5              ftpheaderviewdy:
+289   10E5 04           	db 4
+290   10E6              ; 29 uint8_t FtpHeaderViewColor = 0x52;
+291   10E6              ftpheaderviewcolor:
+292   10E6 52           	db 82
+293   10E7              ; 30 uint8_t FtpHeaderViewInvColor = 0x25;
+294   10E7              ftpheaderviewinvcolor:
+295   10E7 25           	db 37
+296   10E8              ; 11 void WiFiHeaderViewStart() {
+297   10E8              wifiheaderviewstart:
+298   10E8              ; 12     WiFiHeaderViewShow();
+299   10E8              ; 13 }
+300   10E8              ; 14
+301   10E8              ; 15 void WiFiHeaderViewShow() {
+302   10E8              wifiheaderviewshow:
+303   10E8              ; 16     c = (a = WiFiHeaderViewColor);
+304   10E8 3A 8E 11     	ld a, (wifiheaderviewcolor)
+305   10EB 4F           	ld c, a
+306   10EC              ; 17     l = (a = WiFiHeaderViewX);
+307   10EC 3A 8A 11     	ld a, (wifiheaderviewx)
+308   10EF 6F           	ld l, a
+309   10F0              ; 18     h = (a = WiFiHeaderViewY);
+310   10F0 3A 8B 11     	ld a, (wifiheaderviewy)
+311   10F3 67           	ld h, a
+312   10F4              ; 19     e = (a = WiFiHeaderViewDX);
+313   10F4 3A 8C 11     	ld a, (wifiheaderviewdx)
+314   10F7 5F           	ld e, a
+315   10F8              ; 20     d = (a = WiFiHeaderViewDY);
+316   10F8 3A 8D 11     	ld a, (wifiheaderviewdy)
+317   10FB 57           	ld d, a
+318   10FC              ; 21     b = MyViewByteFrame;
+319   10FC 06 02        	ld b, 2
+320   10FE              ; 22     MyViewShow();
+321   10FE CD 2E 10     	call myviewshow
+322   1101              ; 23     //bios(a = biosWindowOpen);
+323   1101              ; 24
+324   1101              ; 25     WiFiHeaderViewShowTitle();
+325   1101 CD 07 11     	call wifiheaderviewshowtitle
+326   1104              ; 26     WiFiHeaderViewShowValue();
+327   1104 C3 58 11     	jp wifiheaderviewshowvalue
+328   1107              ; 27 }
+329   1107              ; 28
+330   1107              ; 29 void WiFiHeaderViewShowTitle() {
+331   1107              wifiheaderviewshowtitle:
+332   1107              ; 30     push_pop(hl, bc) {
+333   1107 E5           	push hl
+334   1108 C5           	push bc
+335   1109              ; 31         //Title
+336   1109              ; 32         a = WiFiHeaderViewX;
+337   1109 3A 8A 11     	ld a, (wifiheaderviewx)
+338   110C              ; 33         b = a;
+339   110C 47           	ld b, a
+340   110D              ; 34         a = WiFiHeaderViewDX;
+341   110D 3A 8C 11     	ld a, (wifiheaderviewdx)
+342   1110              ; 35         a += b;
+343   1110 80           	add b
+344   1111              ; 36         a -= 8; //len Title
+345   1111 D6 08        	sub 8
+346   1113              ; 37         l = a;
+347   1113 6F           	ld l, a
+348   1114              ; 38         h = (a = WiFiHeaderViewY);
+349   1114 3A 8B 11     	ld a, (wifiheaderviewy)
+350   1117 67           	ld h, a
+351   1118              ; 39         bios(a = biosSetPositionCursoreHL);
+352   1118 3E 1C        	ld a, 28
+353   111A CD 00 F0     	call bios
+354   111D              ; 40         bios(a = biosPrintMessageHL, hl = WiFiHeaderViewTitle);
+355   111D 3E 02        	ld a, 2
+356   111F 21 96 11     	ld hl, wifiheaderviewtitle
+357   1122 CD 00 F0     	call bios
+358   1125              ; 41         //SSID
+359   1125              ; 42         a = WiFiHeaderViewX;
+360   1125 3A 8A 11     	ld a, (wifiheaderviewx)
+361   1128              ; 43         a++;
+362   1128 3C           	inc a
+363   1129              ; 44         l = a;
+364   1129 6F           	ld l, a
+365   112A              ; 45         a = WiFiHeaderViewY;
+366   112A 3A 8B 11     	ld a, (wifiheaderviewy)
+367   112D              ; 46         a++;
+368   112D 3C           	inc a
+369   112E              ; 47         h = a;
+370   112E 67           	ld h, a
+371   112F              ; 48         bios(a = biosSetPositionCursoreHL);
+372   112F 3E 1C        	ld a, 28
+373   1131 CD 00 F0     	call bios
+374   1134              ; 49         bios(a = biosPrintMessageHL, hl = WiFiSettingsViewTitleSSID);
+375   1134 3E 02        	ld a, 2
+376   1136 21 B4 11     	ld hl, wifisettingsviewtitlessid
+377   1139 CD 00 F0     	call bios
+378   113C              ; 50         //IP
+379   113C              ; 51         a = WiFiHeaderViewX;
+380   113C 3A 8A 11     	ld a, (wifiheaderviewx)
+381   113F              ; 52         a += 1;
+382   113F C6 01        	add 1
+383   1141              ; 53         l = a;
+384   1141 6F           	ld l, a
+385   1142              ; 54         a = WiFiHeaderViewY;
+386   1142 3A 8B 11     	ld a, (wifiheaderviewy)
+387   1145              ; 55         a += 2;
+388   1145 C6 02        	add 2
+389   1147              ; 56         h = a;
+390   1147 67           	ld h, a
+391   1148              ; 57         bios(a = biosSetPositionCursoreHL);
+392   1148 3E 1C        	ld a, 28
+393   114A CD 00 F0     	call bios
+394   114D              ; 58         bios(a = biosPrintMessageHL, hl = WiFiHeaderViewTitleIP);
+395   114D 3E 02        	ld a, 2
+396   114F 21 8F 11     	ld hl, wifiheaderviewtitleip
+397   1152 CD 00 F0     	call bios
+398   1155 C1           	pop bc
+399   1156 E1           	pop hl
+400   1157 C9           	ret
+401   1158              ; 59     }
+402   1158              ; 60 }
+403   1158              ; 61
+404   1158              ; 62
+405   1158              ; 63
+406   1158              ; 64 void WiFiHeaderViewShowValue() {
+407   1158              wifiheaderviewshowvalue:
+408   1158              ; 65     // SSID
+409   1158              ; 66     a = WiFiHeaderViewX;
+410   1158 3A 8A 11     	ld a, (wifiheaderviewx)
+411   115B              ; 67     a += 7;
+412   115B C6 07        	add 7
+413   115D              ; 68     l = a;
+414   115D 6F           	ld l, a
+415   115E              ; 69     a = WiFiHeaderViewY;
+416   115E 3A 8B 11     	ld a, (wifiheaderviewy)
+417   1161              ; 70     a += 1;
+418   1161 C6 01        	add 1
+419   1163              ; 71     h = a;
+420   1163 67           	ld h, a
+421   1164              ; 72     bios(a = biosSetPositionCursoreHL);
+422   1164 3E 1C        	ld a, 28
+423   1166 CD 00 F0     	call bios
+424   1169              ; 73     a = 16;
+425   1169 3E 10        	ld a, 16
+426   116B              ; 74     MyFuncPrintHLStrLenA(hl = WiFiSettingsViewSsidValue);
+427   116B 21 D0 11     	ld hl, wifisettingsviewssidvalue
+428   116E CD 12 12     	call myfuncprinthlstrlena
+429   1171              ; 75     // IP
+430   1171              ; 76     a = WiFiHeaderViewX;
+431   1171 3A 8A 11     	ld a, (wifiheaderviewx)
+432   1174              ; 77     a += 7;
+433   1174 C6 07        	add 7
+434   1176              ; 78     l = a;
+435   1176 6F           	ld l, a
+436   1177              ; 79     a = WiFiHeaderViewY;
+437   1177 3A 8B 11     	ld a, (wifiheaderviewy)
+438   117A              ; 80     a += 2;
+439   117A C6 02        	add 2
+440   117C              ; 81     h = a;
+441   117C 67           	ld h, a
+442   117D              ; 82     bios(a = biosSetPositionCursoreHL);
+443   117D 3E 1C        	ld a, 28
+444   117F CD 00 F0     	call bios
+445   1182              ; 83     a = 16;
+446   1182 3E 10        	ld a, 16
+447   1184              ; 84     MyFuncPrintHLStrLenA(hl = WiFiSettingsViewIpValue);
+448   1184 21 02 12     	ld hl, wifisettingsviewipvalue
+449   1187 C3 12 12     	jp myfuncprinthlstrlena
+450   118A              ; 85 }
+451   118A              ; 86
+452   118A              ; 87 uint8_t WiFiHeaderViewX = 24;
+453   118A              wifiheaderviewx:
+454   118A 18           	db 24
+455   118B              ; 88 uint8_t WiFiHeaderViewY = 0;
+456   118B              wifiheaderviewy:
+457   118B 00           	db 0
+458   118C              ; 89 uint8_t WiFiHeaderViewDX = 24;
+459   118C              wifiheaderviewdx:
+460   118C 18           	db 24
+461   118D              ; 90 uint8_t WiFiHeaderViewDY = 4;
+462   118D              wifiheaderviewdy:
+463   118D 04           	db 4
+464   118E              ; 91 uint8_t WiFiHeaderViewColor = 0x07;
+465   118E              wifiheaderviewcolor:
+466   118E 07           	db 7
+467   118F              ; 93 uint8_t WiFiHeaderViewTitleIP[] =   "IP  : ";
+468   118F              wifiheaderviewtitleip:
+469   118F 49           	db 73
+470   1190 50           	db 80
+471   1191 20           	db 32
+472   1192 20           	db 32
+473   1193 3A           	db 58
+474   1194 20           	db 32
+475   1195 00           	ds 1
+476   1196              ; 94 uint8_t WiFiHeaderViewTitle[] = {0x82, 'W', 'i', '-', 'F', 'i', 0x92, '\0'};
+477   1196              wifiheaderviewtitle:
+478   1196 82           	db 130
+479   1197 57           	db 87
+480   1198 69           	db 105
+481   1199 2D           	db 45
+482   119A 46           	db 70
+483   119B 69           	db 105
+484   119C 92           	db 146
+485   119D 00           	db 0
+486   119E              ; 11 uint8_t WiFiSettingsViewX = 11;
+487   119E              wifisettingsviewx:
+488   119E 0B           	db 11
+489   119F              ; 12 uint8_t WiFiSettingsViewY = 10;
+490   119F              wifisettingsviewy:
+491   119F 0A           	db 10
+492   11A0              ; 13 uint8_t WiFiSettingsViewDX = 27;
+493   11A0              wifisettingsviewdx:
+494   11A0 1B           	db 27
+495   11A1              ; 14 uint8_t WiFiSettingsViewDY = 13;
+496   11A1              wifisettingsviewdy:
+497   11A1 0D           	db 13
+498   11A2              ; 15 uint8_t WiFiSettingsViewColor = 0x70;
+499   11A2              wifisettingsviewcolor:
+500   11A2 70           	db 112
+501   11A3              ; 16 uint8_t WiFiSettingsViewInvColor = 0x07;
+502   11A3              wifisettingsviewinvcolor:
+503   11A3 07           	db 7
+504   11A4              ; 18 uint8_t WiFiSettingsViewSelectPos = 0;
+505   11A4              wifisettingsviewselectpos:
+506   11A4 00           	db 0
+507   11A5              ; 20 uint8_t WiFiSettingsViewTitle[] = "Wi-Fi settings";
+508   11A5              wifisettingsviewtitle:
+509   11A5 57           	db 87
+510   11A6 69           	db 105
+511   11A7 2D           	db 45
+512   11A8 46           	db 70
+513   11A9 69           	db 105
+514   11AA 20           	db 32
+515   11AB 73           	db 115
+516   11AC 65           	db 101
+517   11AD 74           	db 116
+518   11AE 74           	db 116
+519   11AF 69           	db 105
+520   11B0 6E           	db 110
+521   11B1 67           	db 103
+522   11B2 73           	db 115
+523   11B3 00           	ds 1
+524   11B4              ; 21 uint8_t WiFiSettingsViewTitleSSID[] = "SSID: ";
+525   11B4              wifisettingsviewtitlessid:
+526   11B4 53           	db 83
+527   11B5 53           	db 83
+528   11B6 49           	db 73
+529   11B7 44           	db 68
+530   11B8 3A           	db 58
+531   11B9 20           	db 32
+532   11BA 00           	ds 1
+533   11BB              ; 22 uint8_t WiFiSettingsViewTitlePass[] = "Pass:";
+534   11BB              wifisettingsviewtitlepass:
+535   11BB 50           	db 80
+536   11BC 61           	db 97
+537   11BD 73           	db 115
+538   11BE 73           	db 115
+539   11BF 3A           	db 58
+540   11C0 00           	ds 1
+541   11C1              ; 23 uint8_t WiFiSettingsViewTitleMac[] =  " MAC:";
+542   11C1              wifisettingsviewtitlemac:
+543   11C1 20           	db 32
+544   11C2 4D           	db 77
+545   11C3 41           	db 65
+546   11C4 43           	db 67
+547   11C5 3A           	db 58
+548   11C6 00           	ds 1
+549   11C7              ; 24 uint8_t WiFiSettingsViewButtonTitle[] = "Connect";
+550   11C7              wifisettingsviewbuttontitle:
+551   11C7 43           	db 67
+552   11C8 6F           	db 111
+553   11C9 6E           	db 110
+554   11CA 6E           	db 110
+555   11CB 65           	db 101
+556   11CC 63           	db 99
+557   11CD 74           	db 116
+558   11CE 00           	ds 1
+559   11CF              ; 25 uint8_t WiFiSettingsViewSSIDIsConnected = 0;
+560   11CF              wifisettingsviewssidisconnected:
+561   11CF 00           	db 0
+562   11D0              ; 27 uint8_t WiFiSettingsViewSsidValue[16] = "-";
+563   11D0              wifisettingsviewssidvalue:
+564   11D0 2D           	db 45
+565   11D1 00 00 00...  	ds 15
+566   11E0              ; 28 uint8_t WiFiSettingsViewPassValue[16] = "-";
+567   11E0              wifisettingsviewpassvalue:
+568   11E0 2D           	db 45
+569   11E1 00 00 00...  	ds 15
+570   11F0              ; 29 uint8_t WiFiSettingsViewMacValue[18] = "00:00:00:00:00:00";
+571   11F0              wifisettingsviewmacvalue:
+572   11F0 30           	db 48
+573   11F1 30           	db 48
+574   11F2 3A           	db 58
+575   11F3 30           	db 48
+576   11F4 30           	db 48
+577   11F5 3A           	db 58
+578   11F6 30           	db 48
+579   11F7 30           	db 48
+580   11F8 3A           	db 58
+581   11F9 30           	db 48
+582   11FA 30           	db 48
+583   11FB 3A           	db 58
+584   11FC 30           	db 48
+585   11FD 30           	db 48
+586   11FE 3A           	db 58
+587   11FF 30           	db 48
+588   1200 30           	db 48
+589   1201 00           	ds 1
+590   1202              ; 30 uint8_t WiFiSettingsViewIpValue[16] = "0.0.0.0";
+591   1202              wifisettingsviewipvalue:
+592   1202 30           	db 48
+593   1203 2E           	db 46
+594   1204 30           	db 48
+595   1205 2E           	db 46
+596   1206 30           	db 48
+597   1207 2E           	db 46
+598   1208 30           	db 48
+599   1209 00 00 00...  	ds 9
+600   1212              ; 13 void MyFuncPrintHLStrLenA() {
+601   1212              myfuncprinthlstrlena:
+602   1212              ; 14     push_pop(bc, de) {
+603   1212 C5           	push bc
+604   1213 D5           	push de
+605   1214              ; 15         b = a;
+606   1214 47           	ld b, a
+607   1215              ; 16         d = 0;
+608   1215 16 00        	ld d, 0
+609   1217              ; 17         do {
+610   1217              __l_33:
+611   1217              ; 18             a = *hl;
+612   1217 7E           	ld a, (hl)
+613   1218              ; 19             if (a > 0) {
+614   1218 B7           	or a
+615   1219 CA 23 12     	jp z, __l_36
+616   121C              ; 20                 d++;
+617   121C 14           	inc d
+618   121D              ; 21                 c = a;
+619   121D 4F           	ld c, a
+620   121E              ; 22                 bios(a = biosPrintC);
+621   121E 3E 00        	ld a, 0
+622   1220 CD 00 F0     	call bios
+623   1223              __l_36:
+624   1223              ; 23             }
+625   1223              ; 24             a = *hl;
+626   1223 7E           	ld a, (hl)
+627   1224              ; 25             hl++;
+628   1224 23           	inc hl
+629   1225              __l_34:
+630   1225              ; 26         } while (a > 0);
+631   1225 B7           	or a
+632   1226 C2 17 12     	jp nz, __l_33
+633   1229              ; 27         if ((a = d) < b) {
+634   1229 7A           	ld a, d
+635   122A B8           	cp b
+636   122B D2 3E 12     	jp nc, __l_38
+637   122E              ; 28             a = b;
+638   122E 78           	ld a, b
+639   122F              ; 29             a -= d;
+640   122F 92           	sub d
+641   1230              ; 30             b = a;
+642   1230 47           	ld b, a
+643   1231              ; 31             do {
+644   1231              __l_40:
+645   1231              ; 32                 bios(a = biosPrintC, c = ' ');
+646   1231 3E 00        	ld a, 0
+647   1233 0E 20        	ld c, 32
+648   1235 CD 00 F0     	call bios
+649   1238              ; 33                 b--;
+650   1238 05           	dec b
+651   1239              __l_41:
+652   1239              ; 34             } while ((a = b) > 0);
+653   1239 78           	ld a, b
+654   123A B7           	or a
+655   123B C2 31 12     	jp nz, __l_40
+656   123E              __l_38:
+657   123E D1           	pop de
+658   123F C1           	pop bc
+659   1240 C9           	ret
+660   1241               savebin "getcmd.ord", 0x0ff0, 0x0810
+661   1241
+# file closed: main.asm
